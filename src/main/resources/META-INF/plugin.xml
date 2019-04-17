@@ -1,0 +1,76 @@
+<idea-plugin>
+    <id>com.abas.esdk.projectbuilder</id>
+    <name>ESDK Project Builder</name>
+    <version>1.0.0</version>
+    <vendor email="andre.schuele@abas-consulting.com" url="https://abas-essentials-sdk.com">Abas</vendor>
+
+    <description>
+        A Plugin that replaces the ESDK Project Builder and brings it to IntelliJ Idea.
+        Feautures:
+        - Creating a new ESDK Project and initializing following values:
+        - Development Version
+        - ESDK Version
+        - App ID
+        - App Name
+        - Vendor ID
+        - Package Name
+        - Essentials Version Ranges
+        - Languages
+        - Connection Settings
+        - fop.json
+
+        Coming soon:
+        - Editing current project values
+        - Editing fop.json after Eventhandler creation
+        - Integration of ESDK Eventhandler Live Templates
+        - Autocompletion of Eventhandler "field"-Annotation
+
+        Have fun with it!
+
+        Yonggan / André Schüle
+    </description>
+
+    <change-notes>Added A Plugin for ESDK Project Builder in IntelliJ
+    </change-notes>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="181.5684.4"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <moduleBuilder builderClass="module.ESDKModuleBuilder" id="ESDK_STEP" order="first"/>
+        <moduleType id="ESDK_MODULE_TYPE" implementationClass="module.ESDKModuleType"/>
+
+        <defaultLiveTemplatesProvider implementation="LiveTemplateProvider"/>
+
+        <!--<applicationConfigurable groupId="tools" displayName="ESDK Plugin Settings"-->
+        <!--id="preference.ESDKPluginSettings"-->
+        <!--instance="actions.ESDKPluginSettings"/>-->
+
+        <!--<applicationService serviceInterface="actions.ESDKPluginSettingsPersistence" serviceImplementation="actions.ESDKPluginSettingsPersistence" />-->
+        <bundledColorScheme path="colorScheme/Infinity" order="first"/>
+    </extensions>
+
+    <!--TODO: Help System-->
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="ESDKAppRegister" class="actions.ESDKRegisterApp" text="Register ESDK App"
+                description="Register your ESDK App">
+            <add-to-group group-id="CodeMenu" anchor="first"/>
+            <keyboard-shortcut first-keystroke="ctrl alt R" keymap="$default"/>
+        </action>
+        <action id="ESDKSettings" class="actions.ESDKSettings" text="ESDK Settings"
+                description="Change the ESDK Settings Values for your Project">
+            <add-to-group group-id="CodeMenu" anchor="first"/>
+            <keyboard-shortcut first-keystroke="ctrl alt E" keymap="$default"/>
+        </action>
+    </actions>
+
+</idea-plugin>

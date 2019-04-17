@@ -1,0 +1,73 @@
+<templateSet group="Abas ESDK">
+    <template name="evhaa" value="@EventHandler(head = $MASKEDITOR$$END$.class, row = $MASKEDITOR$.Row.class)&#10;@RunFopWith(EventHandlerRunner.class)" description="Eventhandler Annotations" toReformat="false" toShortenFQNames="true">
+        <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
+    <template name="evhabaft" value="@ButtonEventHandler(field = &quot;FIELDNAME&quot;, type = ButtonEventType.AFTER, table = false)&#10;public void startAfter(ButtonEvent event, ScreenControl screenControl, DbContext ctx, $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}" description="Eventhandler ButtonEvent AFTER" toReformat="false" toShortenFQNames="true">
+        <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
+    <template name="evhabbef" value="@ButtonEventHandler(field = &quot;FIELDNAME&quot;, type = ButtonEventType.BEFORE, table = false)&#10;public void startBefore(ButtonEvent event, ScreenControl screenControl, DbContext ctx, $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}" description="Eventhandler ButtonEvent BEFORE" toReformat="false" toShortenFQNames="true">
+        <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
+    <template name="evhafex" value="@FieldEventHandler(field = &quot;FIELDNAME&quot;, type = FieldEventType.EXIT, table = false)&#10;public void yisExit(FieldEvent event, ScreenControl screenControl, DbContext dbContext, $MASKEDITOR$$END$ head) throws EventException, IOException {&#10;    &#10;}" description="Eventhandler FieldEvent EXIT" toReformat="false" toShortenFQNames="true">
+        <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
+    <template name="evhaffill" value="@FieldEventHandler(field = &quot;FIELDNAME&quot;, type = FieldEventType.FILL, table = false)&#10;public void yisFill(FieldEvent event, ScreenControl screenControl, DbContext dbContext, $MASKEDITOR$$END$ head) throws EventException, IOException {&#10;    &#10;}" description="Eventhandler FieldEvent FILL" toReformat="false" toShortenFQNames="true">
+        <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
+    <template name="evhaimp" value="import de.abas.erp.axi.event.EventException;&#10;import de.abas.erp.axi.screen.ScreenControl;&#10;import de.abas.erp.axi2.EventHandlerRunner;&#10;import de.abas.erp.axi2.annotation.EventHandler;&#10;import de.abas.erp.axi2.event.ButtonEvent;&#10;import de.abas.erp.axi2.type.ButtonEventType;&#10;import de.abas.erp.axi2.annotation.ButtonEventHandler;&#10;import de.abas.erp.axi2.event.FieldEvent;&#10;import de.abas.erp.axi2.type.FieldEventType;&#10;import de.abas.erp.axi2.annotation.FieldEventHandler;&#10;import de.abas.erp.axi2.event.ScreenEvent;&#10;import de.abas.erp.axi2.type.ScreenEventType;&#10;import de.abas.erp.axi2.annotation.ScreenEventHandler;&#10;import de.abas.erp.jfop.rt.api.annotation.RunFopWith;&#10;&#10;$END$" description="Eventhandler Imports" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
+    <template name="evhascan" value="@ScreenEventHandler(type = ScreenEventType.CANCEL)&#10;public void screenCancel(ScreenEvent event, ScreenControl screenControl, DbContext dbContext, $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}" description="Eventhandler ScreenEvent CANCEL" toReformat="false" toShortenFQNames="true">
+        <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
+    <template name="evhasend" value="@ScreenEventHandler(type = ScreenEventType.END)&#10;public void screenEND(ScreenEvent event, ScreenControl screenControl, DbContext dbContext, $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}" description="Eventhandler ScreenEvent END" toReformat="false" toShortenFQNames="true">
+        <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
+    <template name="evhasent" value="@ScreenEventHandler(type = ScreenEventType.ENTER)&#10;public void screenEnter(ScreenEvent event, ScreenControl screenControl, DbContext dbContext, $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}" description="Eventhandler ScreenEvent ENTER" toReformat="false" toShortenFQNames="true">
+        <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
+    <template name="evhasval" value="@ScreenEventHandler(type = ScreenEventType.VALIDATION)&#10;public void screenValidation(ScreenEvent event, ScreenControl screenControl, DbContext dbContext, $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}" description="Eventhandler ScreenEvent VALIDATION" toReformat="false" toShortenFQNames="true">
+        <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
+    <template name="dbselhead" value="SelectionBuilder&lt;$CLASSTOSELECT$$END$&gt; selectionBuilder = SelectionBuilder.create($CLASSTOSELECT$.class);&#10;selectionBuilder.add(Conditions.eq($CLASSTOSELECT$.META.VARIABLE, &quot;CONDITION&quot;));&#10;Query&lt;$CLASSTOSELECT$&gt; query = dbContext.createQuery(selectionBuilder.build());&#10;&#10;for ($CLASSTOSELECT$ item : query) {&#10;    &#10;}" description="Database Head Selection" toReformat="false" toShortenFQNames="true">
+        <variable name="CLASSTOSELECT" expression="" defaultValue="" alwaysStopAt="true" />
+        <context />
+    </template>
+    <template name="dbseltable" value="SelectionBuilder&lt;$CLASSTOSELECT$$END$.Row&gt; selectionBuilder = SelectionBuilder.create($CLASSTOSELECT$.Row.class);&#10;rowSelectionBuilder.add(Conditions.eq($CLASSTOSELECT$.Row.META.VARIABLE.getName(), &quot;CONDITION&quot;));&#10;Query&lt;$CLASSTOSELECT$.Row&gt; queryRow = dbContext.createQuery(selectionBuilder.build());&#10;&#10;for ($CLASSTOSELECT$.Row row : queryRow) {&#10;    &#10;}" description="Database Table Selection" toReformat="false" toShortenFQNames="true">
+        <variable name="CLASSTOSELECT" expression="" defaultValue="" alwaysStopAt="true" />
+        <context />
+    </template>
+    <template name="dbselhat" value="RowSelectionBuilder&lt;$CLASSTOSELECT$$END$, Row&gt; rowSelectionBuilder = RowSelectionBuilder.create($CLASSTOSELECT$.class, Product.Row.class);&#10;rowSelectionBuilder.addForHead(Conditions.eq($CLASSTOSELECT$.META.swd, &quot;CONDITION&quot;));&#10;rowSelectionBuilder.add(Conditions.eq($CLASSTOSELECT$.Row.META.VARIABLE.getName(), &quot;CONDITION&quot;));&#10;rowSelectionBuilder.setTermConjunction(Conjunction.OR);&#10;&#10;RowQuery&lt;$CLASSTOSELECT$, Row&gt; queryHeadTable = dbContext.createQuery(rowSelectionBuilder.build());&#10;for ($CLASSTOSELECT$.Row row : queryHeadTable) {&#10;    &#10;}" description="Database Head and Table Selection" toReformat="false" toShortenFQNames="true">
+        <variable name="CLASSTOSELECT" expression="" defaultValue="" alwaysStopAt="true" />
+        <context />
+    </template>
+</templateSet>
