@@ -60,15 +60,21 @@
     </template>
     <template name="dbselhead" value="SelectionBuilder&lt;$CLASSTOSELECT$$END$&gt; selectionBuilder = SelectionBuilder.create($CLASSTOSELECT$.class);&#10;selectionBuilder.add(Conditions.eq($CLASSTOSELECT$.META.VARIABLE, &quot;CONDITION&quot;));&#10;Query&lt;$CLASSTOSELECT$&gt; query = dbContext.createQuery(selectionBuilder.build());&#10;&#10;for ($CLASSTOSELECT$ item : query) {&#10;    &#10;}" description="Database Head Selection" toReformat="false" toShortenFQNames="true">
         <variable name="CLASSTOSELECT" expression="" defaultValue="" alwaysStopAt="true" />
-        <context />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
     </template>
     <template name="dbseltable" value="SelectionBuilder&lt;$CLASSTOSELECT$$END$.Row&gt; selectionBuilder = SelectionBuilder.create($CLASSTOSELECT$.Row.class);&#10;rowSelectionBuilder.add(Conditions.eq($CLASSTOSELECT$.Row.META.VARIABLE.getName(), &quot;CONDITION&quot;));&#10;Query&lt;$CLASSTOSELECT$.Row&gt; queryRow = dbContext.createQuery(selectionBuilder.build());&#10;&#10;for ($CLASSTOSELECT$.Row row : queryRow) {&#10;    &#10;}" description="Database Table Selection" toReformat="false" toShortenFQNames="true">
         <variable name="CLASSTOSELECT" expression="" defaultValue="" alwaysStopAt="true" />
-        <context />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
     </template>
     <template name="dbselhat" value="RowSelectionBuilder&lt;$CLASSTOSELECT$$END$, Row&gt; rowSelectionBuilder = RowSelectionBuilder.create($CLASSTOSELECT$.class, Product.Row.class);&#10;rowSelectionBuilder.addForHead(Conditions.eq($CLASSTOSELECT$.META.swd, &quot;CONDITION&quot;));&#10;rowSelectionBuilder.add(Conditions.eq($CLASSTOSELECT$.Row.META.VARIABLE.getName(), &quot;CONDITION&quot;));&#10;rowSelectionBuilder.setTermConjunction(Conjunction.OR);&#10;&#10;RowQuery&lt;$CLASSTOSELECT$, Row&gt; queryHeadTable = dbContext.createQuery(rowSelectionBuilder.build());&#10;for ($CLASSTOSELECT$.Row row : queryHeadTable) {&#10;    &#10;}" description="Database Head and Table Selection" toReformat="false" toShortenFQNames="true">
         <variable name="CLASSTOSELECT" expression="" defaultValue="" alwaysStopAt="true" />
-        <context />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
     </template>
     <template name="evharcha" value="@RowEventHandler(type = RowEventType.CHANGED)&#10;public void rowChanged(DbContext context, $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}" description="Eventhandler RowEvent Changed" toReformat="false" toShortenFQNames="true">
         <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />

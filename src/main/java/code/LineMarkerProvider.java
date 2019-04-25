@@ -16,7 +16,7 @@ public class LineMarkerProvider extends RelatedItemLineMarkerProvider implements
     protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo> result) {
         if (element instanceof PsiAnnotation) {
             PsiAnnotation annotation = (PsiAnnotation) element;
-            String value = annotation.getQualifiedName() instanceof String ? (String) annotation.getQualifiedName() : null;
+            String value = annotation.getQualifiedName() instanceof String ? annotation.getQualifiedName() : null;
             if(value != null) {
                 if (value.startsWith("ButtonEventHandler") || value.startsWith("FieldEventHandler")) {
                     NavigationGutterIconBuilder<PsiElement> builder = NavigationGutterIconBuilder.create(ESDK_BOAT_GUTTER)
