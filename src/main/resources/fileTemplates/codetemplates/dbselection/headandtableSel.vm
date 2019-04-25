@@ -1,0 +1,9 @@
+RowSelectionBuilder<${CLASSTOSELECT}, Row> rowSelectionBuilder = RowSelectionBuilder.create(${CLASSTOSELECT}.class, Product.Row.class);
+rowSelectionBuilder.addForHead(Conditions.eq(${CLASSTOSELECT}.META.swd, "CONDITION"));
+rowSelectionBuilder.add(Conditions.eq(${CLASSTOSELECT}.Row.META.VARIABLE.getName(), "CONDITION"));
+rowSelectionBuilder.setTermConjunction(Conjunction.OR);
+
+RowQuery<${CLASSTOSELECT}, Row> queryHeadTable = dbContext.createQuery(rowSelectionBuilder.build());
+for (${CLASSTOSELECT}.Row row : queryHeadTable) {
+
+}

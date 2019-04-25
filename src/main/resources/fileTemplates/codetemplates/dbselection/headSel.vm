@@ -1,0 +1,7 @@
+SelectionBuilder<${CLASSTOSELECT}> selectionBuilder = SelectionBuilder.create(${CLASSTOSELECT}.class);
+selectionBuilder.add(Conditions.eq(${CLASSTOSELECT}.META.VARIABLE, "CONDITION"));
+Query<${CLASSTOSELECT}> query = dbContext.createQuery(selectionBuilder.build());
+
+for (${CLASSTOSELECT} item : query) {
+
+}

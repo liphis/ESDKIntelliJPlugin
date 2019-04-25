@@ -1,0 +1,4 @@
+@FieldEventHandler(field = "${FIELDNAME}", type = FieldEventType.${EVENTUP}, table = false)
+public void ${FIELDNAME}${EVENT}(FieldEvent event, ScreenControl screenControl, DbContext dbContext, ${MASKEDITOR} head) throws EventException, IOException {
+
+}

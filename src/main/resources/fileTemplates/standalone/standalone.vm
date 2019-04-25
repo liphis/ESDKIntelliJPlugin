@@ -1,0 +1,25 @@
+#if (${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+
+import de.abas.erp.axi.event.EventException;
+import de.abas.erp.axi.screen.ScreenControl;
+import de.abas.erp.axi2.EventHandlerRunner;
+import de.abas.erp.axi2.annotation.EventHandler;
+import de.abas.erp.axi2.event.ButtonEvent;
+import de.abas.erp.axi2.type.ButtonEventType;
+import de.abas.erp.axi2.annotation.ButtonEventHandler;
+import de.abas.erp.axi2.event.FieldEvent;
+import de.abas.erp.axi2.type.FieldEventType;
+import de.abas.erp.axi2.annotation.FieldEventHandler;
+import de.abas.erp.axi2.event.ScreenEvent;
+import de.abas.erp.axi2.type.ScreenEventType;
+import de.abas.erp.axi2.annotation.ScreenEventHandler;
+import de.abas.erp.jfop.rt.api.annotation.RunFopWith;
+
+public class ${NAME} implements ContextRunnable{
+
+    @RunFop
+    public int runFop(FOPSessionContext ctx, String[] args) throws FOPException {
+
+    }
+
+}

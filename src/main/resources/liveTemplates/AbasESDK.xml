@@ -70,4 +70,52 @@
         <variable name="CLASSTOSELECT" expression="" defaultValue="" alwaysStopAt="true" />
         <context />
     </template>
+    <template name="evharcha" value="@RowEventHandler(type = RowEventType.CHANGED)&#10;public void rowChanged(DbContext context, $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}" description="Eventhandler RowEvent Changed" toReformat="false" toShortenFQNames="true">
+        <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
+    <template name="evhardelaft" value="@RowEventHandler(type = RowEventType.DELETION_AFTER)&#10;public void rowDeletionAfter(DbContext context, $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}" description="Eventhandler RowEvent DELETION_AFTER" toReformat="false" toShortenFQNames="true">
+        <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
+    <template name="evhardelbef" value="@RowEventHandler(type = RowEventType.DELETION_BEFORE)&#10;public void rowDeletionBefore(DbContext context, $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}" description="Eventhandler RowEvent DELETION_BEFORE" toReformat="false" toShortenFQNames="true">
+        <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
+    <template name="evharinsaft" value="@RowEventHandler(type = RowEventType.INSERTION_AFTER)&#10;public void rowInsertionAfter(DbContext context, $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}" description="Eventhandler RowEvent INSERTION_AFTER" toReformat="false" toShortenFQNames="true">
+        <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
+    <template name="evharinsbef" value="@RowEventHandler(type = RowEventType.INSERTION_BEFORE)&#10;public void rowInsertionBefore(DbContext context, $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}" description="Eventhandler RowEvent INSERTION_BEFORE" toReformat="false" toShortenFQNames="true">
+        <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
+    <template name="evharmark" value="@RowEventHandler(type = RowEventType.MARKED)&#10;public void rowMarked(DbContext context, $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}" description="Eventhandler RowEvent MARKED" toReformat="false" toShortenFQNames="true">
+        <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
+    <template name="evharmovaft" value="@RowEventHandler(type = RowEventType.MOVED_AFTER)&#10;public void rowMovedAfter(DbContext context, $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}" description="Eventhandler RowEvent MOVED_AFTER" toReformat="false" toShortenFQNames="true">
+        <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
+    <template name="evharmovbef" value="@RowEventHandler(type = RowEventType.MOVED_BEFORE)&#10;public void rowMovedBefore(DbContext context, $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}" description="Eventhandler RowEvent MOVED_BEFORE" toReformat="false" toShortenFQNames="true">
+        <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="JAVA_CODE" value="true" />
+        </context>
+    </template>
 </templateSet>

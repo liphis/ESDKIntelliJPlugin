@@ -6,14 +6,14 @@ import com.intellij.openapi.module.ModuleType;
 import com.intellij.openapi.module.ModuleTypeManager;
 import com.intellij.openapi.roots.ui.configuration.ModulesProvider;
 import org.jetbrains.annotations.NotNull;
-import utils.Icons;
+import icons.Icons;
 
 import javax.swing.*;
 
 /**
  * This class adds the ESDK Module to Projectbuilder-Modules
  */
-public class ESDKModuleType extends ModuleType<ESDKModuleBuilder> {
+public class ESDKModuleType extends ModuleType<ESDKModuleBuilder> implements Icons{
     private static final String ID = "ESDK_MODULE_TYPE";
 
     /**
@@ -61,7 +61,7 @@ public class ESDKModuleType extends ModuleType<ESDKModuleBuilder> {
 
     @Override
     public Icon getNodeIcon(@Deprecated final boolean b) {
-        return new Icons().esdkboatmin;
+        return ESDK_BOAT;
     }
 
     @NotNull

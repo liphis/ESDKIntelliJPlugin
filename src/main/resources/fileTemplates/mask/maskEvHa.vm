@@ -1,0 +1,108 @@
+#if (${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+
+import de.abas.erp.axi.event.EventException;
+import de.abas.erp.axi.screen.ScreenControl;
+import de.abas.erp.axi2.EventHandlerRunner;
+import de.abas.erp.axi2.annotation.EventHandler;
+import de.abas.erp.axi2.event.ButtonEvent;
+import de.abas.erp.axi2.type.ButtonEventType;
+import de.abas.erp.axi2.annotation.ButtonEventHandler;
+import de.abas.erp.axi2.event.FieldEvent;
+import de.abas.erp.axi2.type.FieldEventType;
+import de.abas.erp.axi2.annotation.FieldEventHandler;
+import de.abas.erp.axi2.event.ScreenEvent;
+import de.abas.erp.axi2.type.ScreenEventType;
+import de.abas.erp.axi2.annotation.ScreenEventHandler;
+import de.abas.erp.jfop.rt.api.annotation.RunFopWith;
+
+@EventHandler(head = ${CLASSNAME}.class, row = ${CLASSNAME}.Row.class)
+@RunFopWith(EventHandlerRunner.class)
+public class ${NAME} {
+
+#if (${SCREEN_ENTER} == "true")
+@ScreenEventHandler(type = ScreenEventType.ENTER)
+public void screenEnter(ScreenEvent event, ScreenControl screenControl, DbContext dbContext,${CLASSNAME} head) throws EventException {
+
+}
+#end
+
+#if (${SCREEN_VALIDATION} == "true")
+@ScreenEventHandler(type = ScreenEventType.VALIDATION)
+public void screenValidation(ScreenEvent event, ScreenControl screenControl, DbContext dbContext,${CLASSNAME} head) throws EventException {
+
+}
+#end
+
+#if (${SCREEN_CANCEL} == "true")
+@ScreenEventHandler(type = ScreenEventType.CANCEL)
+public void screenCancel(ScreenEvent event, ScreenControl screenControl, DbContext dbContext,${CLASSNAME} head) throws EventException {
+
+}
+#end
+
+#if (${SCREEN_END} == "true")
+@ScreenEventHandler(type = ScreenEventType.END)
+public void screenEND(ScreenEvent event, ScreenControl screenControl, DbContext dbContext,${CLASSNAME} head) throws EventException {
+
+}
+#end
+
+
+
+#if (${ROW_CHANGED} == "true")
+@RowEventHandler(type = RowEventType.CHANGED)
+public void rowChanged(DbContext context,ProductEditor sourceRecord) {
+
+}
+#end
+
+#if (${ROW_DELETION_AFTER} == "true")
+@RowEventHandler(type = RowEventType.DELETION_AFTER)
+public void rowDeletionAfter(DbContext context,ProductEditor sourceRecord) {
+
+}
+#end
+
+#if (${ROW_DELETION_BEFORE} == "true")
+@RowEventHandler(type = RowEventType.DELETION_BEFORE)
+public void rowDeletionBefore(DbContext context,ProductEditor sourceRecord) {
+
+}
+#end
+
+#if (${ROW_INSERTION_AFTER} == "true")
+@RowEventHandler(type = RowEventType.INSERTION_AFTER)
+public void rowInsertionAfter(DbContext context,ProductEditor sourceRecord) {
+
+}
+#end
+
+#if (${ROW_INSERTION_BEFORE} == "true")
+@RowEventHandler(type = RowEventType.INSERTION_BEFORE)
+public void rowInsertionBefore(DbContext context,ProductEditor sourceRecord) {
+
+}
+#end
+
+#if (${ROW_MARKED} == "true")
+@RowEventHandler(type = RowEventType.MARKED)
+public void rowMarked(DbContext context,ProductEditor sourceRecord) {
+
+}
+#end
+
+#if (${ROW_MOVED_AFTER} == "true")
+@RowEventHandler(type = RowEventType.MOVED_AFTER)
+public void rowMovedAfter(DbContext context,ProductEditor sourceRecord) {
+
+}
+#end
+
+#if (${ROW_MOVED_BEFORE} == "true")
+@RowEventHandler(type = RowEventType.MOVED_BEFORE)
+public void rowMovedBefore(DbContext context,ProductEditor sourceRecord) {
+
+}
+#end
+
+}

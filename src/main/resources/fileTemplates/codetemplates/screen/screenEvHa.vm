@@ -1,0 +1,4 @@
+@ScreenEventHandler(type = ScreenEventType.${EVENTUP})
+public void screen${EVENT}(ScreenEvent event, ScreenControl screenControl, DbContext dbContext, ${MASKEDITOR} head) throws EventException {
+
+}

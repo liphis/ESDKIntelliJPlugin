@@ -55,22 +55,46 @@
 
         <!--<applicationService serviceInterface="actions.ESDKPluginSettingsPersistence" serviceImplementation="actions.ESDKPluginSettingsPersistence" />-->
         <bundledColorScheme path="colorScheme/Infinity" order="first"/>
+
+        <codeInsight.lineMarkerProvider language="JAVA" implementationClass="code.LineMarkerProvider"/>
     </extensions>
 
     <!--TODO: Help System-->
 
     <actions>
-        <!-- Add your actions here -->
-        <action id="ESDKAppRegister" class="actions.ESDKRegisterApp" text="Register ESDK App"
-                description="Register your ESDK App">
-            <add-to-group group-id="CodeMenu" anchor="first"/>
-            <keyboard-shortcut first-keystroke="ctrl alt R" keymap="$default"/>
-        </action>
-        <action id="ESDKSettings" class="actions.ESDKSettings" text="ESDK Settings"
-                description="Change the ESDK Settings Values for your Project">
-            <add-to-group group-id="CodeMenu" anchor="first"/>
-            <keyboard-shortcut first-keystroke="ctrl alt E" keymap="$default"/>
-        </action>
+        <group id="ESDKTools" text="ESDK" description="ESDK Tools">
+            <action id="ESDKCodeGenerator" class="actions.generate.ESDKCodeGenerator" text="ESDK Code"
+                    description="Generate ESDK Code" icon="Icons.ESDK_BOAT">
+                <add-to-group group-id="ProjectViewPopupMenu" anchor="before" relative-to-action="ProjectViewPopupMenuRefactoringGroup"/>
+                <add-to-group group-id="GenerateGroup" anchor="before" relative-to-action="JavaGenerateGroup2"/>
+            </action>
+
+            <action id="ESDKAppRegister" class="actions.ESDKRegisterApp" text="Register ESDK App"
+                    description="Register your ESDK App" icon="Icons.ESDK_BOAT">
+                <keyboard-shortcut first-keystroke="ctrl alt R" keymap="$default"/>
+            </action>
+            <action id="ESDKSettings" class="actions.ESDKSettings" text="ESDK Settings"
+                    description="Change the ESDK Settings Values for your Project" icon="Icons.ESDK_BOAT">
+                <keyboard-shortcut first-keystroke="ctrl alt E" keymap="$default"/>
+            </action>
+            <add-to-group group-id="MainMenu" relative-to-action="CodeMenu" anchor="after"/>
+        </group>
+
+        <group id="ESDKFileTemplates" text="ESDK" description="ESDK File Templates">
+            <action id="InfosystemEventHandler" class="actions.fileTemplates.ESDKInfosystem" text="Infosystem Class"
+                    description="Creates a Infosystem Eventhandler File Template" icon="Icons.ESDK_BOAT">
+                <!--<keyboard-shortcut first-keystroke="ctrl alt E" keymap="$default"/>-->
+            </action>
+            <action id="MaskEventHandler" class="actions.fileTemplates.ESDKMask" text="Mask Class"
+                    description="Creates a Mask Eventhandler File Template" icon="Icons.ESDK_BOAT">
+                <!--<keyboard-shortcut first-keystroke="ctrl alt E" keymap="$default"/>-->
+            </action>
+            <action id="Standalone" class="actions.fileTemplates.ESDKStandalone" text="Standalone Class"
+                    description="Creates a Standalone File Template" icon="Icons.ESDK_BOAT">
+                <!--<keyboard-shortcut first-keystroke="ctrl alt E" keymap="$default"/>-->
+            </action>
+            <add-to-group group-id="NewJavaSpecialFile" anchor="first"/>
+        </group>
     </actions>
 
 </idea-plugin>
