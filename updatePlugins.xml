@@ -3,23 +3,24 @@
   The <plugins> element contains the description of the plugins available at this repository. Required. 
 -->
 <plugins>
- <!--
- 
-    Each <plugin> element describes one plugin in the repository. Required.
-    id - used by JetBrains IDEs to uniquely identify a plugin. Required. Must match <id> in plugin.xml
-    url - path to download the plugin JAR/ZIP file. Required. Must be HTTPS
-    version - version of this plugin. Required. Must match <version> in plugin.xml
-  
--->
-<plugin id="com.abas.esdk.projectbuilder" url="https://nx.byticsgroup.net/static/ESDKIntelijPlugin/ESDKProjectManager-1.0.0.jar" version="1.0.0">
- <!--
+    <!--
 
-      The <idea-version> element must match the same element in plugin.xml. Required.
-    
--->
-<idea-version sinceBuild "181.5684.4"/>
+       Each <plugin> element describes one plugin in the repository. Required.
+       id - used by JetBrains IDEs to uniquely identify a plugin. Required. Must match <id> in plugin.xml
+       url - path to download the plugin JAR/ZIP file. Required. Must be HTTPS
+       version - version of this plugin. Required. Must match <version> in plugin.xml
 
-<description><![CDATA[<html>
+   -->
+    <plugin id="com.abas.esdk.projectbuilder"
+            url="https://nx.byticsgroup.net/static/ESDKIntelijPlugin/ESDKProjectManager-1.0.0.jar" version="1.0.0">
+        <!--
+
+             The <idea-version> element must match the same element in plugin.xml. Required.
+
+       -->
+        <name>ESDK Project Manager</name>
+        <idea-version since-build="181.5684.4"/>
+        <description><![CDATA[<html>
         <h1>A Plugin that replaces the ESDK Project Builder and brings it to IntelliJ Idea.</h1>
         <h2>Feautures:</h2>
         <ul>
@@ -53,10 +54,11 @@
         <h4>
         Have fun with it!
         <h4>
-        <h4>Yonggan / André Schüle</h4></html>]]>
-    </description>
+        <h4>Yonggan / AndrÃ© SchÃ¼le</h4></html>]]>
+        </description>
 
-    <change-notes>Added A Plugin for ESDK Project Builder in IntelliJ
-    </change-notes>
-</plugin>
+        <change-notes>Added A Plugin for ESDK Project Builder in IntelliJ
+        </change-notes>
+
+    </plugin>
 </plugins>
