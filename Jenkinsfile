@@ -39,28 +39,27 @@ node {
                                                 verbose: true)
                                         ]
                         )
-                        sshPublisher(
-                                                        publishers:
-                                                                [sshPublisherDesc(
-                                                                        configName: 'NX esdkintelijplugin-deployer', sshRetry: [retries: 10, retryDelay: 10000],
-                                                                        transfers: [sshTransfer(
-                                                                                excludes: '',
-                                                                                execCommand: '',
-                                                                                execTimeout: 120000,
-                                                                                flatten: true,
-                                                                                makeEmptyDirs: false,
-                                                                                noDefaultExcludes: false,
-                                                                                patternSeparator: '[, ]+',
-                                                                                remoteDirectory: '/',
-                                                                                remoteDirectorySDF: false,
-                                                                                removePrefix: '',
-                                                                                sourceFiles: 'updatePlugins.xml')],
-                                                                        usePromotionTimestamp: false,
-                                                                        useWorkspaceInPromotion: false,
-                                                                        verbose: true)
-                                                                ]
-                                                )
-
+                    sshPublisher(
+                                                    publishers:
+                                                            [sshPublisherDesc(
+                                                                    configName: 'NX esdkintelijplugin-deployer', sshRetry: [retries: 10, retryDelay: 10000],
+                                                                    transfers: [sshTransfer(
+                                                                            excludes: '',
+                                                                            execCommand: '',
+                                                                            execTimeout: 120000,
+                                                                            flatten: true,
+                                                                            makeEmptyDirs: false,
+                                                                            noDefaultExcludes: false,
+                                                                            patternSeparator: '[, ]+',
+                                                                            remoteDirectory: '/',
+                                                                            remoteDirectorySDF: false,
+                                                                            removePrefix: '',
+                                                                            sourceFiles: 'updatePlugins.xml')],
+                                                                    usePromotionTimestamp: false,
+                                                                    useWorkspaceInPromotion: false,
+                                                                    verbose: true)
+                                                            ]
+                                            )
             }
 
 
