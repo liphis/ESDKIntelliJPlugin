@@ -1,33 +1,44 @@
 <idea-plugin>
     <id>com.abas.esdk.projectbuilder</id>
-    <name>ESDK Project Builder</name>
+    <name>ESDK Project Manager</name>
     <version>1.0.0</version>
     <vendor email="andre.schuele@abas-consulting.com" url="https://abas-essentials-sdk.com">Abas</vendor>
 
-    <description>
-        A Plugin that replaces the ESDK Project Builder and brings it to IntelliJ Idea.
-        Feautures:
-        - Creating a new ESDK Project and initializing following values:
-        - Development Version
-        - ESDK Version
-        - App ID
-        - App Name
-        - Vendor ID
-        - Package Name
-        - Essentials Version Ranges
-        - Languages
-        - Connection Settings
-        - fop.json
-
-        Coming soon:
-        - Editing current project values
-        - Editing fop.json after Eventhandler creation
-        - Integration of ESDK Eventhandler Live Templates
-        - Autocompletion of Eventhandler "field"-Annotation
-
+    <description><![CDATA[<html>
+        <h1>A Plugin that replaces the ESDK Project Builder and brings it to IntelliJ Idea.</h1>
+        <h2>Feautures:</h2>
+        <ul>
+            <li>Creating a new ESDK Project and initializing following values:</li>
+            <ul>
+                <li>Development Version</li>
+                <li>ESDK Version</li>
+                <li>App ID</li>
+                <li>App Name</li>
+                <li>Vendor ID</li>
+                <li>Package Name</li>
+                <li>Essentials Version Ranges</li>
+                <li>Languages</li>
+                <li>Connection Settings</li>
+                <li>fop.json</li>
+            </ul>
+            <li>Editing current project values</li>
+            <li>Code generation</li>
+            <li>
+                Class generation for:
+                <ul>
+                <li>Infosystems</li>
+                <li>Masks / Databases</li>
+                <li>Standalone Java Programms</li>
+            </li>
+        </ul>
+        <h3>Coming soon:</h3>
+        <ul>
+            <li>Autocompletion of Eventhandler "field"-Annotation</li>
+        </ul>
+        <h4>
         Have fun with it!
-
-        Yonggan / André Schüle
+        <h4>
+        <h4>Yonggan / André Schüle</h4></html>]]>
     </description>
 
     <change-notes>Added A Plugin for ESDK Project Builder in IntelliJ
