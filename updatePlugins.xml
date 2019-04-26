@@ -12,7 +12,7 @@
 
    -->
     <plugin id="com.abas.esdk.projectbuilder"
-            url="https://nx.byticsgroup.net/static/ESDKIntelijPlugin/ESDKProjectManager-1.0.0.jar" version="1.0.0">
+            url="https://nx.byticsgroup.net/static/ESDKIntelijPlugin/ESDKProjectManager-1.0.1.jar" version="1.0.1">
         <!--
 
              The <idea-version> element must match the same element in plugin.xml. Required.
@@ -57,7 +57,13 @@
         <h4>Yonggan / André Schüle</h4></html>]]>
         </description>
 
-        <change-notes>Added A Plugin for ESDK Project Builder in IntelliJ
+        <change-notes><![CDATA[<html>
+        <h4>1.0.1</h4><p>
+        Fixed reading and writing of Settings in array-style properties.</br>
+        Added cout and cop to Live-Templates</p></br>
+        <h4>1.0.0</h4>
+        <p>Added A Plugin for ESDK Project Builder in IntelliJ</p>
+        </html>]]>
         </change-notes>
 
     </plugin>

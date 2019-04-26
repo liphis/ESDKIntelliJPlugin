@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.abas.esdk.projectbuilder</id>
     <name>ESDK Project Manager</name>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <vendor email="andre.schuele@abas-consulting.com" url="https://abas-essentials-sdk.com">Abas</vendor>
 
     <description><![CDATA[<html>

@@ -128,10 +128,13 @@ public class ProjectReader {
             versions = getFirstMatcherGroup(
                     "esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*essentialsVersions\\s*\\S*\\=\\s*\\S*\\[(.*)\\]",
                     readerFile);
-            String[] versionsArray = versions.replaceAll("[\"\\s]", "").trim().split(",");
+            final String versionString = versions.replaceAll("[\"\\s]", "").trim();
+            if (!versionString.isEmpty()) {
+                String[] versionsArray = versionString.split(",");
 
-            for (String version : versionsArray) {
-                ((DefaultListModel) esdkSettingsDialog.getVersionList().getModel()).addElement(version);
+                for (String version : versionsArray) {
+                    ((DefaultListModel) esdkSettingsDialog.getVersionList().getModel()).addElement(version);
+                }
             }
         } catch (IOException e) {
             Notifications.errorNotification("Couldn´t read your current Versions Configuration!");
@@ -216,12 +219,15 @@ public class ProjectReader {
     public void readContentInfosystems(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog) {
         try {
             final String buildGradlepath = baseDirectory + "/build.gradle";
-contentinfosystems = getFirstMatcherGroup("esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*infosystems\\s*\\S*\\=\\s*\\S*\\[(.*)\\]",
-        FileUtils.readFile(buildGradlepath));
-            String[] infosystems = contentinfosystems
-                    .replaceAll("[\"\\s]", "").trim().split(",");
-            for (String infosystem : infosystems) {
-                ((DefaultListModel) esdkSettingsDialog.getInfosystemList().getModel()).addElement(infosystem);
+            contentinfosystems = getFirstMatcherGroup("esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*infosystems\\s*\\S*\\=\\s*\\S*\\[(.*)\\]",
+                    FileUtils.readFile(buildGradlepath));
+            final String infosystemsString = contentinfosystems
+                    .replaceAll("[\"\\s]", "").trim();
+            if (!infosystemsString.isEmpty()) {
+                String[] infosystems = infosystemsString.split(",");
+                for (String infosystem : infosystems) {
+                    ((DefaultListModel) esdkSettingsDialog.getInfosystemList().getModel()).addElement(infosystem);
+                }
             }
         } catch (IOException e) {
             Notifications.errorNotification("Couldn´t read your current Content Infosystems Configuration!");
@@ -239,10 +245,13 @@ contentinfosystems = getFirstMatcherGroup("esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S
             final String buildGradlepath = baseDirectory + "/build.gradle";
             contentTables = getFirstMatcherGroup("esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*tables\\s*\\S*\\=\\s*\\S*\\[(.*)\\]",
                     FileUtils.readFile(buildGradlepath));
-            String[] tables = contentTables
-                    .replaceAll("[\"\\s]", "").trim().split(",");
-            for (String table : tables) {
-                ((DefaultListModel) esdkSettingsDialog.getTableList().getModel()).addElement(table);
+            final String tablesString = contentTables
+                    .replaceAll("[\"\\s]", "").trim();
+            if (!tablesString.isEmpty()) {
+                String[] tables = tablesString.split(",");
+                for (String table : tables) {
+                    ((DefaultListModel) esdkSettingsDialog.getTableList().getModel()).addElement(table);
+                }
             }
         } catch (IOException e) {
             Notifications.errorNotification("Couldn´t read your current Content Tables Configuration!");
@@ -258,20 +267,21 @@ contentinfosystems = getFirstMatcherGroup("esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S
     public void readContentScreens(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog) {
         try {
             final String buildGradlepath = baseDirectory + "/build.gradle";
-            String screensString = getFirstMatcherGroup("esdk\\s*\\{\\R*\\s*app\\s*\\{[\\\\R*\\s*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.]*screens\\s*\\=\\s*\\[(.*)\\]",
+            final String screensString = getFirstMatcherGroup("esdk\\s*\\{\\R*\\s*app\\s*\\{[\\\\R*\\s*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.]*screens\\s*\\=\\s*\\[(.*)\\]",
                     FileUtils.readFile(buildGradlepath)).trim();
             contentScreens = screensString;
-            Pattern pattern = Pattern.compile("\\w\"(,)\"");
-            Matcher matcher = pattern.matcher(screensString);
-            StringBuilder bufferString = new StringBuilder(screensString);
+            final Pattern pattern = Pattern.compile("\\w\"(,)\"");
+            final Matcher matcher = pattern.matcher(screensString);
+            final StringBuilder bufferString = new StringBuilder(screensString);
             while (matcher.find()) {
-                bufferString.replace(matcher.toMatchResult().start() + 2, matcher.toMatchResult().end() -1, "#");
+                bufferString.replace(matcher.toMatchResult().start() + 2, matcher.toMatchResult().end() - 1, "#");
             }
-
-            String[] screens = bufferString.toString().split(",");
-            for (String screen : screens) {
-                ((DefaultListModel) esdkSettingsDialog.getScreensList().getModel())
-                        .addElement(screen.replaceAll("#", ","));
+            if (!bufferString.toString().isEmpty()) {
+                final String[] screens = bufferString.toString().split(",");
+                for (String screen : screens) {
+                    ((DefaultListModel) esdkSettingsDialog.getScreensList().getModel())
+                            .addElement(screen.replaceAll("#", ","));
+                }
             }
         } catch (IOException e) {
             Notifications.errorNotification("Couldn´t read your current Content Screens Configuration!");
@@ -287,16 +297,20 @@ contentinfosystems = getFirstMatcherGroup("esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S
     public void readContentEnums(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog) {
         try {
             final String buildGradlepath = baseDirectory + "/build.gradle";
-            contentEnums =  getFirstMatcherGroup("esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*enums\\s*\\S*\\=\\s*\\S*\\[(.*)\\]",
+            contentEnums = getFirstMatcherGroup("esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*enums\\s*\\S*\\=\\s*\\S*\\[(.*)\\]",
                     FileUtils.readFile(buildGradlepath));
-            String[] enums = contentEnums
-                    .replaceAll("[\"\\s]", "").trim().split(",");
-            for (String enumerator : enums) {
-                ((DefaultListModel) esdkSettingsDialog.getEnumsList().getModel()).addElement(enumerator);
+            final String enumsString = contentEnums.replaceAll("[\"\\s]", "").trim();
+            if (!enumsString.isEmpty()) {
+                final String[] enums = enumsString.split(",");
+                for (String enumerator : enums) {
+                    ((DefaultListModel) esdkSettingsDialog.getEnumsList().getModel()).addElement(enumerator);
+                }
             }
-        } catch (IOException e) {
+        } catch (
+                IOException e) {
             Notifications.errorNotification("Couldn´t read your current Content Enums Configuration!");
         }
+
     }
 
     /**
@@ -309,16 +323,21 @@ contentinfosystems = getFirstMatcherGroup("esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S
     public void readContentNamedTypes(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog) {
         try {
             final String buildGradlepath = baseDirectory + "/build.gradle";
-contentNamedTypes = getFirstMatcherGroup("esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*namedTypes\\s*\\S*\\=\\s*\\S*\\[(.*)\\]",
-        FileUtils.readFile(buildGradlepath));
-            String[] namedTypes = contentNamedTypes
-                    .replaceAll("[\"\\s]", "").trim().split(",");
-            for (String namedType : namedTypes) {
-                ((DefaultListModel) esdkSettingsDialog.getNamedTypesList().getModel()).addElement(namedType);
+            contentNamedTypes = getFirstMatcherGroup("esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*namedTypes\\s*\\S*\\=\\s*\\S*\\[(.*)\\]",
+                    FileUtils.readFile(buildGradlepath));
+            final String namedTypesString = contentNamedTypes
+                    .replaceAll("[\"\\s]", "").trim();
+            if (!namedTypesString.isEmpty()) {
+                String[] namedTypes = namedTypesString.split(",");
+                for (String namedType : namedTypes) {
+                    ((DefaultListModel) esdkSettingsDialog.getNamedTypesList().getModel()).addElement(namedType);
+                }
             }
-        } catch (IOException e) {
+        } catch (
+                IOException e) {
             Notifications.errorNotification("Couldn´t read your current Content Named Types Configuration!");
         }
+
     }
 
     /**
