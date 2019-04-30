@@ -13,7 +13,7 @@ import java.util.Collection;
 
 public class LineMarkerProvider extends RelatedItemLineMarkerProvider implements Icons {
     @Override
-    protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo> result) {
+    protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo> result) throws ArrayIndexOutOfBoundsException{
         if (element instanceof PsiAnnotation) {
             PsiAnnotation annotation = (PsiAnnotation) element;
             String value = annotation.getQualifiedName() instanceof String ? annotation.getQualifiedName() : null;

@@ -9,6 +9,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.ui.ComboBox;
+import module.builder.ProjectReader;
 import utils.Notifications;
 
 import javax.swing.*;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Properties;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 public class GenerateDialog extends JDialog {
     private JPanel contentPane;
@@ -129,14 +131,9 @@ public class GenerateDialog extends JDialog {
         } catch (IOException e) {
             Notifications.errorNotification("Could not generate Method!");
         }
-        FileEditorManager manager = FileEditorManager.getInstance(actionEvent.getProject());
-        final Editor editor = manager.getSelectedTextEditor();
-        assert editor != null;
-        final int cursorOffset = editor.getCaretModel().getOffset();
-        final Document document = editor.getDocument();
 
         String finalText = text;
-        WriteCommandAction.runWriteCommandAction(actionEvent.getProject(), () -> document.insertString(cursorOffset, finalText));
+        WriteCommandAction.runWriteCommandAction(actionEvent.getProject(), () -> getDocument().insertString(getCursorOffset(getEditor()), finalText));
         dispose();
     }
 
@@ -154,6 +151,14 @@ public class GenerateDialog extends JDialog {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+        try {
+            className = new JTextField(ProjectReader
+                    .getFirstMatcherGroup("@EventHandler\\s*\\(\\s*head\\s*\\=\\s*([\\w*\\d*]*).class",
+                            getDocument().getText()));
+        }catch (Exception e){
+            className = new JTextField();
+        }
+
         sort = new ComboBox(new DefaultComboBoxModel<>(
                 new Vector<String>(Arrays.asList("Button", "Field", "Screen", "Row", "Database Selection", "Standalone"))));
         event = new ComboBox<String>(new DefaultComboBoxModel<>(new Vector<>(Arrays.asList("Before", "After"))));
@@ -204,5 +209,25 @@ public class GenerateDialog extends JDialog {
                     break;
             }
         });
+    }
+
+    private Document getDocument(){
+        if(actionEvent == null) return null;
+        FileEditorManager manager = FileEditorManager.getInstance(actionEvent.getProject());
+        final Editor editor = manager.getSelectedTextEditor();
+        assert editor != null;
+        return editor.getDocument();
+    }
+
+    private Editor getEditor(){
+        if(actionEvent == null) return null;
+        FileEditorManager manager = FileEditorManager.getInstance(actionEvent.getProject());
+        final Editor editor = manager.getSelectedTextEditor();
+        assert editor != null;
+        return editor;
+    }
+
+    private int getCursorOffset(Editor editor){
+        return editor.getCaretModel().getOffset();
     }
 }

@@ -12,7 +12,7 @@
 
    -->
     <plugin id="com.abas.esdk.projectbuilder"
-            url="https://nx.byticsgroup.net/static/ESDKIntelijPlugin/ESDKProjectManager-1.0.1.jar" version="1.0.1">
+            url="https://nx.byticsgroup.net/static/ESDKIntelijPlugin/ESDKProjectManager-1.0.2.jar" version="1.0.2">
         <!--
 
              The <idea-version> element must match the same element in plugin.xml. Required.
@@ -58,8 +58,10 @@
         </description>
 
         <change-notes><![CDATA[<html>
-        <h4>1.0.1</h4><p>
-        Fixed reading and writing of Settings in array-style properties.</br>
+        <h4>1.0.2</h4>
+        <p>Fixed LineMarkerProvider and added automatic reading of ClassName at Code Generation.</p>
+        <h4>1.0.1</h4>
+        <p>Fixed reading and writing of Settings in array-style properties.</br>
         Added cout and cop to Live-Templates</p></br>
         <h4>1.0.0</h4>
         <p>Added A Plugin for ESDK Project Builder in IntelliJ</p>
