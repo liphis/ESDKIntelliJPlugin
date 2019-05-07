@@ -7,10 +7,12 @@ import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiElement;
 import icons.Icons;
 import org.jetbrains.annotations.NotNull;
-import utils.Notifications;
 
 import java.util.Collection;
 
+/**
+ * IntelliJ Line Marker Provider
+ */
 public class LineMarkerProvider extends RelatedItemLineMarkerProvider implements Icons {
     @Override
     protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo> result) throws ArrayIndexOutOfBoundsException{

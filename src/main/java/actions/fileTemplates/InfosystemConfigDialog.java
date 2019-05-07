@@ -11,6 +11,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Properties;
 
+/**
+ * "Create Infosystem Class" Config Dialog.
+ */
 public class InfosystemConfigDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
@@ -35,6 +38,9 @@ public class InfosystemConfigDialog extends JDialog {
     private Dialog dialog;
     private static PsiDirectory psiDirectory;
 
+    /**
+     * Instantiates a new Infosystem config dialog.
+     */
     public InfosystemConfigDialog() {
         setContentPane(contentPane);
         setModal(true);
@@ -98,6 +104,12 @@ public class InfosystemConfigDialog extends JDialog {
         dispose();
     }
 
+    /**
+     * Main.
+     *
+     * @param pProject      the p project
+     * @param pPsiDirectory the p psi directory
+     */
     public static void main(Project pProject, PsiDirectory pPsiDirectory) {
         project = pProject;
         psiDirectory = pPsiDirectory;

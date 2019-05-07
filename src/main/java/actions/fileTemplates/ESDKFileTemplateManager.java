@@ -19,38 +19,56 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
+/**
+ * This class manages File Templates.
+ */
 public class ESDKFileTemplateManager {
 
 
     private FileTemplateManager fileTemplateManager;
 
-    public ESDKFileTemplateManager(Project project) {
+    /**
+     * Instantiates a new Esdk file template manager.
+     *
+     * @param project the project
+     */
+    public ESDKFileTemplateManager(final Project project) {
         fileTemplateManager = FileTemplateManager.getInstance(project);
     }
 
-    public FileTemplate loadFileTemplate(String fileName, String templateName) {
+    /**
+     * Load file template file template.
+     *
+     * @param fileName     the file name
+     * @param templateName the template name
+     * @return the file template
+     */
+    public FileTemplate loadFileTemplate(final String fileName, final String templateName) {
         return setTextIfNotSame(fileTemplateManager, templateName, readFileTemplate(fileName));
     }
 
-    private String readFileTemplate(String filename) {
+    private String readFileTemplate(final String filename) {
         StringBuilder sb = new StringBuilder();
         try {
-            InputStreamReader isr = new InputStreamReader(this.getClass().getResourceAsStream("/fileTemplates/" + filename), StandardCharsets.UTF_8);
-            BufferedReader br = new BufferedReader(isr);
+            final InputStreamReader isr = new InputStreamReader(
+                    this.getClass().getResourceAsStream("/fileTemplates/" + filename), StandardCharsets.UTF_8);
+            final BufferedReader br = new BufferedReader(isr);
             String line;
             while ((line = br.readLine()) != null) {
                 sb.append(line);
                 sb.append('\n');
             }
+            br.close();
         } catch (IOException e) {
             Notifications.errorNotification("Couldn´t create File Template!");
         }
         return sb.toString();
     }
 
-    private FileTemplate setTextIfNotSame(FileTemplateManager fileTemplateManager, String templateName, String text) {
+    private FileTemplate setTextIfNotSame(final FileTemplateManager fileTemplateManager, final String templateName,
+                                          final String text) {
         try {
-            if ((!text.isEmpty() && text != fileTemplateManager.getTemplate(templateName).getText())) {
+            if ((!text.isEmpty() && text.equals(fileTemplateManager.getTemplate(templateName).getText()))) {
                 return setFileTemplateText(fileTemplateManager, templateName, text);
             }
         } catch (NullPointerException e) {
@@ -59,7 +77,13 @@ public class ESDKFileTemplateManager {
         return null;
     }
 
-    public void openFileInEditor(Project project, PsiElement fromTemplate) {
+    /**
+     * Open file in editor.
+     *
+     * @param project      the project
+     * @param fromTemplate the from template
+     */
+    public void openFileInEditor(final Project project, final PsiElement fromTemplate) {
         final PsiFile createdFile = fromTemplate.getContainingFile();
 
         if (createdFile != null) {
@@ -71,20 +95,33 @@ public class ESDKFileTemplateManager {
         }
     }
 
-    private FileTemplate setFileTemplateText(FileTemplateManager fileTemplateManager, String templateName, String text) {
-        FileTemplate fileTemplate = fileTemplateManager.addTemplate(templateName, "java");
+    private FileTemplate setFileTemplateText(final FileTemplateManager fileTemplateManager, final String templateName,
+                                             final String text) {
+        final FileTemplate fileTemplate = fileTemplateManager.addTemplate(templateName, "java");
         fileTemplate.setText(text);
         return fileTemplate;
     }
 
-    public Properties getDefaultProperties(){
+    /**
+     * Gets default properties.
+     *
+     * @return the default properties
+     */
+    public Properties getDefaultProperties() {
         return fileTemplateManager.getDefaultProperties();
     }
 
-    public static PsiDirectory findPSIDirectory(AnActionEvent e){
-        VirtualFile virtualFile = e.getData(DataKeys.VIRTUAL_FILE);
+    /**
+     * Find psi directory psi directory.
+     *
+     * @param e the e
+     * @return the psi directory
+     */
+    public static PsiDirectory findPSIDirectory(final AnActionEvent e) {
+        final VirtualFile virtualFile = e.getData(DataKeys.VIRTUAL_FILE);
         PsiDirectory psiDirectory = PsiManager.getInstance(e.getProject()).findDirectory(virtualFile);
-        if(psiDirectory == null) psiDirectory = PsiManager.getInstance(e.getProject()).findDirectory(virtualFile.getParent());
+        if (psiDirectory == null)
+            psiDirectory = PsiManager.getInstance(e.getProject()).findDirectory(virtualFile.getParent());
         return psiDirectory;
     }
 

@@ -11,7 +11,7 @@ node {
         }
         stage('Build') {
             if (isRelease) {
-                sh "./gradlew -Prelease --info --stacktrace clean buildPlugin"
+                sh "./gradlew -Prelease --info --stacktrace clean patchPluginXml patchUpdatePluginsXml buildPlugin"
             } else {
                 sh "./gradlew --info --stacktrace clean buildPlugin"
             }

@@ -9,7 +9,7 @@ repositories {
 }
 
 group 'com.abas.yonggan'
-version '1.0.2'
+version '1.0.3'
 
 intellij {
     pluginName 'ESDK'
@@ -24,7 +24,34 @@ jar {
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
 }
 
-patchPluginXml{
+patchPluginXml {
+    String description = file('description.xml').getText('UTF-8')
+    String changeNotes = file('change-notes.xml').getText('UTF-8')
     version "${version}"
     sinceBuild '181.5684.4'
+    
+    ant.replaceregexp(match: "<description><[.*\\s*\\r*\\S*\\n*]*<\\/description>", replace: "${description}", flags: 'g', byline: false, encoding: "UTF-8") {
+        fileset(dir: "$projectDir/src/main/resources/META-INF/", includes: 'plugin.xml')
+    }
+    ant.replaceregexp(match: "<change-notes><[.*\\s*\\r*\\S*\\n*]*<\\/change-notes>", replace: "${changeNotes}", flags: 'g', byline: false, encoding: "UTF-8") {
+        fileset(dir: "$projectDir/src/main/resources/META-INF/", includes: 'plugin.xml')
+    }
+}
+
+
+task patchUpdatePluginsXml(type : Copy) {
+    String description = file('description.xml').getText('UTF-8')
+    String changeNotes = file('change-notes.xml').getText('UTF-8')
+    ant.replaceregexp(match: "[\\d*\\.*]*\\.jar", replace: "${version}.jar", flags: 'g', byline: true, encoding: "UTF-8") {
+        fileset(dir: "$projectDir", includes: 'updatePlugins.xml')
+    }
+    ant.replaceregexp(match: "version=\"[\\d*\\.*]*\"", replace: "version=\"${version}\"", flags: 'g', byline: true, encoding: "UTF-8") {
+        fileset(dir: "$projectDir", includes: 'updatePlugins.xml')
+    }
+    ant.replaceregexp(match: "<description><[.*\\s*\\r*\\S*\\n*]*<\\/description>", replace: "${description}", flags: 'g', byline: false, encoding: "UTF-8") {
+        fileset(dir: "$projectDir", includes: 'updatePlugins.xml')
+    }
+    ant.replaceregexp(match: "<change-notes><[.*\\s*\\r*\\S*\\n*]*<\\/change-notes>", replace: "${changeNotes}", flags: 'g', byline: false, encoding: "UTF-8") {
+        fileset(dir: "$projectDir", includes: 'updatePlugins.xml')
+    }
 }

@@ -11,19 +11,20 @@ import module.builder.ProjectReader;
 import utils.Notifications;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * This class is a Dialog to show and edit the current ESDK Project Settings.
  */
 final public class ESDKSettingsDialog extends JDialog {
-    private static final ArrayList<FopJson> fopJsonList = new ArrayList<>();
+    private static ArrayList<FopJson> fopJsonList = new ArrayList<>();
     //Basic
     private static final byte BASIC_APP_ID_LIMIT = 5, BASIC_APP_NAME_LIMIT = 15, BASIC_VENDOR_ID_LIMIT = 2;
     //Versions
@@ -50,7 +51,7 @@ final public class ESDKSettingsDialog extends JDialog {
     private JTextField appName;
     private JTextField vendorID;
     private JTextField packageName;
-    private JTextField abasHost;
+    private JTextField edpHost;
     private JTextField nexusHost;
     private JTextField nexusVersion;
     private JCheckBox german;
@@ -132,6 +133,21 @@ final public class ESDKSettingsDialog extends JDialog {
     private JButton eventRemove;
     private JButton eventAdd;
     private JTextField eventKey;
+    private JTextField abasHomeDir;
+    private JTextField abasClientDir;
+    private JTextField edpUser;
+    private JTextField edpPort;
+    private JPasswordField edpPassword;
+    private JTextField nexusPort;
+    private JTextField nexusUser;
+    private JTextField nexusName;
+    private JPasswordField nexusPassword;
+    private JTextField sshUser;
+    private JTextField sshHost;
+    private JTextField sshPort;
+    private JPasswordField sshPassword;
+    private JTextField sshKeyPath;
+    private JButton browseSSHKey;
 
     private ESDKSettingsDialog() {
         setContentPane(rootPanel);
@@ -167,7 +183,8 @@ final public class ESDKSettingsDialog extends JDialog {
     /**
      * Main esdk settings dialog.
      *
-     * @param pProject the p project
+     * @param pProject       the p project
+     * @param pProjectReader the p project reader
      * @return the esdk settings dialog
      */
     public static ESDKSettingsDialog main(final Project pProject, ProjectReader pProjectReader) {
@@ -242,7 +259,7 @@ final public class ESDKSettingsDialog extends JDialog {
      * @return the abas host
      */
     public JTextField getAbasHost() {
-        return abasHost;
+        return edpHost;
     }
 
     /**
@@ -587,6 +604,564 @@ final public class ESDKSettingsDialog extends JDialog {
         return eventList;
     }
 
+    /**
+     * Gets button ok.
+     *
+     * @return the button ok
+     */
+    public JButton getButtonOK() {
+        return buttonOK;
+    }
+
+    /**
+     * Gets button cancel.
+     *
+     * @return the button cancel
+     */
+    public JButton getButtonCancel() {
+        return buttonCancel;
+    }
+
+    /**
+     * Gets root panel.
+     *
+     * @return the root panel
+     */
+    public JPanel getRootPanel() {
+        return rootPanel;
+    }
+
+    /**
+     * Gets tabbed pane 1.
+     *
+     * @return the tabbed pane 1
+     */
+    public JTabbedPane getTabbedPane1() {
+        return tabbedPane1;
+    }
+
+    /**
+     * Gets edp host.
+     *
+     * @return the edp host
+     */
+    public JTextField getEdpHost() {
+        return edpHost;
+    }
+
+    /**
+     * Gets from version.
+     *
+     * @return the from version
+     */
+    public JTextField getFromVersion() {
+        return fromVersion;
+    }
+
+    /**
+     * Gets to version.
+     *
+     * @return the to version
+     */
+    public JTextField getToVersion() {
+        return toVersion;
+    }
+
+    /**
+     * Gets add version.
+     *
+     * @return the add version
+     */
+    public JButton getAddVersion() {
+        return addVersion;
+    }
+
+    /**
+     * Gets remove version.
+     *
+     * @return the remove version
+     */
+    public JButton getRemoveVersion() {
+        return removeVersion;
+    }
+
+    /**
+     * Gets content.
+     *
+     * @return the content
+     */
+    public JTabbedPane getContent() {
+        return content;
+    }
+
+    /**
+     * Gets infosystem working directory.
+     *
+     * @return the infosystem working directory
+     */
+    public JTextField getInfosystemWorkingDirectory() {
+        return infosystemWorkingDirectory;
+    }
+
+    /**
+     * Gets infosystem search word.
+     *
+     * @return the infosystem search word
+     */
+    public JTextField getInfosystemSearchWord() {
+        return infosystemSearchWord;
+    }
+
+    /**
+     * Gets remove infosystem.
+     *
+     * @return the remove infosystem
+     */
+    public JButton getRemoveInfosystem() {
+        return removeInfosystem;
+    }
+
+    /**
+     * Gets add infosystem.
+     *
+     * @return the add infosystem
+     */
+    public JButton getAddInfosystem() {
+        return addInfosystem;
+    }
+
+    /**
+     * Gets table.
+     *
+     * @return the table
+     */
+    public JTextField getTable() {
+        return table;
+    }
+
+    /**
+     * Gets remove table.
+     *
+     * @return the remove table
+     */
+    public JButton getRemoveTable() {
+        return removeTable;
+    }
+
+    /**
+     * Gets add table.
+     *
+     * @return the add table
+     */
+    public JButton getAddTable() {
+        return addTable;
+    }
+
+    /**
+     * Gets screens table.
+     *
+     * @return the screens table
+     */
+    public JTextField getScreensTable() {
+        return screensTable;
+    }
+
+    /**
+     * Gets screens group.
+     *
+     * @return the screens group
+     */
+    public JTextField getScreensGroup() {
+        return screensGroup;
+    }
+
+    /**
+     * Gets screens a.
+     *
+     * @return the screens a
+     */
+    public JCheckBox getScreensA() {
+        return screensA;
+    }
+
+    /**
+     * Gets screens b.
+     *
+     * @return the screens b
+     */
+    public JCheckBox getScreensB() {
+        return screensB;
+    }
+
+    /**
+     * Gets screens c.
+     *
+     * @return the screens c
+     */
+    public JCheckBox getScreensC() {
+        return screensC;
+    }
+
+    /**
+     * Gets screens d.
+     *
+     * @return the screens d
+     */
+    public JCheckBox getScreensD() {
+        return screensD;
+    }
+
+    /**
+     * Gets screens e.
+     *
+     * @return the screens e
+     */
+    public JCheckBox getScreensE() {
+        return screensE;
+    }
+
+    /**
+     * Gets screens f.
+     *
+     * @return the screens f
+     */
+    public JCheckBox getScreensF() {
+        return screensF;
+    }
+
+    /**
+     * Gets screens g.
+     *
+     * @return the screens g
+     */
+    public JCheckBox getScreensG() {
+        return screensG;
+    }
+
+    /**
+     * Gets screens h.
+     *
+     * @return the screens h
+     */
+    public JCheckBox getScreensH() {
+        return screensH;
+    }
+
+    /**
+     * Gets screens i.
+     *
+     * @return the screens i
+     */
+    public JCheckBox getScreensI() {
+        return screensI;
+    }
+
+    /**
+     * Gets screens j.
+     *
+     * @return the screens j
+     */
+    public JCheckBox getScreensJ() {
+        return screensJ;
+    }
+
+    /**
+     * Gets remove screen.
+     *
+     * @return the remove screen
+     */
+    public JButton getRemoveScreen() {
+        return removeScreen;
+    }
+
+    /**
+     * Gets add screen.
+     *
+     * @return the add screen
+     */
+    public JButton getAddScreen() {
+        return addScreen;
+    }
+
+    /**
+     * Gets enum name.
+     *
+     * @return the enum name
+     */
+    public JTextField getEnumName() {
+        return enumName;
+    }
+
+    /**
+     * Gets add enum.
+     *
+     * @return the add enum
+     */
+    public JButton getAddEnum() {
+        return addEnum;
+    }
+
+    /**
+     * Gets remove enums.
+     *
+     * @return the remove enums
+     */
+    public JButton getRemoveEnums() {
+        return removeEnums;
+    }
+
+    /**
+     * Gets named type.
+     *
+     * @return the named type
+     */
+    public JTextField getNamedType() {
+        return namedType;
+    }
+
+    /**
+     * Gets remove named type.
+     *
+     * @return the remove named type
+     */
+    public JButton getRemoveNamedType() {
+        return removeNamedType;
+    }
+
+    /**
+     * Gets add named type.
+     *
+     * @return the add named type
+     */
+    public JButton getAddNamedType() {
+        return addNamedType;
+    }
+
+    /**
+     * Gets event table.
+     *
+     * @return the event table
+     */
+    public JTextField getEventTable() {
+        return eventTable;
+    }
+
+    /**
+     * Gets event group.
+     *
+     * @return the event group
+     */
+    public JTextField getEventGroup() {
+        return eventGroup;
+    }
+
+    /**
+     * Gets event editor mode.
+     *
+     * @return the event editor mode
+     */
+    public JComboBox<String> getEventEditorMode() {
+        return eventEditorMode;
+    }
+
+    /**
+     * Gets event.
+     *
+     * @return the event
+     */
+    public JComboBox<String> getEvent() {
+        return event;
+    }
+
+    /**
+     * Gets event field.
+     *
+     * @return the event field
+     */
+    public JTextField getEventField() {
+        return eventField;
+    }
+
+    /**
+     * Gets event handler.
+     *
+     * @return the event handler
+     */
+    public JTextField getEventHandler() {
+        return eventHandler;
+    }
+
+    /**
+     * Gets event head radio.
+     *
+     * @return the event head radio
+     */
+    public JRadioButton getEventHeadRadio() {
+        return eventHeadRadio;
+    }
+
+    /**
+     * Gets event table radio.
+     *
+     * @return the event table radio
+     */
+    public JRadioButton getEventTableRadio() {
+        return eventTableRadio;
+    }
+
+    /**
+     * Gets event remove.
+     *
+     * @return the event remove
+     */
+    public JButton getEventRemove() {
+        return eventRemove;
+    }
+
+    /**
+     * Gets event add.
+     *
+     * @return the event add
+     */
+    public JButton getEventAdd() {
+        return eventAdd;
+    }
+
+    /**
+     * Gets event key.
+     *
+     * @return the event key
+     */
+    public JTextField getEventKey() {
+        return eventKey;
+    }
+
+    /**
+     * Gets abas home dir.
+     *
+     * @return the abas home dir
+     */
+    public JTextField getAbasHomeDir() {
+        return abasHomeDir;
+    }
+
+    /**
+     * Gets abas client dir.
+     *
+     * @return the abas client dir
+     */
+    public JTextField getAbasClientDir() {
+        return abasClientDir;
+    }
+
+    /**
+     * Gets edp user.
+     *
+     * @return the edp user
+     */
+    public JTextField getEdpUser() {
+        return edpUser;
+    }
+
+    /**
+     * Gets edp port.
+     *
+     * @return the edp port
+     */
+    public JTextField getEdpPort() {
+        return edpPort;
+    }
+
+    /**
+     * Gets edp password.
+     *
+     * @return the edp password
+     */
+    public JPasswordField getEdpPassword() {
+        return edpPassword;
+    }
+
+    /**
+     * Gets nexus port.
+     *
+     * @return the nexus port
+     */
+    public JTextField getNexusPort() {
+        return nexusPort;
+    }
+
+    /**
+     * Gets nexus user.
+     *
+     * @return the nexus user
+     */
+    public JTextField getNexusUser() {
+        return nexusUser;
+    }
+
+    /**
+     * Gets nexus name.
+     *
+     * @return the nexus name
+     */
+    public JTextField getNexusName() {
+        return nexusName;
+    }
+
+    /**
+     * Gets nexus password.
+     *
+     * @return the nexus password
+     */
+    public JPasswordField getNexusPassword() {
+        return nexusPassword;
+    }
+
+    /**
+     * Gets ssh user.
+     *
+     * @return the ssh user
+     */
+    public JTextField getSshUser() {
+        return sshUser;
+    }
+
+    /**
+     * Gets ssh host.
+     *
+     * @return the ssh host
+     */
+    public JTextField getSshHost() {
+        return sshHost;
+    }
+
+    /**
+     * Gets ssh port.
+     *
+     * @return the ssh port
+     */
+    public JTextField getSshPort() {
+        return sshPort;
+    }
+
+    /**
+     * Gets ssh password.
+     *
+     * @return the ssh password
+     */
+    public JPasswordField getSshPassword() {
+        return sshPassword;
+    }
+
+    /**
+     * Gets ssh key path.
+     *
+     * @return the ssh key path
+     */
+    public JTextField getSshKeyPath() {
+        return sshKeyPath;
+    }
+
     private void onOK() {
         // add your code here
         final ProjectBuilder projectBuilder = new ProjectBuilder();
@@ -608,6 +1183,7 @@ final public class ESDKSettingsDialog extends JDialog {
         }
         Notifications.showNotification("Successfully saved ESDK Settings!");
         dispose();
+
     }
 
     private void onCancel() {
@@ -696,7 +1272,7 @@ final public class ESDKSettingsDialog extends JDialog {
         esdkVersion = new JTextField();
 
         //Connection Settings
-        abasHost = new JTextField();
+        edpHost = new JTextField();
         nexusHost = new JTextField();
         nexusVersion = new JTextField();
     }
@@ -762,9 +1338,32 @@ final public class ESDKSettingsDialog extends JDialog {
     }
 
     private void createConnectionSettingsComponents() {
-        abasHost = new JTextField();
+        abasClientDir = new JTextField();
+        abasHomeDir = new JTextField();
+        edpHost = new JTextField();
+        edpPassword = new JPasswordField();
+        edpPort = new JTextField();
+        edpUser = new JTextField();
         nexusHost = new JTextField();
         nexusVersion = new JTextField();
+        nexusPort = new JTextField();
+        nexusUser = new JTextField();
+        nexusPassword = new JPasswordField();
+        nexusName = new JTextField();
+        nexusHost = new JTextField();
+        sshPort = new JTextField();
+        sshUser = new JTextField();
+        browseSSHKey = new JButton();
+        browseSSHKey.addActionListener(e -> {
+            final JFileChooser jFileChooser = new JFileChooser();
+            jFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("SSH Keys", "ppk", "pub"));
+            jFileChooser.setAcceptAllFileFilterUsed(true);
+            jFileChooser.showOpenDialog(new JPanel());
+            if (jFileChooser.getSelectedFile() != null) {
+                sshKeyPath.setText(Paths.get(jFileChooser.getSelectedFile().getAbsolutePath()).toString());
+            }
+
+        });
     }
 
     private void createContentComponents() {
@@ -831,7 +1430,7 @@ final public class ESDKSettingsDialog extends JDialog {
         addScreen.addActionListener(e -> {
             if (!(screensA.isSelected() || screensB.isSelected() || screensC.isSelected() || screensD.isSelected() ||
                     screensE.isSelected() || screensF.isSelected() || screensG.isSelected() || screensH.isSelected() ||
-                    screensI.isSelected() || screensJ.isSelected())){
+                    screensI.isSelected() || screensJ.isSelected())) {
                 Notifications.errorNotification("At least one of the Priorities must be selected!");
                 return;
             }
@@ -913,9 +1512,24 @@ final public class ESDKSettingsDialog extends JDialog {
 
         eventEditorMode = new ComboBox<>();
         eventEditorMode.addItem("*");
-        eventEditorMode.addItem("new");
-        eventEditorMode.addItem("edit");
-        eventEditorMode.addItem("view");
+        eventEditorMode.addItem("Fertig");
+        eventEditorMode.addItem("Hole");
+        eventEditorMode.addItem("Freigeben");
+        eventEditorMode.addItem("Lieferung");
+        eventEditorMode.addItem("Rechnung");
+        eventEditorMode.addItem("Zahlung");
+        eventEditorMode.addItem("Storno");
+        eventEditorMode.addItem("Kalkulieren");
+        eventEditorMode.addItem("Uebertragen");
+        eventEditorMode.addItem("Loeschen");
+        eventEditorMode.addItem("Verweis");
+        eventEditorMode.addItem("Zeigen");
+        eventEditorMode.addItem("Aendern");
+        eventEditorMode.addItem("Neu");
+        eventEditorMode.addItem("Waehlen");
+        eventEditorMode.addItem("Abbruch");
+        eventEditorMode.addItem("Kopieren");
+        eventEditorMode.addItem("Leer");
 
         event = new ComboBox<>();
         event.addItem("*");
@@ -949,22 +1563,7 @@ final public class ESDKSettingsDialog extends JDialog {
                     && !eventHandler.getText().isEmpty()) {
 
 
-                String editorModeString;
-
-                switch (Objects.requireNonNull(eventEditorMode.getSelectedItem()).toString()) {
-                    default:
-                        editorModeString = "*";
-                        break;
-                    case "new":
-                        editorModeString = "neu";
-                        break;
-                    case "edit":
-                        editorModeString = "ändern";
-                        break;
-                    case "view":
-                        editorModeString = "zeigen";
-                        break;
-                }
+                String editorModeString = eventEditorMode.getSelectedItem().toString().toLowerCase();
 
                 String eventString;
                 switch (event.getSelectedItem().toString()) {
@@ -1039,6 +1638,7 @@ final public class ESDKSettingsDialog extends JDialog {
         });
     }
 
+
     private void limit(JTextField jTextField, int limit) {
         jTextField.addKeyListener(new KeyAdapter() {
             @Override
@@ -1103,4 +1703,6 @@ final public class ESDKSettingsDialog extends JDialog {
             }
         });
     }
+
+
 }

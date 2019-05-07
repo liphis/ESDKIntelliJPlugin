@@ -12,7 +12,7 @@
 
    -->
     <plugin id="com.abas.esdk.projectbuilder"
-            url="https://nx.byticsgroup.net/static/ESDKIntelijPlugin/ESDKProjectManager-1.0.2.jar" version="1.0.2">
+            url="https://nx.byticsgroup.net/static/ESDKIntelijPlugin/ESDKProjectManager-1.0.3.jar" version="1.0.3">
         <!--
 
              The <idea-version> element must match the same element in plugin.xml. Required.
@@ -21,7 +21,7 @@
         <name>ESDK Project Manager</name>
         <idea-version since-build="181.5684.4"/>
         <description><![CDATA[<html>
-        <h1>A Plugin that replaces the ESDK Project Builder and brings it to IntelliJ Idea.</h1>
+        <h1>A Plugin that replaces the BLA Project Builder and brings it to IntelliJ Idea.</h1>
         <h2>Feautures:</h2>
         <ul>
             <li>Creating a new ESDK Project and initializing following values:</li>
@@ -55,18 +55,24 @@
         Have fun with it!
         <h4>
         <h4>Yonggan / André Schüle</h4></html>]]>
-        </description>
+</description>
 
         <change-notes><![CDATA[<html>
         <h4>1.0.2</h4>
-        <p>Fixed LineMarkerProvider and added automatic reading of ClassName at Code Generation.</p>
+        <p>ESDKIJP-1: Fixed Infosystem missing imports</p><br>
+        <p>ESDKIJP-2: Changed Field event in Code Generation from "ENTER" to "FILL"</p><br>
+        <p>ESDKIJP-3: Fixed wrong Variable and Naming in "dbsel*"-Live Templates</p><br>
+        <p>ESDKIJP-4: Added Editor Modes to Content - Event Registration</p><br>
+        <p>ESDKIJP-5: Added additional Properties to Connection Settings</p><br>
+        <h4>1.0.2</h4>
+        <p>Fixed LineMarkerProvider and added automatic reading of ClassName at Code Generation.</p><br>
         <h4>1.0.1</h4>
         <p>Fixed reading and writing of Settings in array-style properties.</br>
         Added cout and cop to Live-Templates</p></br>
         <h4>1.0.0</h4>
-        <p>Added A Plugin for ESDK Project Builder in IntelliJ</p>
+        <p>Added A Plugin for ESDK Project Builder in IntelliJ</p><br>
         </html>]]>
-        </change-notes>
+</change-notes>
 
     </plugin>
 </plugins>

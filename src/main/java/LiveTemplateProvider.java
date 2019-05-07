@@ -1,6 +1,9 @@
 import com.intellij.codeInsight.template.impl.DefaultLiveTemplatesProvider;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * This class provides all Live templates.
+ */
 class LiveTemplateProvider implements DefaultLiveTemplatesProvider {
     @Override
     public String[] getDefaultLiveTemplateFiles() {

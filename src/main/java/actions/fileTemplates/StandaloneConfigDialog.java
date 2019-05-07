@@ -13,6 +13,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Properties;
 
+/**
+ * "Create Standalone Class" Config Dialog.
+ */
 public class StandaloneConfigDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
@@ -28,6 +31,9 @@ public class StandaloneConfigDialog extends JDialog {
     private Dialog dialog;
     private static PsiDirectory psiDirectory;
 
+    /**
+     * Instantiates a new Standalone config dialog.
+     */
     public StandaloneConfigDialog() {
         setContentPane(contentPane);
         setModal(true);
@@ -78,6 +84,12 @@ public class StandaloneConfigDialog extends JDialog {
         dispose();
     }
 
+    /**
+     * Main.
+     *
+     * @param pProject      the p project
+     * @param pPsiDirectory the p psi directory
+     */
     public static void main(Project pProject, PsiDirectory pPsiDirectory) {
         project = pProject;
         psiDirectory = pPsiDirectory;

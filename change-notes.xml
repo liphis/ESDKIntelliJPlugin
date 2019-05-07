@@ -1,0 +1,16 @@
+<change-notes><![CDATA[<html>
+        <h4>1.0.2</h4>
+        <p>ESDKIJP-1: Fixed Infosystem missing imports</p><\br>
+        <p>ESDKIJP-2: Changed Field event in Code Generation from "ENTER" to "FILL"</p><\br>
+        <p>ESDKIJP-3: Fixed wrong Variable and Naming in "dbsel*"-Live Templates</p><\br>
+        <p>ESDKIJP-4: Added Editor Modes to Content - Event Registration</p><\br>
+        <p>ESDKIJP-5: Added additional Properties to Connection Settings</p><\br>
+        <h4>1.0.2</h4>
+        <p>Fixed LineMarkerProvider and added automatic reading of ClassName at Code Generation.</p><\br>
+        <h4>1.0.1</h4>
+        <p>Fixed reading and writing of Settings in array-style properties.</br>
+        Added cout and cop to Live-Templates</p></br>
+        <h4>1.0.0</h4>
+        <p>Added A Plugin for ESDK Project Builder in IntelliJ</p><\br>
+        </html>]]>
+</change-notes>

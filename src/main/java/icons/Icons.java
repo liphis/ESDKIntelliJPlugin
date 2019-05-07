@@ -5,7 +5,7 @@ import com.intellij.openapi.util.IconLoader;
 import javax.swing.*;
 
 /**
- * This class contains all Icons
+ * This interface contains all Icons
  */
 public interface Icons {
 

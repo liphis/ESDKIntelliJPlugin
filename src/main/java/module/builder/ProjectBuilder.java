@@ -11,6 +11,7 @@ import utils.Notifications;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
 /**
@@ -157,12 +158,49 @@ public class ProjectBuilder {
     public void setConnectionSettings(final String baseDirecotry, final ESDKSettingsWizardStep esdkSettingsWizardStep) {
         String propertiesTemplateGradlePath = baseDirecotry + "/gradle.properties";
         try {
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "ABAS_HOMEDIR=/abas/s3",
+                    "ABAS_HOMEDIR=" + esdkSettingsWizardStep.getAbasHomeDir().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "ABAS_CLIENTDIR=/abas/erp",
+                    "ABAS_CLIENTDIR=" + esdkSettingsWizardStep.getAbasClientDir().getText());
+            final String[] newsplit = esdkSettingsWizardStep.getAbasClientDir().getText().split("/");
+            final String newAbasClientID = newsplit[newsplit.length - 1];
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "ABAS_CLIENTID=erp",
+                    "ABAS_CLIENTID=" + newAbasClientID);
+
             FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "EDP_HOST=undefined",
-                    "EDP_HOST=" + esdkSettingsWizardStep.getAbasHost().getText());
+                    "EDP_HOST=" + esdkSettingsWizardStep.getEdpHost().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "EDP_USER=",
+                    "EDP_USER=" + esdkSettingsWizardStep.getEdpUser().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "EDP_PASSWORD=sy",
+                    "EDP_PASSWORD=" + new String(esdkSettingsWizardStep.getEdpPassword().getPassword()));
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "EDP_PORT=6560",
+                    "EDP_PORT=" + esdkSettingsWizardStep.getEdpPort().getText());
+
+
             FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "NEXUS_HOST=undefined",
                     "NEXUS_HOST=" + esdkSettingsWizardStep.getNexusHost().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "NEXUS_PORT=8081",
+                    "NEXUS_PORT=" + esdkSettingsWizardStep.getNexusPort().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "NEXUS_USER_NAME=admin",
+                    "NEXUS_USER_NAME=" + esdkSettingsWizardStep.getNexusUser().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "NEXUS_NAME=abas-essentials-libs",
+                    "NEXUS_NAME=" + esdkSettingsWizardStep.getNexusName().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "NEXUS_PASSWORD=admin123",
+                    "NEXUS_PASSWORD=" + new String(esdkSettingsWizardStep.getNexusPassword().getPassword()));
             FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "NEXUS_VERSION=2",
                     "NEXUS_VERSION=" + esdkSettingsWizardStep.getNexusVersion().getText());
+
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "SSH_HOST=undefined",
+                    "SSH_HOST=" + esdkSettingsWizardStep.getSshHost().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "SSH_PORT=2205",
+                    "SSH_PORT=" + esdkSettingsWizardStep.getSshPort().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "SSH_USER=erp",
+                    "SSH_USER=" + esdkSettingsWizardStep.getSshUser().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "SSH_PASSWORD=none",
+                    "SSH_PASSWORD=" + esdkSettingsWizardStep.getSshPassword().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "SSH_KEY=",
+                    "SSH_KEY=" + Paths.get(esdkSettingsWizardStep.getSshKeyPath().getText()).toString().replace("\\", "\\\\\\\\"));
+
         } catch (IOException e) {
             Notifications.errorNotification("Couldn´t prepare ESDK Project Connection Settings!");
         }
@@ -179,12 +217,52 @@ public class ProjectBuilder {
                                       ProjectReader projectReader) {
         String propertiesTemplateGradlePath = baseDirecotry + "/gradle.properties";
         try {
-            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "EDP_HOST=" + projectReader.abasHost,
-                    "EDP_HOST=" + esdkSettingsDialog.getAbasHost().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "ABAS_HOMEDIR=" + projectReader.abasHomeDir,
+                    "ABAS_HOMEDIR=" + esdkSettingsDialog.getAbasHomeDir().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "ABAS_CLIENTDIR="+ projectReader.abasClientDir,
+                    "ABAS_CLIENTDIR=" + esdkSettingsDialog.getAbasClientDir().getText());
+            final String[] oldsplit = projectReader.abasClientDir.split("/");
+            final String oldAbasClientID = oldsplit[oldsplit.length - 1];
+            final String[] newsplit = esdkSettingsDialog.getAbasClientDir().getText().split("/");
+            final String newAbasClientID = newsplit[newsplit.length - 1];
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "ABAS_CLIENTID="+ oldAbasClientID,
+                    "ABAS_CLIENTID=" + newAbasClientID);
+
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "EDP_HOST=" + projectReader.edpHost,
+                    "EDP_HOST=" + esdkSettingsDialog.getEdpHost().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "EDP_USER=" + projectReader.edpUser,
+                    "EDP_USER=" + esdkSettingsDialog.getEdpUser().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "EDP_PASSWORD=" + projectReader.edpPassword,
+                    "EDP_PASSWORD=" + new String(esdkSettingsDialog.getEdpPassword().getPassword()));
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "EDP_PORT=" + projectReader.edpPort,
+                    "EDP_PORT=" + esdkSettingsDialog.getEdpPort().getText());
+
+
             FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "NEXUS_HOST=" + projectReader.nexusHost,
                     "NEXUS_HOST=" + esdkSettingsDialog.getNexusHost().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "NEXUS_PORT=" + projectReader.nexusPort,
+                    "NEXUS_PORT=" + esdkSettingsDialog.getNexusPort().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "NEXUS_USER_NAME=" + projectReader.nexusUser,
+                    "NEXUS_USER_NAME=" + esdkSettingsDialog.getNexusUser().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "NEXUS_NAME=" + projectReader.nexusName,
+                    "NEXUS_NAME=" + esdkSettingsDialog.getNexusName().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "NEXUS_PASSWORD=" + projectReader.nexusPassword,
+                    "NEXUS_PASSWORD=" + new String(esdkSettingsDialog.getNexusPassword().getPassword()));
             FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "NEXUS_VERSION=" + projectReader.nexusVersion,
                     "NEXUS_VERSION=" + esdkSettingsDialog.getNexusVersion().getText());
+
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "SSH_HOST=" + projectReader.sshHost,
+                    "SSH_HOST=" + esdkSettingsDialog.getSshHost().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "SSH_PORT=" + projectReader.sshPort,
+                    "SSH_PORT=" + esdkSettingsDialog.getSshPort().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "SSH_USER=" + projectReader.sshUser,
+                    "SSH_USER=" + esdkSettingsDialog.getSshUser().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "SSH_PASSWORD=" + projectReader.sshPassword,
+                    "SSH_PASSWORD=" + esdkSettingsDialog.getSshPassword().getText());
+            FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "SSH_KEY=" + Paths.get(projectReader.sshKey)
+                            .toString().replace("\\", "\\\\\\\\"),
+                    "SSH_KEY=" + Paths.get(esdkSettingsDialog.getSshKeyPath().getText())
+                            .toString().replace("\\", "\\\\\\\\"));
         } catch (IOException e) {
             Notifications.errorNotification("Couldn´t prepare ESDK Project Connection Settings!");
         }

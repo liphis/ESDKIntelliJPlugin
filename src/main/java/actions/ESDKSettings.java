@@ -6,6 +6,7 @@ import module.ESDKSettingsDialog;
 import module.builder.ProjectReader;
 import org.jetbrains.annotations.NotNull;
 import utils.DialogUtils;
+import utils.Notifications;
 
 import java.util.Objects;
 
@@ -21,6 +22,7 @@ class ESDKSettings extends AnAction {
         try {
             dialog = ESDKSettingsDialog.main(anActionEvent.getProject(), projectReader);
         } catch (NullPointerException e) {
+            e.printStackTrace();
             return;
         }
 

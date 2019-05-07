@@ -18,8 +18,10 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Properties;
 import java.util.Vector;
-import java.util.regex.Pattern;
 
+/**
+ * "Generate ESDK Code" Config Dialog.
+ */
 public class GenerateDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
@@ -32,6 +34,9 @@ public class GenerateDialog extends JDialog {
     private JLabel classNameLabel;
     private static AnActionEvent actionEvent;
 
+    /**
+     * Instantiates a new Generate dialog.
+     */
     public GenerateDialog() {
         setContentPane(contentPane);
         setModal(true);
@@ -142,6 +147,11 @@ public class GenerateDialog extends JDialog {
         dispose();
     }
 
+    /**
+     * Main.
+     *
+     * @param e the e
+     */
     public static void main(AnActionEvent e) {
         actionEvent = e;
         GenerateDialog dialog = new GenerateDialog();
@@ -176,7 +186,7 @@ public class GenerateDialog extends JDialog {
                     classNameLabel.setVisible(true);
                     fieldNameLabel.setVisible(true);
                     fieldName.setVisible(true);
-                    event.setModel(new DefaultComboBoxModel<>(new Vector<>(Arrays.asList("Enter", "Validation", "Exit"))));
+                    event.setModel(new DefaultComboBoxModel<>(new Vector<>(Arrays.asList("Fill", "Validation", "Exit"))));
                     break;
                 case 2:
                     className.setVisible(true);

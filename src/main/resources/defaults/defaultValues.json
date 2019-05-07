@@ -34,7 +34,17 @@
     "Urdu": false,
     "Japanese": false
   },
-  "abasHost": "DOCKER_ENV_HOST",
+  "abasHomeDir" : "/abas/s3",
+  "abasClientDir": "/abas/erp",
+  "edpHost": "DOCKER_ENV_HOST",
+  "edpPassword" : "sy",
+  "edpPort": 6550,
   "nexusHost": "DOCKER_ENV_HOST",
-  "nexusVersion": "2"
+  "nexusPort": 8081,
+  "nexusUser": "admin",
+  "nexusName" : "abas-essentials-libs",
+  "nexusPassword" : "admin123",
+  "nexusVersion": "2",
+  "sshPort": "2205",
+  "sshUser": "erp"
 }

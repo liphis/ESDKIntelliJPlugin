@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,7 +49,7 @@ public class ProjectReader {
     languages, /**
      * The Abas host.
      */
-    abasHost,
+    edpHost,
     /**
      * The Nexus host.
      */
@@ -56,6 +57,62 @@ public class ProjectReader {
      * The Nexus version.
      */
     nexusVersion, /**
+     * The Contentinfosystems.
+     */
+    abasHomeDir,
+    /**
+     * The Abas client dir.
+     */
+    abasClientDir,
+    /**
+     * The Edp user.
+     */
+    edpUser,
+    /**
+     * The Edp port.
+     */
+    edpPort,
+    /**
+     * The Edp password.
+     */
+    edpPassword,
+    /**
+     * The Nexus port.
+     */
+    nexusPort,
+    /**
+     * The Nexus user.
+     */
+    nexusUser,
+    /**
+     * The Nexus name.
+     */
+    nexusName,
+    /**
+     * The Nexus password.
+     */
+    nexusPassword,
+    /**
+     * The Ssh user.
+     */
+    sshUser,
+    /**
+     * The Ssh host.
+     */
+    sshHost,
+    /**
+     * The Ssh port.
+     */
+    sshPort,
+    /**
+     * The Ssh password.
+     */
+    sshPassword,
+    /**
+     * The Ssh key.
+     */
+    sshKey,
+    /**
      * The Contentinfosystems.
      */
     contentinfosystems, /**
@@ -199,12 +256,47 @@ public class ProjectReader {
         String propertiesTemplateGradlePath = baseDirectory + "/gradle.properties";
         try {
             String readerFile = FileUtils.readFile(propertiesTemplateGradlePath);
-            abasHost = getFirstMatcherGroup("EDP_HOST=(.*)", readerFile);
+            abasHomeDir = getFirstMatcherGroup("ABAS_HOMEDIR=(.*)", readerFile);
+            abasClientDir = getFirstMatcherGroup("ABAS_CLIENTDIR=(.*)", readerFile);
+
+            edpHost = getFirstMatcherGroup("EDP_HOST=(.*)", readerFile);
+            edpPort = getFirstMatcherGroup("EDP_PORT=(\\d*)", readerFile);
+            edpUser = getFirstMatcherGroup("EDP_USER=(.*)", readerFile);
+            edpPassword = getFirstMatcherGroup("EDP_PASSWORD=(.*)", readerFile);
+
             nexusHost = getFirstMatcherGroup("NEXUS_HOST=(.*)", readerFile);
+            nexusPort = getFirstMatcherGroup("NEXUS_PORT=(\\d*)", readerFile);
+            nexusUser = getFirstMatcherGroup("NEXUS_USER_NAME=(.*)", readerFile);
+            nexusName = getFirstMatcherGroup("NEXUS_NAME=(.*)", readerFile);
+            nexusPassword = getFirstMatcherGroup("NEXUS_PASSWORD=(.*)", readerFile);
             nexusVersion = getFirstMatcherGroup("NEXUS_VERSION=(\\d*)", readerFile);
-            esdkSettingsDialog.getAbasHost().setText(abasHost);
+
+            sshHost = getFirstMatcherGroup("SSH_HOST=(.*)", readerFile);
+            sshUser = getFirstMatcherGroup("SSH_USER=(.*)", readerFile);
+            sshPort = getFirstMatcherGroup("SSH_PORT=(\\d*)", readerFile);
+            sshPassword = getFirstMatcherGroup("SSH_PASSWORD=(.*)", readerFile);
+            sshKey = getFirstMatcherGroup("SSH_KEY=(.*)", readerFile);
+
+            esdkSettingsDialog.getAbasHomeDir().setText(abasHomeDir);
+            esdkSettingsDialog.getAbasClientDir().setText(abasClientDir);
+
+            esdkSettingsDialog.getEdpHost().setText(edpHost);
+            esdkSettingsDialog.getEdpPort().setText(edpPort);
+            esdkSettingsDialog.getEdpUser().setText(edpUser);
+            esdkSettingsDialog.getEdpPassword().setText(edpPassword);
+
             esdkSettingsDialog.getNexusHost().setText(nexusHost);
+            esdkSettingsDialog.getNexusPort().setText(nexusPort);
+            esdkSettingsDialog.getNexusUser().setText(nexusUser);
+            esdkSettingsDialog.getNexusName().setText(nexusName);
+            esdkSettingsDialog.getNexusPassword().setText(nexusPassword);
             esdkSettingsDialog.getNexusVersion().setText(nexusVersion);
+            esdkSettingsDialog.getSshHost().setText(sshHost);
+            esdkSettingsDialog.getSshUser().setText(sshUser);
+            esdkSettingsDialog.getSshPort().setText(sshPort);
+            esdkSettingsDialog.getSshPassword().setText(sshPassword);
+            esdkSettingsDialog.getSshKeyPath().setText(Paths.get(sshKey).toString());
+
         } catch (IOException e) {
             Notifications.errorNotification("Couldn´t read your current Connection Settings Configuration!");
         }
