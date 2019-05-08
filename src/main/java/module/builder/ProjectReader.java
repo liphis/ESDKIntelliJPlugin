@@ -142,16 +142,16 @@ public class ProjectReader {
             String readerFile = FileUtils.readFile(buildGradlepath);
             //App Name
             appName = getFirstMatcherGroup(
-                    "esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*name\\s*\\S*=\\s*\\S*\\\"(\\w*)\\\"", readerFile);
+                    "esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*name\\s*\\S*=\\s*\\S*\\\"([\\w*\\d*]*)\\\"", readerFile);
             esdkSettingsDialog.getAppName().setText(appName);
             //Vendor ID
             vendorID = getFirstMatcherGroup(
-                    "esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*vendorId\\s*\\S*=\\s*\\S*\\\"(\\w*)\\\"",
+                    "esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*vendorId\\s*\\S*=\\s*\\S*\\\"([\\w*\\d*]*)\\\"",
                     readerFile);
             esdkSettingsDialog.getVendorID().setText(vendorID);
             //App ID
             appID = getFirstMatcherGroup(
-                    "esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*appId\\s*\\S*=\\s*\\S*\\\"(\\w*)\\\"",
+                    "esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*appId\\s*\\S*=\\s*\\S*\\\"([\\w*\\d*]*)\\\"",
                     readerFile);
             esdkSettingsDialog.getAppID().setText(appID);
             //ESDK Version#
@@ -164,7 +164,7 @@ public class ProjectReader {
                     FileUtils.readFile(baseDirectory + "/docker-compose.yml"));
             esdkSettingsDialog.getDevelopmentVersion().setText(developmentVersion);
             packageName = getFirstMatcherGroup(
-                    "group\\s*\\S*\\=\\s*\\S*[\\'\\\"]([\\w*\\.*]*)[\\'\\\"]", readerFile);
+                    "group\\s*\\S*\\=?\\s*\\S*[\\'\\\"]([\\w*\\.*]*)[\\'\\\"]", readerFile);
             esdkSettingsDialog.getPackageName().setText(packageName);
 
         } catch (IOException e) {

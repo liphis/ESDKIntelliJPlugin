@@ -1224,6 +1224,9 @@ final public class ESDKSettingsDialog extends JDialog {
 
     private void setConnectionSettingsLimits() {
         checkNumeric(nexusVersion);
+        checkNumeric(edpPort);
+        checkNumeric(nexusPort);
+        checkNumeric(sshPort);
     }
 
     private void setContentLimits() {

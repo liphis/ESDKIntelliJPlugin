@@ -13,12 +13,12 @@ public class DialogUtils {
      * @param dialog the dialog
      */
     public static void setBoundsHalf(final Dialog dialog) {
-        final Dimension SCREEN_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
+        DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
         //I'd also make this static and final and insert them at the class definition
-        final int dialogWidth = SCREEN_DIMENSION.width / 2; //example; a quarter of the screen size
-        final int dialogHeight = SCREEN_DIMENSION.height / 2; //example
-        final int dialogX = SCREEN_DIMENSION.width / 2 - dialogWidth / 2; //position right in the middle of the screen
-        final int dialogY = SCREEN_DIMENSION.height / 2 - dialogHeight / 2;
+        final int dialogWidth = displayMode.getWidth() / 2; //example; a quarter of the screen size
+        final int dialogHeight = displayMode.getHeight() / 2; //example
+        final int dialogX = displayMode.getWidth() / 2 - dialogWidth / 2; //position right in the middle of the screen
+        final int dialogY = displayMode.getHeight() / 2 - dialogHeight / 2;
 
         dialog.setBounds(dialogX, dialogY, dialogWidth, dialogHeight);
     }
