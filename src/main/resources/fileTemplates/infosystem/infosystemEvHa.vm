@@ -10,6 +10,7 @@ import de.abas.erp.axi2.event.FieldEvent;
 import de.abas.erp.axi2.type.FieldEventType;
 import de.abas.erp.axi2.event.ScreenEvent;
 import de.abas.erp.axi2.type.ScreenEventType;
+import de.abas.erp.axi2.type.RowEventType;
 import de.abas.erp.jfop.rt.api.annotation.RunFopWith;
 import de.abas.erp.db.DbContext;
 
@@ -21,28 +22,28 @@ public class ${NAME} {
 
 #if (${SCREEN_ENTER} == "true")
 @ScreenEventHandler(type = ScreenEventType.ENTER)
-public void screenEnter(final ScreenEvent event, ScreenControl final ScreenControl, final DbContext dbContext, final ${IS_CLASS} head) throws EventException {
+public void screenEnter(final ScreenEvent event, final ScreenControl ScreenControl, final DbContext dbContext, final ${IS_CLASS} head) throws EventException {
 
 }
 #end
 
 #if (${SCREEN_VALIDATION} == "true")
 @ScreenEventHandler(type = ScreenEventType.VALIDATION)
-public void screenValidation(final ScreenEvent event, final ScreenControl screenControl, final DBContext dbContext, final ${IS_CLASS} head) throws EventException {
+public void screenValidation(final ScreenEvent event, final ScreenControl screenControl, final DbContext dbContext, final ${IS_CLASS} head) throws EventException {
 
 }
 #end
 
 #if (${SCREEN_CANCEL} == "true")
 @ScreenEventHandler(type = ScreenEventType.CANCEL)
-public void screenCancel(final ScreenEvent event, final ScreenControl screenControl, final DBContext dbContext, final ${IS_CLASS} head) throws EventException {
+public void screenCancel(final ScreenEvent event, final ScreenControl screenControl, final DbContext dbContext, final ${IS_CLASS} head) throws EventException {
 
 }
 #end
 
 #if (${SCREEN_END} == "true")
 @ScreenEventHandler(type = ScreenEventType.END)
-public void screenEND(final ScreenEvent event, final ScreenControl screenControl, final DBContext dbContext, final ${IS_CLASS} head) throws EventException {
+public void screenEND(final ScreenEvent event, final ScreenControl screenControl, final DbContext dbContext, final ${IS_CLASS} head) throws EventException {
 
 }
 #end
@@ -51,7 +52,7 @@ public void screenEND(final ScreenEvent event, final ScreenControl screenControl
 
 #if (${START_BUTTON} == "true")
 @ButtonEventHandler(field = "start", type = ButtonEventType.AFTER)
-public void startAfter(final ButtonEvent event, final ScreenControl screenControl, final DBContext ctx, final ${IS_CLASS} head) throws EventException {
+public void startAfter(final ButtonEvent event, final ScreenControl screenControl, final DbContext ctx, final ${IS_CLASS} head) throws EventException {
 
 }
 #end
@@ -60,56 +61,56 @@ public void startAfter(final ButtonEvent event, final ScreenControl screenContro
 
 #if (${ROW_CHANGED} == "true")
 @RowEventHandler(type = RowEventType.CHANGED)
-public void rowChanged(final DBContext dbContext, final ${IS_CLASS} sourceRecord) {
+public void rowChanged(final DbContext dbContext, final ${IS_CLASS} sourceRecord) {
 
 }
 #end
 
 #if (${ROW_DELETION_AFTER} == "true")
 @RowEventHandler(type = RowEventType.DELETION_AFTER)
-public void rowDeletionAfter(final DBContext dbContext, final ${IS_CLASS} sourceRecord) {
+public void rowDeletionAfter(final DbContext dbContext, final ${IS_CLASS} sourceRecord) {
 
 }
 #end
 
 #if (${ROW_DELETION_BEFORE} == "true")
 @RowEventHandler(type = RowEventType.DELETION_BEFORE)
-public void rowDeletionBefore(final DBContext dbContext, final ${IS_CLASS} sourceRecord) {
+public void rowDeletionBefore(final DbContext dbContext, final ${IS_CLASS} sourceRecord) {
 
 }
 #end
 
 #if (${ROW_INSERTION_AFTER} == "true")
 @RowEventHandler(type = RowEventType.INSERTION_AFTER)
-public void rowInsertionAfter(final DBContext dbContext, final ${IS_CLASS} sourceRecord) {
+public void rowInsertionAfter(final DbContext dbContext, final ${IS_CLASS} sourceRecord) {
 
 }
 #end
 
 #if (${ROW_INSERTION_BEFORE} == "true")
 @RowEventHandler(type = RowEventType.INSERTION_BEFORE)
-public void rowInsertionBefore(final DBContext dbContext, final ${IS_CLASS} sourceRecord) {
+public void rowInsertionBefore(final DbContext dbContext, final ${IS_CLASS} sourceRecord) {
 
 }
 #end
 
 #if (${ROW_MARKED} == "true")
 @RowEventHandler(type = RowEventType.MARKED)
-public void rowMarked(final DBContext dbContext, final ${IS_CLASS} sourceRecord) {
+public void rowMarked(final DbContext dbContext, final ${IS_CLASS} sourceRecord) {
 
 }
 #end
 
 #if (${ROW_MOVED_AFTER} == "true")
 @RowEventHandler(type = RowEventType.MOVED_AFTER)
-public void rowMovedAfter(final DBContext dbContext, final ${IS_CLASS} sourceRecord) {
+public void rowMovedAfter(final DbContext dbContext, final ${IS_CLASS} sourceRecord) {
 
 }
 #end
 
 #if (${ROW_MOVED_BEFORE} == "true")
 @RowEventHandler(type = RowEventType.MOVED_BEFORE)
-public void rowMovedBefore(final DBContext dbContext, final ${IS_CLASS} sourceRecord) {
+public void rowMovedBefore(final DbContext dbContext, final ${IS_CLASS} sourceRecord) {
 
 }
 #end

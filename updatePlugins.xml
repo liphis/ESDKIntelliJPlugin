@@ -12,7 +12,7 @@
 
    -->
     <plugin id="com.abas.esdk.projectbuilder"
-            url="https://nx.byticsgroup.net/static/ESDKIntelijPlugin/ESDKProjectManager-1.0.5.jar" version="1.0.5">
+            url="https://nx.byticsgroup.net/static/ESDKIntelijPlugin/ESDKProjectManager-1.0.6.jar" version="1.0.6">
         <!--
 
              The <idea-version> element must match the same element in plugin.xml. Required.
@@ -55,7 +55,9 @@
 </description>
 
         <change-notes><![CDATA[<html>
-        <h5>1.0.5</h4>
+        <h4>1.0.6</h4>
+        <p>Hotfix for Infosystem and Mask Classes</p>
+        <h4>1.0.5</h4>
         <p>ESDKIJP-10: Added final to all method parameters</p></br>
         <p>ESDKIJP-11: Fixed dbsel* Templates</p></br>
         <p>ESDKIJP-12: Fixed Live Templates ctx -> dbContext</p></br>
@@ -79,7 +81,7 @@
         Added cout and cop to Live-Templates</p></br>
         <h4>1.0.0</h4>
         <p>Added A Plugin for ESDK Project Builder in IntelliJ</p></br>
-        </html>]]>
+</html>]]>
 </change-notes>
 
     </plugin>

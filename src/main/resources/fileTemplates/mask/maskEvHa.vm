@@ -16,28 +16,28 @@ public class ${NAME} {
 
 #if (${SCREEN_ENTER} == "true")
 @ScreenEventHandler(type = ScreenEventType.ENTER)
-public void screenEnter(final ScreenEvent event, final ScreenControl screencontrol, final DBContext dbContext, final ${CLASSNAME} head) throws EventException {
+public void screenEnter(final ScreenEvent event, final ScreenControl screencontrol, final DbContext dbContext, final ${CLASSNAME} head) throws EventException {
 
 }
 #end
 
 #if (${SCREEN_VALIDATION} == "true")
 @ScreenEventHandler(type = ScreenEventType.VALIDATION)
-public void screenValidation(final ScreenEvent event, final ScreenControl screencontrol, final DBContext dbContext, final ${CLASSNAME} head) throws EventException {
+public void screenValidation(final ScreenEvent event, final ScreenControl screencontrol, final DbContext dbContext, final ${CLASSNAME} head) throws EventException {
 
 }
 #end
 
 #if (${SCREEN_CANCEL} == "true")
 @ScreenEventHandler(type = ScreenEventType.CANCEL)
-public void screenCancel(final ScreenEvent event, final ScreenControl screencontrol, final DBContext dbContext, final ${CLASSNAME} head) throws EventException {
+public void screenCancel(final ScreenEvent event, final ScreenControl screencontrol, final DbContext dbContext, final ${CLASSNAME} head) throws EventException {
 
 }
 #end
 
 #if (${SCREEN_END} == "true")
 @ScreenEventHandler(type = ScreenEventType.END)
-public void screenEND(final ScreenEvent event, final ScreenControl screencontrol, final DBContext dbContext, final ${CLASSNAME} head) throws EventException {
+public void screenEND(final ScreenEvent event, final ScreenControl screencontrol, final DbContext dbContext, final ${CLASSNAME} head) throws EventException {
 
 }
 #end

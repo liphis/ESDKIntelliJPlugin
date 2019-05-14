@@ -1,4 +1,6 @@
 <change-notes><![CDATA[<html>
+        <h4>1.0.6</h4>
+        <p>Hotfix for Infosystem and Mask Classes</p>
         <h4>1.0.5</h4>
         <p>ESDKIJP-10: Added final to all method parameters</p></br>
         <p>ESDKIJP-11: Fixed dbsel* Templates</p></br>
