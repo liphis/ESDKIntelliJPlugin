@@ -1,0 +1,9 @@
+#if(${PRINTBUFFEREXISTS} == "false")
+private final PrintBuffer printBuffer = BufferFactory.newInstance(false).getPrintBuffer();
+#end
+
+private static void appendVisibility(final PrintBuffer printBuffer, final String name) {
+String screenContextFop = printBuffer.getStringValue(FIELDNAME_SCREEN_CONTEXT_FOP);
+screenContextFop += " FOP_" + name;
+printBuffer.setValue(FIELDNAME_SCREEN_CONTEXT_FOP, screenContextFop);
+}

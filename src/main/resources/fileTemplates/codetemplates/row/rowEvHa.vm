@@ -1,4 +1,4 @@
 @RowEventHandler(type = RowEventType.${EVENTUP})
-public void row${EVENT}(DbContext context, ${CLASSNAME} sourceRecord) {
+public void row${EVENT}(final DbContext context, final ${CLASSNAME} sourceRecord) {
 
 }

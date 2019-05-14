@@ -18,7 +18,7 @@ class ESDKRegisterApp extends AnAction {
     public void actionPerformed(@NotNull final AnActionEvent anActionEvent) {
         try {
             BrowserUtils.openWebpage(new URL("https://dev.abas-essentials-sdk.com/#/create-appid"));
-        } catch (MalformedURLException e) {
+        } catch (@NotNull final MalformedURLException e) {
             Notifications.errorNotification("Malformed URL!");
         }
     }

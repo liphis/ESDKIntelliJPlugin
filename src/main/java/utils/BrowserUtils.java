@@ -1,5 +1,7 @@
 package utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
@@ -13,20 +15,20 @@ import java.net.URL;
 public class BrowserUtils {
 
 
-    private static boolean openWebpage(final URI uri, final URL url) {
-        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+    private static boolean openWebpage(@NotNull final URI uri, final URL url) {
+        final Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
             try {
                 desktop.browse(uri);
                 return true;
-            } catch (Exception e) {
+            } catch (@NotNull final Exception e) {
                 Notifications.errorNotification("Couldn´t open Webpage!");
             }
         }else{
-            Runtime runtime = Runtime.getRuntime();
+            final Runtime runtime = Runtime.getRuntime();
             try {
                 runtime.exec("xdg-open " + url);
-            } catch (IOException e) {
+            } catch (@NotNull final IOException e) {
                 Notifications.errorNotification("Couldn´t open Webpage!");
             }
         }
@@ -38,10 +40,10 @@ public class BrowserUtils {
      *
      * @param url the url
      */
-    public static void openWebpage(final URL url) {
+    public static void openWebpage(@NotNull final URL url) {
         try {
             openWebpage(url.toURI(), url);
-        } catch (URISyntaxException e) {
+        } catch (@NotNull final URISyntaxException e) {
             Notifications.errorNotification("Couldn´t open Webpage!");
         }
     }

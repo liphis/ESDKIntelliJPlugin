@@ -19,6 +19,7 @@ class ESDKPluginSettings implements SearchableConfigurable {
         return "preference.ESDKPluginSettings";
     }
 
+    @NotNull
     @Nls(capitalization = Nls.Capitalization.Title)
     @Override
     public String getDisplayName() {

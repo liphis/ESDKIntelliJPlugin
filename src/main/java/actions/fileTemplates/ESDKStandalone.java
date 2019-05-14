@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class ESDKStandalone extends AnAction {
     @Override
-    public void actionPerformed(@NotNull AnActionEvent e) {
+    public void actionPerformed(@NotNull final AnActionEvent e) {
         new StandaloneConfigDialog().main(e.getProject(), ESDKFileTemplateManager.findPSIDirectory(e));
     }
 }

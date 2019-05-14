@@ -1,0 +1,4 @@
+BufferFactory bufferFactory = BufferFactory.newInstance(true);
+GlobalTextBuffer globalTextBuffer = bufferFactory.getGlobalTextBuffer();
+
+globalTextBuffer.getStringValue("YOURVARIABLE");

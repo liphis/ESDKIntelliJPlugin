@@ -4,6 +4,7 @@ import com.intellij.ide.fileTemplates.FileTemplate;
 import com.intellij.ide.fileTemplates.FileTemplateUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDirectory;
+import org.jetbrains.annotations.NotNull;
 import utils.Notifications;
 
 import javax.swing.*;
@@ -46,7 +47,7 @@ public class StandaloneConfigDialog extends JDialog {
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(final WindowEvent e) {
                 onCancel();
             }
         });
@@ -63,17 +64,17 @@ public class StandaloneConfigDialog extends JDialog {
         }
 
         final ESDKFileTemplateManager esdkFileTemplateManager = new ESDKFileTemplateManager(project);
-        FileTemplate fileTemplate = esdkFileTemplateManager
+        final FileTemplate fileTemplate = esdkFileTemplateManager
                 .loadFileTemplate("standalone/standalone.vm",
                         "Standalone");
 
-        Properties defaultProperties = esdkFileTemplateManager.getDefaultProperties();
+        final Properties defaultProperties = esdkFileTemplateManager.getDefaultProperties();
         defaultProperties.setProperty("CLASSNAME", className.getText());
 
         try {
             esdkFileTemplateManager.openFileInEditor(project, FileTemplateUtil.createFromTemplate(fileTemplate,
                     className.getText(), defaultProperties, psiDirectory));
-        } catch (Exception e) {
+        } catch (@NotNull final Exception e) {
             Notifications.errorNotification("Couldn´t create Standalone Class!");
         }
         dispose();
@@ -90,10 +91,10 @@ public class StandaloneConfigDialog extends JDialog {
      * @param pProject      the p project
      * @param pPsiDirectory the p psi directory
      */
-    public static void main(Project pProject, PsiDirectory pPsiDirectory) {
+    public static void main(final Project pProject, final PsiDirectory pPsiDirectory) {
         project = pProject;
         psiDirectory = pPsiDirectory;
-        StandaloneConfigDialog dialog = new StandaloneConfigDialog();
+        final StandaloneConfigDialog dialog = new StandaloneConfigDialog();
         dialog.pack();
         dialog.setVisible(true);
     }

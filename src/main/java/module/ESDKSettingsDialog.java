@@ -8,6 +8,7 @@ import com.intellij.ui.components.JBList;
 import data.FopJson;
 import module.builder.ProjectBuilder;
 import module.builder.ProjectReader;
+import org.jetbrains.annotations.NotNull;
 import utils.Notifications;
 
 import javax.swing.*;
@@ -24,6 +25,7 @@ import java.util.Arrays;
  * This class is a Dialog to show and edit the current ESDK Project Settings.
  */
 final public class ESDKSettingsDialog extends JDialog {
+    @NotNull
     private static ArrayList<FopJson> fopJsonList = new ArrayList<>();
     //Basic
     private static final byte BASIC_APP_ID_LIMIT = 5, BASIC_APP_NAME_LIMIT = 15, BASIC_VENDOR_ID_LIMIT = 2;
@@ -176,6 +178,7 @@ final public class ESDKSettingsDialog extends JDialog {
      *
      * @return the fop json list
      */
+    @NotNull
     public static ArrayList<FopJson> getFopJsonList() {
         return fopJsonList;
     }
@@ -187,7 +190,7 @@ final public class ESDKSettingsDialog extends JDialog {
      * @param pProjectReader the p project reader
      * @return the esdk settings dialog
      */
-    public static ESDKSettingsDialog main(final Project pProject, ProjectReader pProjectReader) {
+    public static ESDKSettingsDialog main(final Project pProject, final ProjectReader pProjectReader) {
         project = pProject;
         projectReader = pProjectReader;
         dialog = new ESDKSettingsDialog();
@@ -1178,7 +1181,7 @@ final public class ESDKSettingsDialog extends JDialog {
         project.save();
         project.getBasePath();
 
-        for (VirtualFile virtualFile : ProjectRootManager.getInstance(project).getContentRootsFromAllModules()) {
+        for (final VirtualFile virtualFile : ProjectRootManager.getInstance(project).getContentRootsFromAllModules()) {
             virtualFile.refresh(true, true);
         }
         Notifications.showNotification("Successfully saved ESDK Settings!");
@@ -1450,7 +1453,7 @@ final public class ESDKSettingsDialog extends JDialog {
             if (screensI.isSelected()) priorities += "I";
             if (screensJ.isSelected()) priorities += "J";
             final char[] prioritiesCharArray = priorities.toCharArray();
-            String[] prioritiesArray = new String[prioritiesCharArray.length];
+            final String[] prioritiesArray = new String[prioritiesCharArray.length];
             for (int i = 0; i < prioritiesCharArray.length; i++) {
                 prioritiesArray[i] = "\"" + prioritiesCharArray[i] + "\"";
             }
@@ -1566,9 +1569,9 @@ final public class ESDKSettingsDialog extends JDialog {
                     && !eventHandler.getText().isEmpty()) {
 
 
-                String editorModeString = eventEditorMode.getSelectedItem().toString().toLowerCase();
+                final String editorModeString = eventEditorMode.getSelectedItem().toString().toLowerCase();
 
-                String eventString;
+                final String eventString;
                 switch (event.getSelectedItem().toString()) {
                     default:
                         eventString = "*";
@@ -1642,10 +1645,10 @@ final public class ESDKSettingsDialog extends JDialog {
     }
 
 
-    private void limit(JTextField jTextField, int limit) {
+    private void limit(@NotNull final JTextField jTextField, final int limit) {
         jTextField.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
+            public void keyTyped(@NotNull final KeyEvent e) {
                 if (jTextField.getText().length() >= limit) {
                     e.setKeyChar(Character.MIN_VALUE);
                 } else {
@@ -1655,10 +1658,10 @@ final public class ESDKSettingsDialog extends JDialog {
         });
     }
 
-    private void checkAlphaNumeric(JTextField jTextField) {
+    private void checkAlphaNumeric(@NotNull final JTextField jTextField) {
         jTextField.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
+            public void keyTyped(@NotNull final KeyEvent e) {
                 if (!(Character.isLetterOrDigit(e.getKeyChar()))) {
                     e.setKeyChar(Character.MIN_VALUE);
                 } else {
@@ -1668,10 +1671,10 @@ final public class ESDKSettingsDialog extends JDialog {
         });
     }
 
-    private void checkNumeric(JTextField jTextField) {
+    private void checkNumeric(@NotNull final JTextField jTextField) {
         jTextField.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
+            public void keyTyped(@NotNull final KeyEvent e) {
                 if (!(Character.isDigit(e.getKeyChar()))) {
                     e.setKeyChar(Character.MIN_VALUE);
                 } else {
@@ -1681,10 +1684,10 @@ final public class ESDKSettingsDialog extends JDialog {
         });
     }
 
-    private void checkVersion(JTextField jTextField) {
+    private void checkVersion(@NotNull final JTextField jTextField) {
         jTextField.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
+            public void keyTyped(@NotNull final KeyEvent e) {
                 if (!(Character.isDigit(e.getKeyChar()) || Character.valueOf('.').equals(e.getKeyChar()))) {
                     e.setKeyChar(Character.MIN_VALUE);
                 } else {
@@ -1694,10 +1697,10 @@ final public class ESDKSettingsDialog extends JDialog {
         });
     }
 
-    private void checkPackage(JTextField jTextField) {
+    private void checkPackage(@NotNull final JTextField jTextField) {
         jTextField.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
+            public void keyTyped(@NotNull final KeyEvent e) {
                 if (!(Character.isLetter(e.getKeyChar()) || Character.valueOf('.').equals(e.getKeyChar()))) {
                     e.setKeyChar(Character.MIN_VALUE);
                 } else {

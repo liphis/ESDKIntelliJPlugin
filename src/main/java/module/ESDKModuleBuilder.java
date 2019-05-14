@@ -23,6 +23,7 @@ import java.util.Objects;
 public class ESDKModuleBuilder extends ModuleBuilder {
 
 
+    @NotNull
     private ESDKSettingsWizardStep esdkSettingsWizardStep = new ESDKSettingsWizardStep();
 
     /**
@@ -30,7 +31,7 @@ public class ESDKModuleBuilder extends ModuleBuilder {
      * @param model
      */
     @Override
-    final public void setupRootModel(final ModifiableRootModel model) {
+    final public void setupRootModel(@NotNull final ModifiableRootModel model) {
         final module.builder.ProjectBuilder projectBuilder = new ProjectBuilder();
         final String basePath = model.getProject().getBasePath();
         projectBuilder.unpack(basePath);
@@ -43,7 +44,7 @@ public class ESDKModuleBuilder extends ModuleBuilder {
                         ModuleManager.getInstance(model.getProject()).disposeModule(model.getModule());
                         ModuleManager.getInstance(project).disposeModule(module);
                     }
-                } catch (NullPointerException e) {
+                } catch (@NotNull final NullPointerException e) {
                 }
             }
         });
@@ -62,6 +63,7 @@ public class ESDKModuleBuilder extends ModuleBuilder {
     /**
      * @return
      */
+    @NotNull
     @Override
     public ModuleType getModuleType() {
         return ESDKModuleType.getInstance();

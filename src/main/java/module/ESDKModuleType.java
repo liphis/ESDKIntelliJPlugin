@@ -28,6 +28,7 @@ public class ESDKModuleType extends ModuleType<ESDKModuleBuilder> implements Ico
      *
      * @return the instance
      */
+    @NotNull
     public static ESDKModuleType getInstance() {
         return (ESDKModuleType) ModuleTypeManager.getInstance().findByID(ID);
     }
@@ -37,6 +38,7 @@ public class ESDKModuleType extends ModuleType<ESDKModuleBuilder> implements Ico
      *
      * @return the id
      */
+    @NotNull
     static String getID() {
         return ID;
     }
@@ -59,6 +61,7 @@ public class ESDKModuleType extends ModuleType<ESDKModuleBuilder> implements Ico
         return "Abas ESDK Project";
     }
 
+    @NotNull
     @Override
     public Icon getNodeIcon(@Deprecated final boolean b) {
         return ESDK_BOAT;

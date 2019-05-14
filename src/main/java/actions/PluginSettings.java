@@ -1,5 +1,7 @@
 package actions;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.util.Objects;
 
@@ -33,7 +35,7 @@ class PluginSettings {
         try {
             evhaLiveTemplates.setSelected(Objects.requireNonNull(ESDKPluginSettingsPersistence.getInstance()).isEsdkEventhandlerLiveTemplates());
             infinityColorScheme.setSelected(ESDKPluginSettingsPersistence.getInstance().isInfinityColorScheme());
-        } catch (NullPointerException e) {
+        } catch (@NotNull final NullPointerException e) {
         }
 
     }

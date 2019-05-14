@@ -1,4 +1,4 @@
 @RunFop
-public int runFop(FOPSessionContext ctx, String[] args) throws FOPException {
+public int runFop(final FOPSessionContext ctx, final String[] args) throws FOPException {
 
 }

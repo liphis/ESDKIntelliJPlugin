@@ -1,4 +1,11 @@
 <change-notes><![CDATA[<html>
+        <h4>1.0.5</h4>
+        <p>ESDKIJP-10: Added final to all method parameters</p></br>
+        <p>ESDKIJP-11: Fixed dbsel* Templates</p></br>
+        <p>ESDKIJP-12: Fixed Live Templates ctx -> dbContext</p></br>
+        <p>ESDKIJP-13: Added Global TextBuffer and Visibility Live Templates </p></br>
+        <p>ESDKIJP-14: Fixed recognition of group in build.gradle</p></br>
+        <p>ESDKIJP-15: Fixed LineMarkerProvider</p></br>
         <h4>1.0.4</h4>
         <p>ESDKIJP-9: Fixed some Bugs with Screen Size and Browser opening on Linux</p></br>
         <p>Added alphanumeric check for Ports</p></br>
@@ -16,5 +23,5 @@
         Added cout and cop to Live-Templates</p></br>
         <h4>1.0.0</h4>
         <p>Added A Plugin for ESDK Project Builder in IntelliJ</p></br>
-        </html>]]>
+</html>]]>
 </change-notes>

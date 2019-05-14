@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import data.FopJson;
 import module.ESDKSettingsDialog;
 import module.ESDKSettingsWizardStep;
+import org.jetbrains.annotations.NotNull;
 import utils.FileUtils;
 import utils.Notifications;
 
@@ -28,9 +29,9 @@ public class ProjectBuilder {
      *
      * @param baseDirectory the base directory
      */
-    public void unpack(final String baseDirectory) {
+    public void unpack(@NotNull final String baseDirectory) {
         try {
-            InputStream file = getClass().getResourceAsStream("/template" + TEMPLATE_NAME + ARCHIVE_EXTENSION);
+            final InputStream file = getClass().getResourceAsStream("/template" + TEMPLATE_NAME + ARCHIVE_EXTENSION);
             FileUtils.copyFileUsingStream(
                     file, new File(baseDirectory + TEMPLATE_NAME + ARCHIVE_EXTENSION));
 
@@ -38,7 +39,7 @@ public class ProjectBuilder {
                     baseDirectory + TEMPLATE_NAME + ARCHIVE_EXTENSION,
                     baseDirectory);
             FileUtils.deleteFile(baseDirectory + TEMPLATE_NAME + ARCHIVE_EXTENSION);
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t decompress Project Files!");
         }
     }
@@ -53,7 +54,7 @@ public class ProjectBuilder {
         try {
             FileUtils.copyFileUsingStream(this.getClass().getResourceAsStream("/ideaTemplates/gradle.xml"),
                     new File(baseDirectory + IDEA_FOLDER + "/gradle.xml"));
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t copy Project Files!");
         }
     }
@@ -64,11 +65,11 @@ public class ProjectBuilder {
      * @param baseDirectory the base directory
      * @param moduleName    the module name
      */
-    public void deleteModule(final String baseDirectory, final String moduleName) {
+    public void deleteModule(final String baseDirectory, @NotNull final String moduleName) {
 
         try {
             FileUtils.deleteLine(baseDirectory + IDEA_FOLDER + "/modules.xml", moduleName);
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t remove default Module!");
         }
     }
@@ -79,8 +80,8 @@ public class ProjectBuilder {
      * @param baseDirectory          the base directory
      * @param esdkSettingsWizardStep the esdk settings wizard step
      */
-    public void setBasic(final String baseDirectory, final ESDKSettingsWizardStep esdkSettingsWizardStep) {
-        String buildGradlepath = baseDirectory + "/build.gradle";
+    public void setBasic(final String baseDirectory, @NotNull final ESDKSettingsWizardStep esdkSettingsWizardStep) {
+        final String buildGradlepath = baseDirectory + "/build.gradle";
         try {
             FileUtils.replaceStringInFile(buildGradlepath,
                     "appId = \"mctrg\"", "appId = \""
@@ -105,7 +106,7 @@ public class ProjectBuilder {
                             + esdkSettingsWizardStep.getDevelopmentVersion().getText());
 
             renamePackage(baseDirectory, esdkSettingsWizardStep.getPackageName().getText());
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t prepare ESDK Project Basic Settings!");
         }
     }
@@ -117,8 +118,8 @@ public class ProjectBuilder {
      * @param esdkSettingsDialog the esdk settings dialog
      * @param projectReader      the project reader
      */
-    public void setBasic(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog, ProjectReader projectReader) {
-        String buildGradlepath = baseDirectory + "/build.gradle";
+    public void setBasic(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog, @NotNull final ProjectReader projectReader) {
+        final String buildGradlepath = baseDirectory + "/build.gradle";
         try {
             FileUtils.replaceStringInFile(buildGradlepath,
                     "appId = \"" + projectReader.appID + "\"",
@@ -144,7 +145,7 @@ public class ProjectBuilder {
                             + esdkSettingsDialog.getDevelopmentVersion().getText());
 
             renamePackage(baseDirectory, esdkSettingsDialog.getPackageName().getText());
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t prepare ESDK Project Basic Settings!");
         }
     }
@@ -155,8 +156,8 @@ public class ProjectBuilder {
      * @param baseDirecotry          the base direcotry
      * @param esdkSettingsWizardStep the esdk settings wizard step
      */
-    public void setConnectionSettings(final String baseDirecotry, final ESDKSettingsWizardStep esdkSettingsWizardStep) {
-        String propertiesTemplateGradlePath = baseDirecotry + "/gradle.properties";
+    public void setConnectionSettings(final String baseDirecotry, @NotNull final ESDKSettingsWizardStep esdkSettingsWizardStep) {
+        final String propertiesTemplateGradlePath = baseDirecotry + "/gradle.properties";
         try {
             FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "ABAS_HOMEDIR=/abas/s3",
                     "ABAS_HOMEDIR=" + esdkSettingsWizardStep.getAbasHomeDir().getText());
@@ -201,7 +202,7 @@ public class ProjectBuilder {
             FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "SSH_KEY=",
                     "SSH_KEY=" + Paths.get(esdkSettingsWizardStep.getSshKeyPath().getText()).toString().replace("\\", "\\\\\\\\"));
 
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t prepare ESDK Project Connection Settings!");
         }
     }
@@ -213,9 +214,9 @@ public class ProjectBuilder {
      * @param esdkSettingsDialog the esdk settings dialog
      * @param projectReader      the project reader
      */
-    public void setConnectionSettings(final String baseDirecotry, final ESDKSettingsDialog esdkSettingsDialog,
-                                      ProjectReader projectReader) {
-        String propertiesTemplateGradlePath = baseDirecotry + "/gradle.properties";
+    public void setConnectionSettings(final String baseDirecotry, @NotNull final ESDKSettingsDialog esdkSettingsDialog,
+                                      @NotNull final ProjectReader projectReader) {
+        final String propertiesTemplateGradlePath = baseDirecotry + "/gradle.properties";
         try {
             FileUtils.replaceStringInFile(propertiesTemplateGradlePath, "ABAS_HOMEDIR=" + projectReader.abasHomeDir,
                     "ABAS_HOMEDIR=" + esdkSettingsDialog.getAbasHomeDir().getText());
@@ -263,7 +264,7 @@ public class ProjectBuilder {
                             .toString().replace("\\", "\\\\\\\\"),
                     "SSH_KEY=" + Paths.get(esdkSettingsDialog.getSshKeyPath().getText())
                             .toString().replace("\\", "\\\\\\\\"));
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t prepare ESDK Project Connection Settings!");
         }
     }
@@ -274,8 +275,8 @@ public class ProjectBuilder {
      * @param baseDirectory          the base directory
      * @param esdkSettingsWizardStep the esdk settings wizard step
      */
-    public void setLanguages(final String baseDirectory, final ESDKSettingsWizardStep esdkSettingsWizardStep) {
-        String buildGradlepath = baseDirectory + "/build.gradle";
+    public void setLanguages(final String baseDirectory, @NotNull final ESDKSettingsWizardStep esdkSettingsWizardStep) {
+        final String buildGradlepath = baseDirectory + "/build.gradle";
         try {
             String languageString = "";
 
@@ -311,7 +312,7 @@ public class ProjectBuilder {
 
             FileUtils.replaceStringInFile(buildGradlepath, "languages = \"DA\"",
                     "languages = \"" + languageString + "\"");
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t prepare ESDK Project Language Settings!");
         }
     }
@@ -323,8 +324,8 @@ public class ProjectBuilder {
      * @param esdkSettingsDialog the esdk settings dialog
      * @param projectReader      the project reader
      */
-    public void setLanguages(String baseDirectory, ESDKSettingsDialog esdkSettingsDialog, ProjectReader projectReader) {
-        String buildGradlepath = baseDirectory + "/build.gradle";
+    public void setLanguages(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog, @NotNull final ProjectReader projectReader) {
+        final String buildGradlepath = baseDirectory + "/build.gradle";
         try {
             String languageString = "";
 
@@ -360,7 +361,7 @@ public class ProjectBuilder {
 
             FileUtils.replaceStringInFile(buildGradlepath, "languages = \"" + projectReader.languages + "\"",
                     "languages = \"" + languageString + "\"");
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t prepare ESDK Project Language Settings!");
         }
     }
@@ -371,16 +372,16 @@ public class ProjectBuilder {
      * @param baseDirectory          the base directory
      * @param esdkSettingsWizardStep the esdk settings wizard step
      */
-    public void setVersions(final String baseDirectory, final ESDKSettingsWizardStep esdkSettingsWizardStep) {
-        String buildGradlepath = baseDirectory + "/build.gradle";
+    public void setVersions(final String baseDirectory, @NotNull final ESDKSettingsWizardStep esdkSettingsWizardStep) {
+        final String buildGradlepath = baseDirectory + "/build.gradle";
         try {
-            String[] versions = new String[esdkSettingsWizardStep.getVersionList().getModel().getSize()];
+            final String[] versions = new String[esdkSettingsWizardStep.getVersionList().getModel().getSize()];
             for (int i = 0; i < esdkSettingsWizardStep.getVersionList().getModel().getSize(); i++) {
                 versions[i] = "\"" + esdkSettingsWizardStep.getVersionList().getModel().getElementAt(i) + "\"";
             }
             FileUtils.replaceStringInFile(buildGradlepath, "essentialsVersions = \\[\\]",
                     "essentialsVersions = " + Arrays.toString(versions));
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t prepare ESDK Project Versions Settings!");
         }
     }
@@ -392,11 +393,11 @@ public class ProjectBuilder {
      * @param esdkSettingsDialog the esdk settings dialog
      * @param projectReader      the project reader
      */
-    public void setVersions(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog, ProjectReader projectReader) {
-        String buildGradlepath = baseDirectory + "/build.gradle";
+    public void setVersions(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog, @NotNull final ProjectReader projectReader) {
+        final String buildGradlepath = baseDirectory + "/build.gradle";
         String replacement = "[]";
         if (esdkSettingsDialog.getVersionList().getModel().getSize() > 0) {
-            String[] versions = new String[esdkSettingsDialog.getVersionList().getModel().getSize()];
+            final String[] versions = new String[esdkSettingsDialog.getVersionList().getModel().getSize()];
             for (int i = 0; i < esdkSettingsDialog.getVersionList().getModel().getSize(); i++) {
                 versions[i] = "\"" + esdkSettingsDialog.getVersionList().getModel().getElementAt(i) + "\"";
             }
@@ -405,7 +406,7 @@ public class ProjectBuilder {
         try {
             FileUtils.replaceStringInFile(buildGradlepath, "essentialsVersions = \\[" + projectReader.versions + "\\]",
                     "essentialsVersions = " + replacement);
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t prepare ESDK Project Versions Settings!");
         }
     }
@@ -418,9 +419,9 @@ public class ProjectBuilder {
      */
     public void setFopJson(final String baseDirectory, final ESDKSettingsWizardStep esdkSettingsWizardStep) {
         if (ESDKSettingsWizardStep.getFopJsonList().size() > 0) {
-            JsonArray jsonArray = new JsonArray();
-            for (FopJson fopJson : ESDKSettingsWizardStep.getFopJsonList()) {
-                JsonObject jsonObject = new JsonObject();
+            final JsonArray jsonArray = new JsonArray();
+            for (final FopJson fopJson : ESDKSettingsWizardStep.getFopJsonList()) {
+                final JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("databaseName", fopJson.databaseName);
                 jsonObject.addProperty("groupName", fopJson.groupName);
                 jsonObject.addProperty("editorMode", fopJson.editorMode);
@@ -434,12 +435,12 @@ public class ProjectBuilder {
             }
 
             try {
-                FileOutputStream fileStream = new FileOutputStream(baseDirectory + "/src/main/resources/fop.json");
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileStream, StandardCharsets.UTF_8);
+                final FileOutputStream fileStream = new FileOutputStream(baseDirectory + "/src/main/resources/fop.json");
+                final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileStream, StandardCharsets.UTF_8);
                 outputStreamWriter.write(new Gson().toJson(jsonArray));
                 outputStreamWriter.close();
                 fileStream.close();
-            } catch (IOException e) {
+            } catch (@NotNull final IOException e) {
                 Notifications.errorNotification("Couldn´t prepare ESDK fop.json!");
             }
         }
@@ -453,9 +454,9 @@ public class ProjectBuilder {
      */
     public void setFopJson(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog) {
         if (ESDKSettingsDialog.getFopJsonList().size() > 0) {
-            JsonArray jsonArray = new JsonArray();
-            for (FopJson fopJson : ESDKSettingsDialog.getFopJsonList()) {
-                JsonObject jsonObject = new JsonObject();
+            final JsonArray jsonArray = new JsonArray();
+            for (final FopJson fopJson : ESDKSettingsDialog.getFopJsonList()) {
+                final JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("databaseName", fopJson.databaseName);
                 jsonObject.addProperty("groupName", fopJson.groupName);
                 jsonObject.addProperty("editorMode", fopJson.editorMode);
@@ -469,12 +470,12 @@ public class ProjectBuilder {
             }
 
             try {
-                FileOutputStream fileStream = new FileOutputStream(baseDirectory + "/src/main/resources/fop.json");
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileStream, StandardCharsets.UTF_8);
+                final FileOutputStream fileStream = new FileOutputStream(baseDirectory + "/src/main/resources/fop.json");
+                final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileStream, StandardCharsets.UTF_8);
                 outputStreamWriter.write(new Gson().toJson(jsonArray));
                 outputStreamWriter.close();
                 fileStream.close();
-            } catch (IOException e) {
+            } catch (@NotNull final IOException e) {
                 Notifications.errorNotification("Couldn´t prepare ESDK fop.json!");
             }
         }
@@ -486,10 +487,10 @@ public class ProjectBuilder {
      * @param baseDirectory          the base directory
      * @param esdkSettingsWizardStep the esdk settings wizard step
      */
-    public void setContentInfosystems(final String baseDirectory, final ESDKSettingsWizardStep esdkSettingsWizardStep) {
-        String buildGradlepath = baseDirectory + "/build.gradle";
+    public void setContentInfosystems(final String baseDirectory, @NotNull final ESDKSettingsWizardStep esdkSettingsWizardStep) {
+        final String buildGradlepath = baseDirectory + "/build.gradle";
         if (esdkSettingsWizardStep.getInfosystemList().getModel().getSize() > 0) {
-            String[] infosystems = new String[esdkSettingsWizardStep.getInfosystemList().getModel().getSize()];
+            final String[] infosystems = new String[esdkSettingsWizardStep.getInfosystemList().getModel().getSize()];
             for (int i = 0; i < esdkSettingsWizardStep.getInfosystemList().getModel().getSize(); i++) {
                 infosystems[i] = "\"" + esdkSettingsWizardStep.getInfosystemList().getModel().getElementAt(i) + "\"";
             }
@@ -497,7 +498,7 @@ public class ProjectBuilder {
             try {
                 FileUtils.replaceStringInFile(buildGradlepath, "infosystems = \\[\\]",
                         "infosystems = " + Arrays.toString(infosystems));
-            } catch (IOException e) {
+            } catch (@NotNull final IOException e) {
                 Notifications.errorNotification("Couldn´t prepare ESDK Infosystems!");
             }
         }
@@ -510,12 +511,12 @@ public class ProjectBuilder {
      * @param esdkSettingsDialog the esdk settings dialog
      * @param projectReader      the project reader
      */
-    public void setContentInfosystems(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog,
-                                      ProjectReader projectReader) {
-        String buildGradlepath = baseDirectory + "/build.gradle";
+    public void setContentInfosystems(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog,
+                                      @NotNull final ProjectReader projectReader) {
+        final String buildGradlepath = baseDirectory + "/build.gradle";
         String replacement = "[]";
         if (esdkSettingsDialog.getInfosystemList().getModel().getSize() > 0) {
-            String[] infosystems = new String[esdkSettingsDialog.getInfosystemList().getModel().getSize()];
+            final String[] infosystems = new String[esdkSettingsDialog.getInfosystemList().getModel().getSize()];
             for (int i = 0; i < esdkSettingsDialog.getInfosystemList().getModel().getSize(); i++) {
                 infosystems[i] = "\"" + esdkSettingsDialog.getInfosystemList().getModel().getElementAt(i) + "\"";
             }
@@ -524,7 +525,7 @@ public class ProjectBuilder {
         try {
             FileUtils.replaceStringInFile(buildGradlepath, "infosystems = \\[" + projectReader.contentinfosystems + "\\]",
                     "infosystems = " + replacement);
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t prepare ESDK Infosystems!");
         }
     }
@@ -535,10 +536,10 @@ public class ProjectBuilder {
      * @param baseDirectory          the base directory
      * @param esdkSettingsWizardStep the esdk settings wizard step
      */
-    public void setContentTables(final String baseDirectory, final ESDKSettingsWizardStep esdkSettingsWizardStep) {
-        String buildGradlepath = baseDirectory + "/build.gradle";
+    public void setContentTables(final String baseDirectory, @NotNull final ESDKSettingsWizardStep esdkSettingsWizardStep) {
+        final String buildGradlepath = baseDirectory + "/build.gradle";
         if (esdkSettingsWizardStep.getTableList().getModel().getSize() > 0) {
-            String[] tables = new String[esdkSettingsWizardStep.getTableList().getModel().getSize()];
+            final String[] tables = new String[esdkSettingsWizardStep.getTableList().getModel().getSize()];
             for (int i = 0; i < esdkSettingsWizardStep.getTableList().getModel().getSize(); i++) {
                 tables[i] = "\"" + esdkSettingsWizardStep.getTableList().getModel().getElementAt(i) + "\"";
             }
@@ -546,7 +547,7 @@ public class ProjectBuilder {
             try {
                 FileUtils.replaceStringInFile(buildGradlepath, "tables = \\[\\]",
                         "tables = " + Arrays.toString(tables));
-            } catch (IOException e) {
+            } catch (@NotNull final IOException e) {
                 Notifications.errorNotification("Couldn´t prepare ESDK Tables!");
             }
         }
@@ -559,12 +560,12 @@ public class ProjectBuilder {
      * @param esdkSettingsDialog the esdk settings dialog
      * @param projectReader      the project reader
      */
-    public void setContentTables(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog,
-                                 ProjectReader projectReader) {
-        String buildGradlepath = baseDirectory + "/build.gradle";
+    public void setContentTables(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog,
+                                 @NotNull final ProjectReader projectReader) {
+        final String buildGradlepath = baseDirectory + "/build.gradle";
         String replacement = "[]";
         if (esdkSettingsDialog.getTableList().getModel().getSize() > 0) {
-            String[] tables = new String[esdkSettingsDialog.getTableList().getModel().getSize()];
+            final String[] tables = new String[esdkSettingsDialog.getTableList().getModel().getSize()];
             for (int i = 0; i < esdkSettingsDialog.getTableList().getModel().getSize(); i++) {
                 tables[i] = "\"" + esdkSettingsDialog.getTableList().getModel().getElementAt(i) + "\"";
             }
@@ -573,7 +574,7 @@ public class ProjectBuilder {
         try {
             FileUtils.replaceStringInFile(buildGradlepath, "tables = \\[" + projectReader.contentTables + "\\]",
                     "tables = " + replacement);
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t prepare ESDK Tables!");
         }
     }
@@ -584,10 +585,10 @@ public class ProjectBuilder {
      * @param baseDirectory          the base directory
      * @param esdkSettingsWizardStep the esdk settings wizard step
      */
-    public void setContentScreens(final String baseDirectory, final ESDKSettingsWizardStep esdkSettingsWizardStep) {
-        String buildGradlepath = baseDirectory + "/build.gradle";
+    public void setContentScreens(final String baseDirectory, @NotNull final ESDKSettingsWizardStep esdkSettingsWizardStep) {
+        final String buildGradlepath = baseDirectory + "/build.gradle";
         if (esdkSettingsWizardStep.getScreensList().getModel().getSize() > 0) {
-            String[] screens = new String[esdkSettingsWizardStep.getScreensList().getModel().getSize()];
+            final String[] screens = new String[esdkSettingsWizardStep.getScreensList().getModel().getSize()];
             for (int i = 0; i < esdkSettingsWizardStep.getScreensList().getModel().getSize(); i++) {
                 screens[i] = esdkSettingsWizardStep.getScreensList().getModel().getElementAt(i).toString();
             }
@@ -595,7 +596,7 @@ public class ProjectBuilder {
             try {
                 FileUtils.replaceStringInFile(buildGradlepath, "screens = \\[\\:\\]",
                         "screens = " + Arrays.toString(screens).trim().replaceAll("\\s*", ""));
-            } catch (IOException e) {
+            } catch (@NotNull final IOException e) {
                 Notifications.errorNotification("Couldn´t prepare ESDK Screens!");
             }
         }
@@ -608,12 +609,12 @@ public class ProjectBuilder {
      * @param esdkSettingsDialog the esdk settings dialog
      * @param projectReader      the project reader
      */
-    public void setContentScreens(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog,
-                                  ProjectReader projectReader) {
-        String buildGradlepath = baseDirectory + "/build.gradle";
+    public void setContentScreens(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog,
+                                  @NotNull final ProjectReader projectReader) {
+        final String buildGradlepath = baseDirectory + "/build.gradle";
         String replacement = "[:]";
         if (esdkSettingsDialog.getScreensList().getModel().getSize() > 0) {
-            String[] screens = new String[esdkSettingsDialog.getScreensList().getModel().getSize()];
+            final String[] screens = new String[esdkSettingsDialog.getScreensList().getModel().getSize()];
             for (int i = 0; i < esdkSettingsDialog.getScreensList().getModel().getSize(); i++) {
                 screens[i] = esdkSettingsDialog.getScreensList().getModel().getElementAt(i).toString();
             }
@@ -624,7 +625,7 @@ public class ProjectBuilder {
                     replaceAll("\\[", "\\\\[").
                     replaceAll("\\]", "\\\\]") + "\\]", "screens = " + replacement
             );
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t prepare ESDK Screens!");
         }
     }
@@ -635,10 +636,10 @@ public class ProjectBuilder {
      * @param baseDirectory          the base directory
      * @param esdkSettingsWizardStep the esdk settings wizard step
      */
-    public void setContentEnums(final String baseDirectory, ESDKSettingsWizardStep esdkSettingsWizardStep) {
-        String buildGradlepath = baseDirectory + "/build.gradle";
+    public void setContentEnums(final String baseDirectory, @NotNull final ESDKSettingsWizardStep esdkSettingsWizardStep) {
+        final String buildGradlepath = baseDirectory + "/build.gradle";
         if (esdkSettingsWizardStep.getEnumsList().getModel().getSize() > 0) {
-            String[] enums = new String[esdkSettingsWizardStep.getEnumsList().getModel().getSize()];
+            final String[] enums = new String[esdkSettingsWizardStep.getEnumsList().getModel().getSize()];
             for (int i = 0; i < esdkSettingsWizardStep.getEnumsList().getModel().getSize(); i++) {
                 enums[i] = "\"" + esdkSettingsWizardStep.getEnumsList().getModel().getElementAt(i) + "\"";
             }
@@ -646,7 +647,7 @@ public class ProjectBuilder {
             try {
                 FileUtils.replaceStringInFile(buildGradlepath, "enums = \\[\\]",
                         "enums = " + Arrays.toString(enums));
-            } catch (IOException e) {
+            } catch (@NotNull final IOException e) {
                 Notifications.errorNotification("Couldn´t prepare ESDK Enums!");
             }
         }
@@ -659,12 +660,12 @@ public class ProjectBuilder {
      * @param esdkSettingsDialog the esdk settings dialog
      * @param projectReader      the project reader
      */
-    public void setContentEnums(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog,
-                                ProjectReader projectReader) {
-        String buildGradlepath = baseDirectory + "/build.gradle";
+    public void setContentEnums(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog,
+                                @NotNull final ProjectReader projectReader) {
+        final String buildGradlepath = baseDirectory + "/build.gradle";
         String replacement = "[]";
         if (esdkSettingsDialog.getEnumsList().getModel().getSize() > 0) {
-            String[] enums = new String[esdkSettingsDialog.getEnumsList().getModel().getSize()];
+            final String[] enums = new String[esdkSettingsDialog.getEnumsList().getModel().getSize()];
             for (int i = 0; i < esdkSettingsDialog.getEnumsList().getModel().getSize(); i++) {
                 enums[i] = "\"" + esdkSettingsDialog.getEnumsList().getModel().getElementAt(i) + "\"";
             }
@@ -673,7 +674,7 @@ public class ProjectBuilder {
         try {
             FileUtils.replaceStringInFile(buildGradlepath, "enums = \\[" + projectReader.contentEnums + "\\]",
                     "enums = " + replacement);
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t prepare ESDK Enums!");
         }
     }
@@ -684,10 +685,10 @@ public class ProjectBuilder {
      * @param baseDirectory          the base directory
      * @param esdkSettingsWizardStep the esdk settings wizard step
      */
-    public void setContentNamedTypes(final String baseDirectory, final ESDKSettingsWizardStep esdkSettingsWizardStep) {
-        String buildGradlepath = baseDirectory + "/build.gradle";
+    public void setContentNamedTypes(final String baseDirectory, @NotNull final ESDKSettingsWizardStep esdkSettingsWizardStep) {
+        final String buildGradlepath = baseDirectory + "/build.gradle";
         if (esdkSettingsWizardStep.getNamedTypesList().getModel().getSize() > 0) {
-            String[] namedTypes = new String[esdkSettingsWizardStep.getNamedTypesList().getModel().getSize()];
+            final String[] namedTypes = new String[esdkSettingsWizardStep.getNamedTypesList().getModel().getSize()];
             for (int i = 0; i < esdkSettingsWizardStep.getNamedTypesList().getModel().getSize(); i++) {
                 namedTypes[i] = "\"" + esdkSettingsWizardStep.getNamedTypesList().getModel().getElementAt(i) + "\"";
             }
@@ -695,7 +696,7 @@ public class ProjectBuilder {
             try {
                 FileUtils.replaceStringInFile(buildGradlepath, "namedTypes = \\[\\]",
                         "namedTypes = " + Arrays.toString(namedTypes));
-            } catch (IOException e) {
+            } catch (@NotNull final IOException e) {
                 Notifications.errorNotification("Couldn´t prepare ESDK Named Types!");
             }
         }
@@ -708,11 +709,11 @@ public class ProjectBuilder {
      * @param esdkSettingsDialog the esdk settings dialog
      * @param projectReader      the project reader
      */
-    public void setContentNamedTypes(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog, ProjectReader projectReader) {
-        String buildGradlepath = baseDirectory + "/build.gradle";
+    public void setContentNamedTypes(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog, @NotNull final ProjectReader projectReader) {
+        final String buildGradlepath = baseDirectory + "/build.gradle";
         String replacement = "[]";
         if (esdkSettingsDialog.getNamedTypesList().getModel().getSize() > 0) {
-            String[] namedTypes = new String[esdkSettingsDialog.getNamedTypesList().getModel().getSize()];
+            final String[] namedTypes = new String[esdkSettingsDialog.getNamedTypesList().getModel().getSize()];
             for (int i = 0; i < esdkSettingsDialog.getNamedTypesList().getModel().getSize(); i++) {
                 namedTypes[i] = "\"" + esdkSettingsDialog.getNamedTypesList().getModel().getElementAt(i) + "\"";
             }
@@ -721,13 +722,13 @@ public class ProjectBuilder {
         try {
             FileUtils.replaceStringInFile(buildGradlepath, "namedTypes = \\[" + projectReader.contentNamedTypes + "\\]",
                     "namedTypes = " + replacement);
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t prepare ESDK Named Types!");
         }
 
     }
 
-    private void renamePackage(final String baseDirectory, final String packageName) {
+    private void renamePackage(final String baseDirectory, @NotNull final String packageName) {
         new File(baseDirectory + "/src/main/java/" + (packageName.replaceAll("\\.", "/"))).mkdirs();
     }
 

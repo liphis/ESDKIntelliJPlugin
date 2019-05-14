@@ -10,6 +10,8 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.ui.ComboBox;
 import module.builder.ProjectReader;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import utils.Notifications;
 
 import javax.swing.*;
@@ -49,7 +51,7 @@ public class GenerateDialog extends JDialog {
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(final WindowEvent e) {
                 onCancel();
             }
         });
@@ -63,7 +65,7 @@ public class GenerateDialog extends JDialog {
         // add your code here
         final ESDKFileTemplateManager esdkFileTemplateManager = new ESDKFileTemplateManager(actionEvent.getProject());
         FileTemplate fileTemplate = null;
-        Properties defaultProperties = esdkFileTemplateManager.getDefaultProperties();
+        final Properties defaultProperties = esdkFileTemplateManager.getDefaultProperties();
         switch (sort.getSelectedIndex()) {
             default:
                 return;
@@ -128,16 +130,46 @@ public class GenerateDialog extends JDialog {
                         .loadFileTemplate("codetemplates/standalone/standalone.vm",
                                 "StandaloneCode");
                 break;
+            case 6:
+                defaultProperties.setProperty("PRINTBUFFEREXISTS",  String.valueOf(getDocument().getText().contains("PrintBuffer") ? true : false));
+                switch (event.getSelectedIndex()) {
+                    default:
+                        return;
+                    case 0:
 
+                        fileTemplate = esdkFileTemplateManager
+                                .loadFileTemplate("codetemplates/tools/globalTextBuffer.vm",
+                                        "GlobalTextBuffer");
+                        break;
+                    case 1:
+                        fileTemplate = esdkFileTemplateManager
+                                .loadFileTemplate("codetemplates/tools/visibilityAppend.vm",
+                                        "VisibilityAppend");
+                        break;
+                    case 2:
+                        fileTemplate = esdkFileTemplateManager
+                                .loadFileTemplate("codetemplates/tools/visibilityDelete.vm",
+                                        "VisibilityDelete");
+                        break;
+                    case 3:
+                        fileTemplate = esdkFileTemplateManager
+                                .loadFileTemplate("codetemplates/tools/visibilityReset.vm",
+                                        "VisibilityReset");
+                        break;
+                }
+                break;
         }
         String text = "";
         try {
             text = fileTemplate.getText(defaultProperties);
-        } catch (IOException e) {
+        }catch(@NotNull final NullPointerException e){
+            text = fileTemplate.getText();
+        }
+        catch (@NotNull final IOException e) {
             Notifications.errorNotification("Could not generate Method!");
         }
 
-        String finalText = text;
+        final String finalText = text;
         WriteCommandAction.runWriteCommandAction(actionEvent.getProject(), () -> getDocument().insertString(getCursorOffset(getEditor()), finalText));
         dispose();
     }
@@ -152,9 +184,9 @@ public class GenerateDialog extends JDialog {
      *
      * @param e the e
      */
-    public static void main(AnActionEvent e) {
+    public static void main(final AnActionEvent e) {
         actionEvent = e;
-        GenerateDialog dialog = new GenerateDialog();
+        final GenerateDialog dialog = new GenerateDialog();
         dialog.pack();
         dialog.setVisible(true);
     }
@@ -165,12 +197,12 @@ public class GenerateDialog extends JDialog {
             className = new JTextField(ProjectReader
                     .getFirstMatcherGroup("@EventHandler\\s*\\(\\s*head\\s*\\=\\s*([\\w*\\d*]*).class",
                             getDocument().getText()));
-        }catch (Exception e){
+        } catch (@NotNull final Exception e) {
             className = new JTextField();
         }
 
         sort = new ComboBox(new DefaultComboBoxModel<>(
-                new Vector<String>(Arrays.asList("Button", "Field", "Screen", "Row", "Database Selection", "Standalone"))));
+                new Vector<String>(Arrays.asList("Button", "Field", "Screen", "Row", "Database Selection", "Standalone", "Tools"))));
         event = new ComboBox<String>(new DefaultComboBoxModel<>(new Vector<>(Arrays.asList("Before", "After"))));
         sort.addActionListener(e -> {
             switch (sort.getSelectedIndex()) {
@@ -217,27 +249,36 @@ public class GenerateDialog extends JDialog {
                     fieldName.setVisible(false);
                     event.setModel(new DefaultComboBoxModel<>(new Vector<>(Arrays.asList("RunFop"))));
                     break;
+                case 6:
+                    className.setVisible(false);
+                    classNameLabel.setVisible(false);
+                    fieldNameLabel.setVisible(false);
+                    fieldName.setVisible(false);
+                    event.setModel(new DefaultComboBoxModel<>(new Vector<>(Arrays.asList("GlobalTextBuffer", "Visibility Append", "Visibility Delete", "Visibility Reset"))));
+                    break;
             }
         });
     }
 
-    private Document getDocument(){
-        if(actionEvent == null) return null;
-        FileEditorManager manager = FileEditorManager.getInstance(actionEvent.getProject());
+    @Nullable
+    private Document getDocument() {
+        if (actionEvent == null) return null;
+        final FileEditorManager manager = FileEditorManager.getInstance(actionEvent.getProject());
         final Editor editor = manager.getSelectedTextEditor();
         assert editor != null;
         return editor.getDocument();
     }
 
-    private Editor getEditor(){
-        if(actionEvent == null) return null;
-        FileEditorManager manager = FileEditorManager.getInstance(actionEvent.getProject());
+    @Nullable
+    private Editor getEditor() {
+        if (actionEvent == null) return null;
+        final FileEditorManager manager = FileEditorManager.getInstance(actionEvent.getProject());
         final Editor editor = manager.getSelectedTextEditor();
         assert editor != null;
         return editor;
     }
 
-    private int getCursorOffset(Editor editor){
+    private int getCursorOffset(@NotNull final Editor editor) {
         return editor.getCaretModel().getOffset();
     }
 }

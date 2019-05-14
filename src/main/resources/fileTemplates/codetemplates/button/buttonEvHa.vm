@@ -1,4 +1,4 @@
 @ButtonEventHandler(field = "${FIELDNAME}", type = ButtonEventType.${EVENTUP}, table = false)
-public void start${EVENT}${FIELDNAME}(ButtonEvent event, ScreenControl screenControl, DbContext ctx, ${MASKEDITOR} head) throws EventException {
+public void start${EVENT}${FIELDNAME}(final ButtonEvent event, final ScreenControl screenControl, final DbContext ctx, final ${MASKEDITOR} head) throws EventException {
 
 }

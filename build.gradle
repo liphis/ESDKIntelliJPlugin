@@ -9,7 +9,7 @@ repositories {
 }
 
 group 'com.abas.yonggan'
-version '1.0.4'
+version '1.0.5'
 
 intellij {
     pluginName 'ESDK'

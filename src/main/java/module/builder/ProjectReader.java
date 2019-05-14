@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import data.FopJson;
 import module.ESDKSettingsDialog;
+import org.jetbrains.annotations.NotNull;
 import utils.FileUtils;
 import utils.Notifications;
 
@@ -136,10 +137,10 @@ public class ProjectReader {
      * @param baseDirectory      the base directory
      * @param esdkSettingsDialog the esdk settings dialog
      */
-    public void readBasic(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog) {
+    public void readBasic(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog) {
         final String buildGradlepath = baseDirectory + "/build.gradle";
         try {
-            String readerFile = FileUtils.readFile(buildGradlepath);
+            final String readerFile = FileUtils.readFile(buildGradlepath);
             //App Name
             appName = getFirstMatcherGroup(
                     "esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*name\\s*\\S*=\\s*\\S*\\\"([\\w*\\d*]*)\\\"", readerFile);
@@ -159,16 +160,17 @@ public class ProjectReader {
                     "plugins\\s*\\S*\\{\\R*\\s*\\S*id\\s*\\S*\\\"[\\w*\\.]*\\\"\\s*\\S*version\\s*\\S*\\\"([\\d*\\.*]*)\\\"",
                     readerFile);
             esdkSettingsDialog.getEsdkVersion().setText(esdkVersion);
+            packageName = getFirstMatcherGroup(
+                    "group[\\s*\\S*]*\\=?[\\s*\\S*]*[\\'\\\"]([\\w*\\.*]*)[\\'\\\"]", readerFile);
+            esdkSettingsDialog.getPackageName().setText(packageName);
             developmentVersion = getFirstMatcherGroup(
                     "erp:[\\s*\\S*\\\\R*]*image:[\\s*\\S*\\w*\\.*\\/]*:([\\d*\\w]*)",
                     FileUtils.readFile(baseDirectory + "/docker-compose.yml"));
             esdkSettingsDialog.getDevelopmentVersion().setText(developmentVersion);
-            packageName = getFirstMatcherGroup(
-                    "group\\s*\\S*\\=?\\s*\\S*[\\'\\\"]([\\w*\\.*]*)[\\'\\\"]", readerFile);
-            esdkSettingsDialog.getPackageName().setText(packageName);
 
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t read your current Basic Configuration!");
+            Notifications.errorNotification(e.getMessage());
         }
     }
 
@@ -178,22 +180,22 @@ public class ProjectReader {
      * @param baseDirectory      the base directory
      * @param esdkSettingsDialog the esdk settings dialog
      */
-    public void readVersions(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog) {
+    public void readVersions(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog) {
         final String buildGradlepath = baseDirectory + "/build.gradle";
         try {
-            String readerFile = FileUtils.readFile(buildGradlepath);
+            final String readerFile = FileUtils.readFile(buildGradlepath);
             versions = getFirstMatcherGroup(
                     "esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*essentialsVersions\\s*\\S*\\=\\s*\\S*\\[(.*)\\]",
                     readerFile);
             final String versionString = versions.replaceAll("[\"\\s]", "").trim();
             if (!versionString.isEmpty()) {
-                String[] versionsArray = versionString.split(",");
+                final String[] versionsArray = versionString.split(",");
 
-                for (String version : versionsArray) {
+                for (final String version : versionsArray) {
                     ((DefaultListModel) esdkSettingsDialog.getVersionList().getModel()).addElement(version);
                 }
             }
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t read your current Versions Configuration!");
         }
     }
@@ -204,7 +206,7 @@ public class ProjectReader {
      * @param baseDirectory      the base directory
      * @param esdkSettingsDialog the esdk settings dialog
      */
-    public void readlanguages(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog) {
+    public void readlanguages(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog) {
         final String buildGradlepath = baseDirectory + "/build.gradle";
         try {
             languages = getFirstMatcherGroup(
@@ -241,7 +243,7 @@ public class ProjectReader {
             if (languages.contains("8")) esdkSettingsDialog.getUrdu().setSelected(true);
             if (languages.contains("7")) esdkSettingsDialog.getJapanese().setSelected(true);
 
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t read your current Languages Configuration!");
         }
     }
@@ -252,10 +254,10 @@ public class ProjectReader {
      * @param baseDirectory      the base directory
      * @param esdkSettingsDialog the esdk settings dialog
      */
-    public void readConnectionSettings(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog) {
-        String propertiesTemplateGradlePath = baseDirectory + "/gradle.properties";
+    public void readConnectionSettings(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog) {
+        final String propertiesTemplateGradlePath = baseDirectory + "/gradle.properties";
         try {
-            String readerFile = FileUtils.readFile(propertiesTemplateGradlePath);
+            final String readerFile = FileUtils.readFile(propertiesTemplateGradlePath);
             abasHomeDir = getFirstMatcherGroup("ABAS_HOMEDIR=(.*)", readerFile);
             abasClientDir = getFirstMatcherGroup("ABAS_CLIENTDIR=(.*)", readerFile);
 
@@ -297,7 +299,7 @@ public class ProjectReader {
             esdkSettingsDialog.getSshPassword().setText(sshPassword);
             esdkSettingsDialog.getSshKeyPath().setText(Paths.get(sshKey).toString());
 
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t read your current Connection Settings Configuration!");
         }
     }
@@ -308,7 +310,7 @@ public class ProjectReader {
      * @param baseDirectory      the base directory
      * @param esdkSettingsDialog the esdk settings dialog
      */
-    public void readContentInfosystems(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog) {
+    public void readContentInfosystems(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog) {
         try {
             final String buildGradlepath = baseDirectory + "/build.gradle";
             contentinfosystems = getFirstMatcherGroup("esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*infosystems\\s*\\S*\\=\\s*\\S*\\[(.*)\\]",
@@ -316,12 +318,12 @@ public class ProjectReader {
             final String infosystemsString = contentinfosystems
                     .replaceAll("[\"\\s]", "").trim();
             if (!infosystemsString.isEmpty()) {
-                String[] infosystems = infosystemsString.split(",");
-                for (String infosystem : infosystems) {
+                final String[] infosystems = infosystemsString.split(",");
+                for (final String infosystem : infosystems) {
                     ((DefaultListModel) esdkSettingsDialog.getInfosystemList().getModel()).addElement(infosystem);
                 }
             }
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t read your current Content Infosystems Configuration!");
         }
     }
@@ -332,7 +334,7 @@ public class ProjectReader {
      * @param baseDirectory      the base directory
      * @param esdkSettingsDialog the esdk settings dialog
      */
-    public void readContentTables(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog) {
+    public void readContentTables(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog) {
         try {
             final String buildGradlepath = baseDirectory + "/build.gradle";
             contentTables = getFirstMatcherGroup("esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*tables\\s*\\S*\\=\\s*\\S*\\[(.*)\\]",
@@ -340,12 +342,12 @@ public class ProjectReader {
             final String tablesString = contentTables
                     .replaceAll("[\"\\s]", "").trim();
             if (!tablesString.isEmpty()) {
-                String[] tables = tablesString.split(",");
-                for (String table : tables) {
+                final String[] tables = tablesString.split(",");
+                for (final String table : tables) {
                     ((DefaultListModel) esdkSettingsDialog.getTableList().getModel()).addElement(table);
                 }
             }
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t read your current Content Tables Configuration!");
         }
     }
@@ -356,7 +358,7 @@ public class ProjectReader {
      * @param baseDirectory      the base directory
      * @param esdkSettingsDialog the esdk settings dialog
      */
-    public void readContentScreens(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog) {
+    public void readContentScreens(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog) {
         try {
             final String buildGradlepath = baseDirectory + "/build.gradle";
             final String screensString = getFirstMatcherGroup("esdk\\s*\\{\\R*\\s*app\\s*\\{[\\\\R*\\s*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.]*screens\\s*\\=\\s*\\[(.*)\\]",
@@ -370,12 +372,12 @@ public class ProjectReader {
             }
             if (!bufferString.toString().isEmpty()) {
                 final String[] screens = bufferString.toString().split(",");
-                for (String screen : screens) {
+                for (final String screen : screens) {
                     ((DefaultListModel) esdkSettingsDialog.getScreensList().getModel())
                             .addElement(screen.replaceAll("#", ","));
                 }
             }
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t read your current Content Screens Configuration!");
         }
     }
@@ -386,7 +388,7 @@ public class ProjectReader {
      * @param baseDirectory      the base directory
      * @param esdkSettingsDialog the esdk settings dialog
      */
-    public void readContentEnums(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog) {
+    public void readContentEnums(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog) {
         try {
             final String buildGradlepath = baseDirectory + "/build.gradle";
             contentEnums = getFirstMatcherGroup("esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*enums\\s*\\S*\\=\\s*\\S*\\[(.*)\\]",
@@ -394,12 +396,12 @@ public class ProjectReader {
             final String enumsString = contentEnums.replaceAll("[\"\\s]", "").trim();
             if (!enumsString.isEmpty()) {
                 final String[] enums = enumsString.split(",");
-                for (String enumerator : enums) {
+                for (final String enumerator : enums) {
                     ((DefaultListModel) esdkSettingsDialog.getEnumsList().getModel()).addElement(enumerator);
                 }
             }
         } catch (
-                IOException e) {
+                @NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t read your current Content Enums Configuration!");
         }
 
@@ -412,7 +414,7 @@ public class ProjectReader {
      * @param baseDirectory      the base directory
      * @param esdkSettingsDialog the esdk settings dialog
      */
-    public void readContentNamedTypes(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog) {
+    public void readContentNamedTypes(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog) {
         try {
             final String buildGradlepath = baseDirectory + "/build.gradle";
             contentNamedTypes = getFirstMatcherGroup("esdk\\s*\\S*\\{\\R*\\s*\\S*app\\s*\\S*\\{[\\\\R*\\s*\\S*\\\"*\\w*\\=\\[*\\]*\\,*\\:*\\.*]*namedTypes\\s*\\S*\\=\\s*\\S*\\[(.*)\\]",
@@ -420,13 +422,13 @@ public class ProjectReader {
             final String namedTypesString = contentNamedTypes
                     .replaceAll("[\"\\s]", "").trim();
             if (!namedTypesString.isEmpty()) {
-                String[] namedTypes = namedTypesString.split(",");
-                for (String namedType : namedTypes) {
+                final String[] namedTypes = namedTypesString.split(",");
+                for (final String namedType : namedTypes) {
                     ((DefaultListModel) esdkSettingsDialog.getNamedTypesList().getModel()).addElement(namedType);
                 }
             }
         } catch (
-                IOException e) {
+                @NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t read your current Content Named Types Configuration!");
         }
 
@@ -438,7 +440,7 @@ public class ProjectReader {
      * @param baseDirectory      the base directory
      * @param esdkSettingsDialog the esdk settings dialog
      */
-    public void readContentEvents(final String baseDirectory, final ESDKSettingsDialog esdkSettingsDialog) {
+    public void readContentEvents(final String baseDirectory, @NotNull final ESDKSettingsDialog esdkSettingsDialog) {
         final String fopJson = baseDirectory + "/src/main/resources/fop.json";
         try {
             final FileInputStream fileInputStream = new FileInputStream(fopJson);
@@ -463,7 +465,7 @@ public class ProjectReader {
                 ((DefaultListModel) esdkSettingsDialog.getEventList().getModel())
                         .addElement(jsonObject.get("field") + " | " + jsonObject.get("handler"));
             }
-        } catch (NullPointerException | IOException e) {
+        } catch (@NotNull final NullPointerException | IOException e) {
             Notifications.errorNotification("Couldn´t read your current Content Events Configuration!");
         }
     }
@@ -475,9 +477,9 @@ public class ProjectReader {
      * @param string the string
      * @return the first matcher group
      */
-    public static String getFirstMatcherGroup(final String regex, final String string) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(string);
+    public static String getFirstMatcherGroup(@NotNull final String regex, @NotNull final String string) {
+        final Pattern pattern = Pattern.compile(regex);
+        final Matcher matcher = pattern.matcher(string);
         if (matcher.find())
             return matcher.group(1);
         else return "";

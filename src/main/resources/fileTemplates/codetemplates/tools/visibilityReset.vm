@@ -1,0 +1,7 @@
+#if(${PRINTBUFFEREXISTS} == "false")
+private final PrintBuffer printBuffer = BufferFactory.newInstance(false).getPrintBuffer();
+#end
+
+private static void resetVisibility(final PrintBuffer printBuffer) {
+printBuffer.setValue(FIELDNAME_SCREEN_CONTEXT_FOP, "");
+}

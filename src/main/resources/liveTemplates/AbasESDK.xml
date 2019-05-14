@@ -1,7 +1,37 @@
 <templateSet group="ESDK">
+    <template name="globtebuff"
+              value="BufferFactory bufferFactory = BufferFactory.newInstance(true);&#10;GlobalTextBuffer globalTextBuffer = bufferFactory.getGlobalTextBuffer();&#10;&#10;globalTextBuffer.getStringValue(&quot;$VARIABLE$&quot;);"
+              description="Access the GlobalTextBuffer and search for Variable" toReformat="false"
+              toShortenFQNames="true">
+        <variable name="VARIABLE" expression="" defaultValue="" alwaysStopAt="true"/>
+        <context>
+            <option name="JAVA_CODE" value="true"/>
+        </context>
+    </template>
+    <template name="visibreset"
+              value="private final PrintBuffer printBuffer$END$ = BufferFactory.newInstance(false).getPrintBuffer();&#10;&#10;private static void resetVisibility(final PrintBuffer printBuffer) {&#10;    printBuffer.setValue(FIELDNAME_SCREEN_CONTEXT_FOP, &quot;&quot;);&#10;}&#10;"
+              description="Visibility &quot;reset&quot; Method" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="JAVA_CODE" value="true"/>
+        </context>
+    </template>
+    <template name="visibappend"
+              value="private final PrintBuffer printBuffer$END$ = BufferFactory.newInstance(false).getPrintBuffer();&#10;&#10;private static void appendVisibility(final PrintBuffer printBuffer, final String name) {&#10;    String screenContextFop = printBuffer.getStringValue(FIELDNAME_SCREEN_CONTEXT_FOP);&#10;    screenContextFop += &quot; FOP_&quot; + name;&#10;    printBuffer.setValue(FIELDNAME_SCREEN_CONTEXT_FOP, screenContextFop);&#10;}"
+              description="Visibility &quot;append&quot; Method" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="JAVA_CODE" value="true"/>
+        </context>
+    </template>
+    <template name="visibdelete"
+              value="private final PrintBuffer printBuffer$END$ = BufferFactory.newInstance(false).getPrintBuffer();&#10;&#10;private static void deleteVisibility(final PrintBuffer printBuffer, final String name) {&#10;    String screenContextFop = printBuffer.getStringValue(FIELDNAME_SCREEN_CONTEXT_FOP);&#10;    screenContextFop = screenContextFop.replaceAll(&quot;FOP_&quot; + name, &quot;&quot;);&#10;    printBuffer.setValue(FIELDNAME_SCREEN_CONTEXT_FOP, screenContextFop);&#10;}"
+              description="Visibility &quot;delete&quot; Method" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="JAVA_CODE" value="true"/>
+        </context>
+    </template>
     <template name="cop" value="$ctx$.out().println($END$);" description="ctx.out().println();" toReformat="false"
               toShortenFQNames="true">
-        <variable name="ctx" expression="variableOfType(&quot;de.abas.erp.db.DbContext&quot;)" defaultValue="ctx"
+        <variable name="ctx" expression="variableOfType(&quot;de.abas.erp.db.DbContext&quot;)" defaultValue="dbContext"
                   alwaysStopAt="true"/>
         <context>
             <option name="JAVA_CODE" value="true"/>
@@ -9,7 +39,7 @@
     </template>
     <template name="cout" value="$ctx$.out().println($END$);" description="ctx.out().println();" toReformat="false"
               toShortenFQNames="true">
-        <variable name="ctx" expression="variableOfType(&quot;de.abas.erp.db.DbContext&quot;)" defaultValue="ctx"
+        <variable name="ctx" expression="variableOfType(&quot;de.abas.erp.db.DbContext&quot;)" defaultValue="dbContext"
                   alwaysStopAt="true"/>
         <context>
             <option name="JAVA_CODE" value="true"/>
@@ -32,7 +62,7 @@
         </context>
     </template>
     <template name="dbseltable"
-              value="SelectionBuilder&lt;$CLASSTOSELECT$$END$.Row&gt; selectionBuilder = SelectionBuilder.create($CLASSTOSELECT$.Row.class);&#10;rowSelectionBuilder.add(Conditions.eq($CLASSTOSELECT$.Row.META.VARIABLE.getName(), &quot;CONDITION&quot;));&#10;Query&lt;$CLASSTOSELECT$.Row&gt; queryRow = dbContext.createQuery(selectionBuilder.build());&#10;&#10;for ($CLASSTOSELECT$.Row row : queryRow) {&#10;    &#10;}"
+              value="SelectionBuilder&lt;$CLASSTOSELECT$$END$.Row&gt; rowSelectionBuilder = SelectionBuilder.create($CLASSTOSELECT$.Row.class);&#10;rowSelectionBuilder.add(Conditions.eq($CLASSTOSELECT$.Row.META.VARIABLE.getName(), &quot;CONDITION&quot;));&#10;Query&lt;$CLASSTOSELECT$.Row&gt; queryRow = dbContext.createQuery(rowSelectionBuilder.build());&#10;&#10;for ($CLASSTOSELECT$.Row row : queryRow) {&#10;    &#10;}"
               description="Database Table Selection" toReformat="false" toShortenFQNames="true">
         <variable name="CLASSTOSELECT" expression="" defaultValue="" alwaysStopAt="true"/>
         <context>
@@ -48,7 +78,7 @@
         </context>
     </template>
     <template name="evhabaft"
-              value="@ButtonEventHandler(field = &quot;FIELDNAME&quot;, type = ButtonEventType.AFTER, table = false)&#10;public void startAfter(ButtonEvent event, ScreenControl screenControl, DbContext ctx, $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}"
+              value="@ButtonEventHandler(field = &quot;FIELDNAME&quot;, type = ButtonEventType.AFTER, table = false)&#10;public void startAfter(final ButtonEvent event, ScreenControl final ScreenControl, final DBContext dbContext, final $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}"
               description="Eventhandler ButtonEvent AFTER" toReformat="false" toShortenFQNames="true">
         <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true"/>
         <context>
@@ -56,7 +86,7 @@
         </context>
     </template>
     <template name="evhabbef"
-              value="@ButtonEventHandler(field = &quot;FIELDNAME&quot;, type = ButtonEventType.BEFORE, table = false)&#10;public void startBefore(ButtonEvent event, ScreenControl screenControl, DbContext ctx, $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}"
+              value="@ButtonEventHandler(field = &quot;FIELDNAME&quot;, type = ButtonEventType.BEFORE, table = false)&#10;public void startBefore(final ButtonEvent event, final ScreenControl screenControl, final DBContext dbContext, final $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}"
               description="Eventhandler ButtonEvent BEFORE" toReformat="false" toShortenFQNames="true">
         <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true"/>
         <context>
@@ -64,7 +94,7 @@
         </context>
     </template>
     <template name="evhafex"
-              value="@FieldEventHandler(field = &quot;FIELDNAME&quot;, type = FieldEventType.EXIT, table = false)&#10;public void yisExit(FieldEvent event, ScreenControl screenControl, DbContext dbContext, $MASKEDITOR$$END$ head) throws EventException, IOException {&#10;    &#10;}"
+              value="@FieldEventHandler(field = &quot;FIELDNAME&quot;, type = FieldEventType.EXIT, table = false)&#10;public void yisExit(final FieldEvent event, final ScreenControl screenControl, final DBContext dbContext, final $MASKEDITOR$$END$ head) throws EventException, IOException {&#10;    &#10;}"
               description="Eventhandler FieldEvent EXIT" toReformat="false" toShortenFQNames="true">
         <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true"/>
         <context>
@@ -72,7 +102,7 @@
         </context>
     </template>
     <template name="evhaffill"
-              value="@FieldEventHandler(field = &quot;FIELDNAME&quot;, type = FieldEventType.FILL, table = false)&#10;public void yisFill(FieldEvent event, ScreenControl screenControl, DbContext dbContext, $MASKEDITOR$$END$ head) throws EventException, IOException {&#10;    &#10;}"
+              value="@FieldEventHandler(field = &quot;FIELDNAME&quot;, type = FieldEventType.FILL, table = false)&#10;public void yisFill(final FieldEvent event, final ScreenControl screenControl, final DBContext dbContext, final $MASKEDITOR$$END$ head) throws EventException, IOException {&#10;    &#10;}"
               description="Eventhandler FieldEvent FILL" toReformat="false" toShortenFQNames="true">
         <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true"/>
         <context>
@@ -87,7 +117,7 @@
         </context>
     </template>
     <template name="evharcha"
-              value="@RowEventHandler(type = RowEventType.CHANGED)&#10;public void rowChanged(DbContext context, $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}"
+              value="@RowEventHandler(type = RowEventType.CHANGED)&#10;public void rowChanged(final DBContext dbContext, final $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}"
               description="Eventhandler RowEvent Changed" toReformat="false" toShortenFQNames="true">
         <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true"/>
         <context>
@@ -95,7 +125,7 @@
         </context>
     </template>
     <template name="evhardelaft"
-              value="@RowEventHandler(type = RowEventType.DELETION_AFTER)&#10;public void rowDeletionAfter(DbContext context, $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}"
+              value="@RowEventHandler(type = RowEventType.DELETION_AFTER)&#10;public void rowDeletionAfter(final DBContext dbContext, final $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}"
               description="Eventhandler RowEvent DELETION_AFTER" toReformat="false" toShortenFQNames="true">
         <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true"/>
         <context>
@@ -103,7 +133,7 @@
         </context>
     </template>
     <template name="evhardelbef"
-              value="@RowEventHandler(type = RowEventType.DELETION_BEFORE)&#10;public void rowDeletionBefore(DbContext context, $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}"
+              value="@RowEventHandler(type = RowEventType.DELETION_BEFORE)&#10;public void rowDeletionBefore(final DBContext dbContext, final $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}"
               description="Eventhandler RowEvent DELETION_BEFORE" toReformat="false" toShortenFQNames="true">
         <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true"/>
         <context>
@@ -111,7 +141,7 @@
         </context>
     </template>
     <template name="evharinsaft"
-              value="@RowEventHandler(type = RowEventType.INSERTION_AFTER)&#10;public void rowInsertionAfter(DbContext context, $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}"
+              value="@RowEventHandler(type = RowEventType.INSERTION_AFTER)&#10;public void rowInsertionAfter(final DBContext dbContext, final $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}"
               description="Eventhandler RowEvent INSERTION_AFTER" toReformat="false" toShortenFQNames="true">
         <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true"/>
         <context>
@@ -119,7 +149,7 @@
         </context>
     </template>
     <template name="evharinsbef"
-              value="@RowEventHandler(type = RowEventType.INSERTION_BEFORE)&#10;public void rowInsertionBefore(DbContext context, $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}"
+              value="@RowEventHandler(type = RowEventType.INSERTION_BEFORE)&#10;public void rowInsertionBefore(final DBContext dbContext, final $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}"
               description="Eventhandler RowEvent INSERTION_BEFORE" toReformat="false" toShortenFQNames="true">
         <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true"/>
         <context>
@@ -127,7 +157,7 @@
         </context>
     </template>
     <template name="evharmark"
-              value="@RowEventHandler(type = RowEventType.MARKED)&#10;public void rowMarked(DbContext context, $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}"
+              value="@RowEventHandler(type = RowEventType.MARKED)&#10;public void rowMarked(final DBContext dbContext, final $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}"
               description="Eventhandler RowEvent MARKED" toReformat="false" toShortenFQNames="true">
         <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true"/>
         <context>
@@ -135,7 +165,7 @@
         </context>
     </template>
     <template name="evharmovaft"
-              value="@RowEventHandler(type = RowEventType.MOVED_AFTER)&#10;public void rowMovedAfter(DbContext context, $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}"
+              value="@RowEventHandler(type = RowEventType.MOVED_AFTER)&#10;public void rowMovedAfter(final DBContext dbContext, final $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}"
               description="Eventhandler RowEvent MOVED_AFTER" toReformat="false" toShortenFQNames="true">
         <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true"/>
         <context>
@@ -143,7 +173,7 @@
         </context>
     </template>
     <template name="evharmovbef"
-              value="@RowEventHandler(type = RowEventType.MOVED_BEFORE)&#10;public void rowMovedBefore(DbContext context, $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}"
+              value="@RowEventHandler(type = RowEventType.MOVED_BEFORE)&#10;public void rowMovedBefore(final DBContext dbContext, final $MASKEDITOR$$END$ sourceRecord) {&#10;    &#10;}"
               description="Eventhandler RowEvent MOVED_BEFORE" toReformat="false" toShortenFQNames="true">
         <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true"/>
         <context>
@@ -151,7 +181,7 @@
         </context>
     </template>
     <template name="evhascan"
-              value="@ScreenEventHandler(type = ScreenEventType.CANCEL)&#10;public void screenCancel(ScreenEvent event, ScreenControl screenControl, DbContext dbContext, $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}"
+              value="@ScreenEventHandler(type = ScreenEventType.CANCEL)&#10;public void screenCancel(final ScreenEvent event, final ScreenControl screenControl, final DBContext dbContext, final $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}"
               description="Eventhandler ScreenEvent CANCEL" toReformat="false" toShortenFQNames="true">
         <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true"/>
         <context>
@@ -159,7 +189,7 @@
         </context>
     </template>
     <template name="evhasend"
-              value="@ScreenEventHandler(type = ScreenEventType.END)&#10;public void screenEND(ScreenEvent event, ScreenControl screenControl, DbContext dbContext, $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}"
+              value="@ScreenEventHandler(type = ScreenEventType.END)&#10;public void screenEND(final ScreenEvent event, final ScreenControl screenControl, final DBContext dbContext, final $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}"
               description="Eventhandler ScreenEvent END" toReformat="false" toShortenFQNames="true">
         <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true"/>
         <context>
@@ -167,7 +197,7 @@
         </context>
     </template>
     <template name="evhasent"
-              value="@ScreenEventHandler(type = ScreenEventType.ENTER)&#10;public void screenEnter(ScreenEvent event, ScreenControl screenControl, DbContext dbContext, $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}"
+              value="@ScreenEventHandler(type = ScreenEventType.ENTER)&#10;public void screenEnter(final ScreenEvent event, final ScreenControl screenControl, final DBContext dbContext, final $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}"
               description="Eventhandler ScreenEvent ENTER" toReformat="false" toShortenFQNames="true">
         <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true"/>
         <context>
@@ -175,7 +205,7 @@
         </context>
     </template>
     <template name="evhasval"
-              value="@ScreenEventHandler(type = ScreenEventType.VALIDATION)&#10;public void screenValidation(ScreenEvent event, ScreenControl screenControl, DbContext dbContext, $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}"
+              value="@ScreenEventHandler(type = ScreenEventType.VALIDATION)&#10;public void screenValidation(final ScreenEvent event, final ScreenControl screenControl, final DBContext dbContext, final $MASKEDITOR$$END$ head) throws EventException {&#10;    &#10;}"
               description="Eventhandler ScreenEvent VALIDATION" toReformat="false" toShortenFQNames="true">
         <variable name="MASKEDITOR" expression="" defaultValue="" alwaysStopAt="true"/>
         <context>

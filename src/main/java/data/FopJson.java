@@ -56,7 +56,7 @@ public class FopJson {
      * @param handler      the handler
      */
     public FopJson(final String databaseName, final String groupName, final String editorMode, final String event,
-                   final String key, final String field, String headOrTable, String isContinue, String handler) {
+                   final String key, final String field, final String headOrTable, final String isContinue, final String handler) {
         this.databaseName = databaseName;
         this.groupName = groupName;
         this.editorMode = editorMode;

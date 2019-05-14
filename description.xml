@@ -1,5 +1,5 @@
 <description><![CDATA[<html>
-        <h1>A Plugin that replaces the BLA Project Builder and brings it to IntelliJ Idea.</h1>
+        <h1>A Plugin that replaces the Project Builder and brings it to IntelliJ Idea.</h1>
         <h2>Feautures:</h2>
         <ul>
             <li>Creating a new ESDK Project and initializing following values:</li>
@@ -23,14 +23,11 @@
                 <li>Infosystems</li>
                 <li>Masks / Databases</li>
                 <li>Standalone Java Programms</li>
+                </ul>
+                <li>Live Templates</li>
+                <li>Snippet Generation</li>
             </li>
         </ul>
-        <h3>Coming soon:</h3>
-        <ul>
-            <li>Autocompletion of Eventhandler "field"-Annotation</li>
-        </ul>
-        <h4>
-        Have fun with it!
-        <h4>
+        <h4>Have fun with it!</h4>
         <h4>Yonggan / André Schüle</h4></html>]]>
 </description>

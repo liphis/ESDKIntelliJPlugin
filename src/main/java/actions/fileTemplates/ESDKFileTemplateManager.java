@@ -11,6 +11,8 @@ import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import utils.Notifications;
 
 import java.io.BufferedReader;
@@ -32,7 +34,7 @@ public class ESDKFileTemplateManager {
      *
      * @param project the project
      */
-    public ESDKFileTemplateManager(final Project project) {
+    public ESDKFileTemplateManager(@NotNull final Project project) {
         fileTemplateManager = FileTemplateManager.getInstance(project);
     }
 
@@ -43,12 +45,14 @@ public class ESDKFileTemplateManager {
      * @param templateName the template name
      * @return the file template
      */
-    public FileTemplate loadFileTemplate(final String fileName, final String templateName) {
+    @Nullable
+    public FileTemplate loadFileTemplate(final String fileName, @NotNull final String templateName) {
         return setTextIfNotSame(fileTemplateManager, templateName, readFileTemplate(fileName));
     }
 
+    @NotNull
     private String readFileTemplate(final String filename) {
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         try {
             final InputStreamReader isr = new InputStreamReader(
                     this.getClass().getResourceAsStream("/fileTemplates/" + filename), StandardCharsets.UTF_8);
@@ -59,19 +63,20 @@ public class ESDKFileTemplateManager {
                 sb.append('\n');
             }
             br.close();
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Couldn´t create File Template!");
         }
         return sb.toString();
     }
 
-    private FileTemplate setTextIfNotSame(final FileTemplateManager fileTemplateManager, final String templateName,
-                                          final String text) {
+    @Nullable
+    private FileTemplate setTextIfNotSame(@NotNull final FileTemplateManager fileTemplateManager, @NotNull final String templateName,
+                                          @NotNull final String text) {
         try {
             if ((!text.isEmpty() && text.equals(fileTemplateManager.getTemplate(templateName).getText()))) {
                 return setFileTemplateText(fileTemplateManager, templateName, text);
             }
-        } catch (NullPointerException e) {
+        } catch (@NotNull final NullPointerException e) {
             return setFileTemplateText(fileTemplateManager, templateName, text);
         }
         return null;
@@ -83,7 +88,7 @@ public class ESDKFileTemplateManager {
      * @param project      the project
      * @param fromTemplate the from template
      */
-    public void openFileInEditor(final Project project, final PsiElement fromTemplate) {
+    public void openFileInEditor(@NotNull final Project project, @NotNull final PsiElement fromTemplate) {
         final PsiFile createdFile = fromTemplate.getContainingFile();
 
         if (createdFile != null) {
@@ -95,7 +100,8 @@ public class ESDKFileTemplateManager {
         }
     }
 
-    private FileTemplate setFileTemplateText(final FileTemplateManager fileTemplateManager, final String templateName,
+    @NotNull
+    private FileTemplate setFileTemplateText(@NotNull final FileTemplateManager fileTemplateManager, @NotNull final String templateName,
                                              final String text) {
         final FileTemplate fileTemplate = fileTemplateManager.addTemplate(templateName, "java");
         fileTemplate.setText(text);
@@ -107,6 +113,7 @@ public class ESDKFileTemplateManager {
      *
      * @return the default properties
      */
+    @NotNull
     public Properties getDefaultProperties() {
         return fileTemplateManager.getDefaultProperties();
     }
@@ -117,7 +124,8 @@ public class ESDKFileTemplateManager {
      * @param e the e
      * @return the psi directory
      */
-    public static PsiDirectory findPSIDirectory(final AnActionEvent e) {
+    @Nullable
+    public static PsiDirectory findPSIDirectory(@NotNull final AnActionEvent e) {
         final VirtualFile virtualFile = e.getData(DataKeys.VIRTUAL_FILE);
         PsiDirectory psiDirectory = PsiManager.getInstance(e.getProject()).findDirectory(virtualFile);
         if (psiDirectory == null)

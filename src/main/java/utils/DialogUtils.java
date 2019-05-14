@@ -1,5 +1,7 @@
 package utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.awt.*;
 
 /**
@@ -12,8 +14,8 @@ public class DialogUtils {
      *
      * @param dialog the dialog
      */
-    public static void setBoundsHalf(final Dialog dialog) {
-        DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
+    public static void setBoundsHalf(@NotNull final Dialog dialog) {
+        final DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
         //I'd also make this static and final and insert them at the class definition
         final int dialogWidth = displayMode.getWidth() / 2; //example; a quarter of the screen size
         final int dialogHeight = displayMode.getHeight() / 2; //example

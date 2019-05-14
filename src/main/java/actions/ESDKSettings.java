@@ -17,17 +17,17 @@ class ESDKSettings extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull final AnActionEvent anActionEvent) {
-        ESDKSettingsDialog dialog;
-        ProjectReader projectReader = new ProjectReader();
+        final ESDKSettingsDialog dialog;
+        final ProjectReader projectReader = new ProjectReader();
         try {
             dialog = ESDKSettingsDialog.main(anActionEvent.getProject(), projectReader);
-        } catch (NullPointerException e) {
+        } catch (@NotNull final NullPointerException e) {
             e.printStackTrace();
             return;
         }
 
         DialogUtils.setBoundsHalf(dialog);
-        String basePath = Objects.requireNonNull(anActionEvent.getProject()).getBasePath();
+        final String basePath = Objects.requireNonNull(anActionEvent.getProject()).getBasePath();
         projectReader.readBasic(basePath, dialog);
         projectReader.readVersions(basePath, dialog);
         projectReader.readlanguages(basePath, dialog);

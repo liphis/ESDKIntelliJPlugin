@@ -7,6 +7,8 @@ import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.ui.components.JBList;
 import data.FopJson;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import utils.Notifications;
 
 import javax.swing.*;
@@ -149,6 +151,7 @@ public class ESDKSettingsWizardStep extends ModuleWizardStep {
      *
      * @return the fop json list
      */
+    @NotNull
     public static ArrayList<FopJson> getFopJsonList() {
         return fopJsonList;
     }
@@ -1360,7 +1363,7 @@ public class ESDKSettingsWizardStep extends ModuleWizardStep {
             if (screensI.isSelected()) priorities += "I";
             if (screensJ.isSelected()) priorities += "J";
             final char[] prioritiesCharArray = priorities.toCharArray();
-            String[] prioritiesArray = new String[prioritiesCharArray.length];
+            final String[] prioritiesArray = new String[prioritiesCharArray.length];
             for (int i = 0; i < prioritiesCharArray.length; i++) {
                 prioritiesArray[i] = "\"" + prioritiesCharArray[i] + "\"";
             }
@@ -1476,9 +1479,9 @@ public class ESDKSettingsWizardStep extends ModuleWizardStep {
                     && !eventHandler.getText().isEmpty()) {
 
 
-                String editorModeString = eventEditorMode.getSelectedItem().toString().toLowerCase();
+                final String editorModeString = eventEditorMode.getSelectedItem().toString().toLowerCase();
 
-                String eventString;
+                final String eventString;
                 switch (event.getSelectedItem().toString()) {
                     default:
                         eventString = "*";
@@ -1561,12 +1564,12 @@ public class ESDKSettingsWizardStep extends ModuleWizardStep {
         }
     }
 
-    private void setBasicDefaults(JsonObject defaults) {
+    private void setBasicDefaults(@NotNull final JsonObject defaults) {
         developmentVersion.setText(defaults.get("developmentVersion").getAsString());
         esdkVersion.setText(defaults.get("esdkVersion").getAsString());
     }
 
-    private void setConnectionSettingsDefaults(JsonObject defaults) {
+    private void setConnectionSettingsDefaults(@NotNull final JsonObject defaults) {
         abasHomeDir.setText(defaults.get("abasHomeDir").getAsString());
         abasClientDir.setText(defaults.get("abasClientDir").getAsString());
         edpHost.setText(defaults.get("edpHost").getAsString());
@@ -1582,7 +1585,7 @@ public class ESDKSettingsWizardStep extends ModuleWizardStep {
         sshUser.setText(defaults.get("sshUser").getAsString());
     }
 
-    private void setLanguageDefaults(JsonObject defaults) {
+    private void setLanguageDefaults(@NotNull final JsonObject defaults) {
         final JsonObject languages = defaults.get("languages").getAsJsonObject();
         german.setSelected(languages.get("German").getAsBoolean());
         americanEnglish.setSelected(languages.get("AmericanEnglish").getAsBoolean());
@@ -1615,15 +1618,15 @@ public class ESDKSettingsWizardStep extends ModuleWizardStep {
         japanese.setSelected(languages.get("Japanese").getAsBoolean());
     }
 
-    private void setVersionDefaults(JsonObject defaults) {
+    private void setVersionDefaults(@NotNull final JsonObject defaults) {
         fromVersion.setText(defaults.get("essentialsVersionRangeFrom").getAsString());
         toVersion.setText(defaults.get("essentialsVersionRangeTo").getAsString());
     }
 
-    private void limit(JTextField jTextField, int limit) {
+    private void limit(@NotNull final JTextField jTextField, final int limit) {
         jTextField.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
+            public void keyTyped(@NotNull final KeyEvent e) {
                 if (jTextField.getText().length() >= limit) {
                     e.setKeyChar(Character.MIN_VALUE);
                 } else {
@@ -1633,10 +1636,10 @@ public class ESDKSettingsWizardStep extends ModuleWizardStep {
         });
     }
 
-    private void checkAlphaNumeric(JTextField jTextField) {
+    private void checkAlphaNumeric(@NotNull final JTextField jTextField) {
         jTextField.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
+            public void keyTyped(@NotNull final KeyEvent e) {
                 if (!(Character.isLetterOrDigit(e.getKeyChar()))) {
                     e.setKeyChar(Character.MIN_VALUE);
                 } else {
@@ -1646,10 +1649,10 @@ public class ESDKSettingsWizardStep extends ModuleWizardStep {
         });
     }
 
-    private void checkNumeric(JTextField jTextField) {
+    private void checkNumeric(@NotNull final JTextField jTextField) {
         jTextField.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
+            public void keyTyped(@NotNull final KeyEvent e) {
                 if (!(Character.isDigit(e.getKeyChar()))) {
                     e.setKeyChar(Character.MIN_VALUE);
                 } else {
@@ -1659,10 +1662,10 @@ public class ESDKSettingsWizardStep extends ModuleWizardStep {
         });
     }
 
-    private void checkVersion(JTextField jTextField) {
+    private void checkVersion(@NotNull final JTextField jTextField) {
         jTextField.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
+            public void keyTyped(@NotNull final KeyEvent e) {
                 if (!(Character.isDigit(e.getKeyChar()) || Character.valueOf('.').equals(e.getKeyChar()))) {
                     e.setKeyChar(Character.MIN_VALUE);
                 } else {
@@ -1672,10 +1675,10 @@ public class ESDKSettingsWizardStep extends ModuleWizardStep {
         });
     }
 
-    private void checkPackage(JTextField jTextField) {
+    private void checkPackage(@NotNull final JTextField jTextField) {
         jTextField.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
+            public void keyTyped(@NotNull final KeyEvent e) {
                 if (!(Character.isLetter(e.getKeyChar()) || Character.valueOf('.').equals(e.getKeyChar()))) {
                     e.setKeyChar(Character.MIN_VALUE);
                 } else {
@@ -1712,14 +1715,15 @@ public class ESDKSettingsWizardStep extends ModuleWizardStep {
             throw new ConfigurationException("Please fill Nexus Host with at least " + CONNECTION_NEXUS_HOST_MIN + " characters!");
     }
 
+    @Nullable
     private JsonObject loadDefaults() {
-        Gson gson = new Gson();
+        final Gson gson = new Gson();
         try {
 
-            InputStream is = getClass().getResourceAsStream("/defaults/defaultValues.json");
-            InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
-            BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
+            final InputStream is = getClass().getResourceAsStream("/defaults/defaultValues.json");
+            final InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
+            final BufferedReader br = new BufferedReader(isr);
+            final StringBuilder sb = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
                 sb.append(line);
@@ -1733,7 +1737,7 @@ public class ESDKSettingsWizardStep extends ModuleWizardStep {
 Can´t be used because Plugin is packed as JAR and the File has to be read as Stream
 return gson.fromJson(new FileReader(new File(getClass().getResource("/defaults/defaultValues.json").getFile())), JsonObject.class);
 */
-        } catch (IOException e) {
+        } catch (@NotNull final IOException e) {
             Notifications.errorNotification("Can´t find default Values!");
         }
         return null;

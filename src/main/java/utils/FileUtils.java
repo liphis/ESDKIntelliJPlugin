@@ -2,6 +2,7 @@ package utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -27,15 +28,15 @@ public class FileUtils {
      * @param unzipLocation the unzip location
      * @throws IOException the io exception
      */
-    public static void unzip(final String zipFilePath, final String unzipLocation) throws IOException {
+    public static void unzip(@NotNull final String zipFilePath, @NotNull final String unzipLocation) throws IOException {
 
         if (!(Files.exists(Paths.get(unzipLocation)))) {
             Files.createDirectories(Paths.get(unzipLocation));
         }
-        try (ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(zipFilePath))) {
+        try (final ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(zipFilePath))) {
             ZipEntry entry = zipInputStream.getNextEntry();
             while (entry != null) {
-                Path filePath = Paths.get(unzipLocation, entry.getName());
+                final Path filePath = Paths.get(unzipLocation, entry.getName());
                 if (!entry.isDirectory()) {
                     unzipFiles(zipInputStream, filePath);
                 } else {
@@ -48,8 +49,8 @@ public class FileUtils {
         }
     }
 
-    private static void unzipFiles(final ZipInputStream zipInputStream, final Path unzipFilePath) throws IOException {
-        try (BufferedOutputStream bos = new BufferedOutputStream(
+    private static void unzipFiles(@NotNull final ZipInputStream zipInputStream, @NotNull final Path unzipFilePath) throws IOException {
+        try (final BufferedOutputStream bos = new BufferedOutputStream(
                 new FileOutputStream(unzipFilePath.toAbsolutePath().toString()))) {
             final byte[] bytesIn = new byte[1024];
             int read;
@@ -66,20 +67,20 @@ public class FileUtils {
      * @param zipPath             the zip path
      * @throws IOException the io exception
      */
-    public static void zipDirectory(final String sourceDirectoryPath, final String zipPath) throws IOException {
-        Path zipFilePath = Files.createFile(Paths.get(zipPath));
+    public static void zipDirectory(@NotNull final String sourceDirectoryPath, @NotNull final String zipPath) throws IOException {
+        final Path zipFilePath = Files.createFile(Paths.get(zipPath));
 
-        try (ZipOutputStream zipOutputStream = new ZipOutputStream(Files.newOutputStream(zipFilePath))) {
-            Path sourceDirPath = Paths.get(sourceDirectoryPath);
+        try (final ZipOutputStream zipOutputStream = new ZipOutputStream(Files.newOutputStream(zipFilePath))) {
+            final Path sourceDirPath = Paths.get(sourceDirectoryPath);
 
             Files.walk(sourceDirPath).filter(path -> !Files.isDirectory(path))
                     .forEach(path -> {
-                        ZipEntry zipEntry = new ZipEntry(sourceDirPath.relativize(path).toString());
+                        final ZipEntry zipEntry = new ZipEntry(sourceDirPath.relativize(path).toString());
                         try {
                             zipOutputStream.putNextEntry(zipEntry);
                             zipOutputStream.write(Files.readAllBytes(path));
                             zipOutputStream.closeEntry();
-                        } catch (Exception e) {
+                        } catch (@NotNull final Exception e) {
                             Notifications.errorNotification(e.getMessage());
                         }
                     });
@@ -93,7 +94,7 @@ public class FileUtils {
      * @throws IOException the io exception
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static void deleteDirectoryStream(final String path) throws IOException {
+    public static void deleteDirectoryStream(@NotNull final String path) throws IOException {
         Files.walk(Paths.get(path))
                 .sorted(Comparator.reverseOrder())
                 .map(Path::toFile)
@@ -107,9 +108,9 @@ public class FileUtils {
      * @param dest   the dest
      * @throws IOException the io exception
      */
-    public static void copyFileUsingStream(final InputStream source, final File dest) throws IOException {
-        try (InputStream is = source; OutputStream os = new FileOutputStream(dest)) {
-            byte[] buffer = new byte[1024];
+    public static void copyFileUsingStream(final InputStream source, @NotNull final File dest) throws IOException {
+        try (final InputStream is = source; final OutputStream os = new FileOutputStream(dest)) {
+            final byte[] buffer = new byte[1024];
             int length;
             while ((length = is.read(buffer)) > 0) {
                 os.write(buffer, 0, length);
@@ -137,7 +138,7 @@ public class FileUtils {
      * @param filePath the file path
      * @return the boolean
      */
-    public static boolean checkFileExists(final String filePath) {
+    public static boolean checkFileExists(@NotNull final String filePath) {
         return new File(filePath).exists();
     }
 
@@ -146,7 +147,7 @@ public class FileUtils {
      *
      * @param filePath the file path
      */
-    public static void deleteFile(final String filePath) {
+    public static void deleteFile(@NotNull final String filePath) {
         new File(filePath).delete();
         new File(filePath.replaceAll("/", "\\\\")).delete();
     }
@@ -159,7 +160,7 @@ public class FileUtils {
      * @param replacement the replacement
      * @throws IOException the io exception
      */
-    public static void replaceStringInFile(final String pathToFile, final String regex, final String replacement)
+    public static void replaceStringInFile(@NotNull final String pathToFile, @NotNull final String regex, @NotNull final String replacement)
             throws IOException {
         String content = new String(Files.readAllBytes(Paths.get(pathToFile)), StandardCharsets.UTF_8);
         content = content.replaceFirst(regex, replacement);
@@ -176,7 +177,8 @@ public class FileUtils {
      * @return the string
      * @throws IOException the io exception
      */
-    public static String readFile(final String pathToFile) throws IOException {
+    @NotNull
+    public static String readFile(@NotNull final String pathToFile) throws IOException {
         return new String(Files.readAllBytes(Paths.get(pathToFile)), StandardCharsets.UTF_8);
     }
 
@@ -187,13 +189,13 @@ public class FileUtils {
      * @param match    the match
      * @throws IOException the io exception
      */
-    public static void deleteLine(String filepath, String match) throws IOException {
+    public static void deleteLine(@NotNull final String filepath, @NotNull final String match) throws IOException {
 
         final FileInputStream fileInputStream = new FileInputStream(filepath);
         final InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+        final BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
         String line;
-        StringBuilder input = new StringBuilder();
+        final StringBuilder input = new StringBuilder();
         while ((line = bufferedReader.readLine()) != null) {
             //System.out.println(line);
             if (line.contains(match)) {
@@ -202,7 +204,7 @@ public class FileUtils {
             input.append(line).append('\n');
         }
 
-        FileOutputStream fileOutputStream = new FileOutputStream(filepath);
+        final FileOutputStream fileOutputStream = new FileOutputStream(filepath);
         final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8);
         outputStreamWriter.write(input.toString());
         bufferedReader.close();
